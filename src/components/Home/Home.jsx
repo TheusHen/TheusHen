@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Landscape from '../../assets/landscapes/codecode.webp'
 
 const Home = () => {
   const navigate = useNavigate();
@@ -13,19 +14,19 @@ const Home = () => {
           style={styles.card}
           onClick={() => navigate('/projects')}
         >
-          <img src="../../assets/landscapes/projects.webp" alt="Projects" style={styles.image} />
+          <img src={Landscape} alt="Projects" style={styles.image} />
         </div>
         <div
           style={styles.card}
           onClick={() => navigate('/skills')}
         >
-          <img src="../../assets/landscapes/skills.webp" alt="Skills" style={styles.image} />
+          <img src={Landscape} alt="Skills" style={styles.image} />
         </div>
         <div
           style={styles.card}
           onClick={() => navigate('/contact')}
         >
-          <img src="../../assets/landscapes/contact.webp" alt="Contact" style={styles.image} />
+          <img src={Landscape} alt="Contact" style={styles.image} />
         </div>
       </div>
     </div>

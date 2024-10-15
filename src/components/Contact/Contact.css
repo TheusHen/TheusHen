@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Kodchasan:wght@400;600&family=Roboto+Mono:wght@500&display=swap');
 
+.icon-link {
+    color:white
+}
+
 .contact-container {
     display: flex;
     flex-direction: column;

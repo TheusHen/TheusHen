@@ -1,90 +1,78 @@
-import { useState } from "react"; 
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import Slider from "react-slick";
+import { useNavigate } from 'react-router-dom';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import "./Skills.css";
 
-const SkillsCarousel = () => {
-  const navigate = useNavigate(); // Usando useNavigate
-  const [scrollX, setScrollX] = useState(0);
+const Skills = () => {
+  const [showAll, setShowAll] = useState(false);
+  const navigate = useNavigate();
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+  };
+
+  const handleToggle = () => {
+    setShowAll(!showAll);
+  };
 
   const handleBack = () => {
-    navigate("/"); // Usando navigate em vez de router.push
+    navigate('/');
   };
 
-  const handleScrollLeft = () => {
-    setScrollX(scrollX + 200);
-  };
-
-  const handleScrollRight = () => {
-    setScrollX(scrollX - 200);
-  };
+  const skills = [
+    "git", "docker", "anaconda", "androidstudio", "arch", "arduino", 
+    "aws", "bash", "bootstrap", "c", "cpp", "cloudflare", "cmake", 
+    "css", "dart", "electron", "express", "fastapi", "flask", "flutter", 
+    "github", "gitlab", "go", "grafana", "html", "js", "kali", "kotlin", 
+    "linux", "md", "mongodb", "nextjs", "netlify", "nginx", "nodejs", 
+    "npm", "postgres", "prometheus", "py", "react", "redis", "ruby", 
+    "robloxstudio", "tensorflow", "unity", "vercel", "vite", "windows", 
+    "yarn"
+  ];
 
   return (
     <div className="skills-carousel">
       <h2>Skills</h2>
-      <div className="carousel-container">
-        <button className="scroll-button left" onClick={handleScrollLeft}>
-          {"<"}
-        </button>
-        <div className="carousel" style={{ transform: `translateX(${scrollX}px)` }}>
-          <img src="https://skillicons.dev/icons?i=git" alt="Git" />
-          <img src="https://skillicons.dev/icons?i=docker" alt="Docker" />
-          <img src="https://skillicons.dev/icons?i=anaconda" alt="Anaconda" />
-          <img src="https://skillicons.dev/icons?i=androidstudio" alt="Android Studio" />
-          <img src="https://skillicons.dev/icons?i=arch" alt="Arch Linux" />
-          <img src="https://skillicons.dev/icons?i=arduino" alt="Arduino" />
-          <img src="https://skillicons.dev/icons?i=aws" alt="AWS" />
-          <img src="https://skillicons.dev/icons?i=bash" alt="Bash" />
-          <img src="https://skillicons.dev/icons?i=bootstrap" alt="Bootstrap" />
-          <img src="https://skillicons.dev/icons?i=c" alt="C" />
-          <img src="https://skillicons.dev/icons?i=cpp" alt="C++" />
-          <img src="https://skillicons.dev/icons?i=cloudflare" alt="Cloudflare" />
-          <img src="https://skillicons.dev/icons?i=cmake" alt="CMake" />
-          <img src="https://skillicons.dev/icons?i=css" alt="CSS" />
-          <img src="https://skillicons.dev/icons?i=dart" alt="Dart" />
-          <img src="https://skillicons.dev/icons?i=electron" alt="Electron" />
-          <img src="https://skillicons.dev/icons?i=express" alt="Express" />
-          <img src="https://skillicons.dev/icons?i=fastapi" alt="FastAPI" />
-          <img src="https://skillicons.dev/icons?i=flask" alt="Flask" />
-          <img src="https://skillicons.dev/icons?i=flutter" alt="Flutter" />
-          <img src="https://skillicons.dev/icons?i=github" alt="GitHub" />
-          <img src="https://skillicons.dev/icons?i=gitlab" alt="GitLab" />
-          <img src="https://skillicons.dev/icons?i=go" alt="Go" />
-          <img src="https://skillicons.dev/icons?i=grafana" alt="Grafana" />
-          <img src="https://skillicons.dev/icons?i=html" alt="HTML" />
-          <img src="https://skillicons.dev/icons?i=js" alt="JavaScript" />
-          <img src="https://skillicons.dev/icons?i=kali" alt="Kali Linux" />
-          <img src="https://skillicons.dev/icons?i=kotlin" alt="Kotlin" />
-          <img src="https://skillicons.dev/icons?i=linux" alt="Linux" />
-          <img src="https://skillicons.dev/icons?i=md" alt="Markdown" />
-          <img src="https://skillicons.dev/icons?i=mongodb" alt="MongoDB" />
-          <img src="https://skillicons.dev/icons?i=nextjs" alt="Next.js" />
-          <img src="https://skillicons.dev/icons?i=netlify" alt="Netlify" />
-          <img src="https://skillicons.dev/icons?i=nginx" alt="Nginx" />
-          <img src="https://skillicons.dev/icons?i=nodejs" alt="Node.js" />
-          <img src="https://skillicons.dev/icons?i=npm" alt="npm" />
-          <img src="https://skillicons.dev/icons?i=postgres" alt="PostgreSQL" />
-          <img src="https://skillicons.dev/icons?i=prometheus" alt="Prometheus" />
-          <img src="https://skillicons.dev/icons?i=py" alt="Python" />
-          <img src="https://skillicons.dev/icons?i=react" alt="React" />
-          <img src="https://skillicons.dev/icons?i=redis" alt="Redis" />
-          <img src="https://skillicons.dev/icons?i=ruby" alt="Ruby" />
-          <img src="https://skillicons.dev/icons?i=robloxstudio" alt="Roblox Studio" />
-          <img src="https://skillicons.dev/icons?i=tensorflow" alt="TensorFlow" />
-          <img src="https://skillicons.dev/icons?i=unity" alt="Unity" />
-          <img src="https://skillicons.dev/icons?i=vercel" alt="Vercel" />
-          <img src="https://skillicons.dev/icons?i=vite" alt="Vite" />
-          <img src="https://skillicons.dev/icons?i=windows" alt="Windows" />
-          <img src="https://skillicons.dev/icons?i=yarn" alt="Yarn" />
+      {!showAll ? (
+        <Slider {...settings}>
+          {skills.map((skill) => (
+            <img 
+              key={skill} 
+              src={`https://skillicons.dev/icons?i=${skill}&theme=light`} 
+              alt={skill} 
+              loading="lazy"
+            />
+          ))}
+        </Slider>
+      ) : (
+        <div className="skills-container active">
+          {skills.map((skill) => (
+            <div key={skill} className="skill-item">
+              <img 
+                src={`https://skillicons.dev/icons?i=${skill}&theme=light`} 
+                alt={skill} 
+                loading="lazy"
+              />
+            </div>
+          ))}
         </div>
-        <button className="scroll-button right" onClick={handleScrollRight}>
-          {">"}
+      )}
+      <div className="button-container">
+        <button className="toggle-button" onClick={handleToggle}>
+          {showAll ? "Carousel" : "All Skills"}
         </button>
+        <button className="back-button" onClick={handleBack}>Back</button>
       </div>
-      <button className="back-button" onClick={handleBack}>
-        Back
-      </button>
     </div>
   );
 };
 
-export default SkillsCarousel;
+export default Skills;
