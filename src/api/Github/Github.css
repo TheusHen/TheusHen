@@ -1,0 +1,129 @@
+/* Estilos gerais */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #1f1f1f;
+  color: #eaeaea;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.title {
+  font-size: 2.5em;
+  text-align: center;
+  margin-bottom: 40px;
+  color: #ffffff;
+  border-bottom: 2px solid #444;
+  padding-bottom: 10px;
+}
+
+.repo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.repo-card {
+  background-color: #2b2b2b;
+  border-radius: 10px;
+  padding: 20px;
+  text-decoration: none;
+  color: #eaeaea;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: block;
+}
+
+.repo-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.repo-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.repo-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 15px;
+}
+
+.repo-details h2 {
+  margin: 0;
+  font-size: 1.5em;
+  color: #ffffff;
+}
+
+.repo-details p {
+  margin: 0;
+  color: #999;
+}
+
+.repo-card p {
+  font-size: 1em;
+  margin-bottom: 10px;
+  color: #cccccc;
+}
+
+/* Estilos do README */
+.repo-readme {
+  background-color: #1a1a1a;
+  padding: 15px;
+  border-radius: 8px;
+  color: #ddd;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.repo-readme pre, code {
+  background-color: #333;
+  color: #ffcc99;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.repo-readme h1, h2, h3, h4 {
+  color: #f9f871;
+  font-weight: bold;
+}
+
+.repo-readme img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.repo-readme a {
+  color: #f9f871;
+  text-decoration: underline;
+}
+
+/* Scroll minimalista */
+.repo-readme::-webkit-scrollbar {
+  width: 6px;
+}
+
+.repo-readme::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 10px;
+}

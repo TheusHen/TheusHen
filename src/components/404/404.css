@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Kodchasan:wght@400;600&family=Roboto+Mono:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Konkhmer+Sleokchher&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Kodchasan', sans-serif;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #fff;
+  overflow: hidden;
+}
+
+.container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.error-text {
+  font-size: clamp(8rem, 15vw, 12rem); /* Responsivo */
+  font-family: 'Konkhmer Sleokchher', sans-serif;
+  color: #fff;
+  animation: lampFlicker 2.5s infinite;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6),
+               0 0 30px rgba(255, 255, 255, 0.4), 0 0 40px rgba(255, 255, 255, 0.2);
+}
+
+.error-description {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.home-button {
+  background-color: #fff;
+  border: none;
+  color: #000;
+  padding: 10px 30px;
+  font-size: 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'Kodchasan', sans-serif;
+}
+
+.home-button:hover {
+  background-color: #ccc;
+  box-shadow: 0px 0px 10px #fff;
+}
+
+@keyframes lampFlicker {
+  0% {
+    opacity: 1;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.8),
+                 0 0 50px rgba(255, 255, 255, 0.7), 0 0 80px rgba(255, 255, 255, 0.6);
+  }
+  5% {
+    opacity: 0.8;
+  }
+  10% {
+    opacity: 0.5;
+  }
+  15% {
+    opacity: 0.9;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 25px rgba(255, 255, 255, 0.6),
+                 0 0 35px rgba(255, 255, 255, 0.4), 0 0 50px rgba(255, 255, 255, 0.3);
+  }
+  20% {
+    opacity: 0.2;
+  }
+  25%, 35%, 45%, 55% {
+    opacity: 1;
+  }
+  65%, 75%, 85% {
+    opacity: 0.6;
+  }
+  95% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0.9;
+  }
+}

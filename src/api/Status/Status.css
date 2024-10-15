@@ -1,0 +1,39 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 100% da altura da viewport */
+  margin: 0; /* Remove margem padrão do body */
+  background-color: #f0f0f0; /* Cor de fundo clara */
+  font-family: Arial, sans-serif; /* Fonte padrão */
+}
+
+.status-container {
+  background: white; /* Fundo branco para o container */
+  border-radius: 8px; /* Bordas arredondadas */
+  padding: 20px; /* Espaçamento interno */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  text-align: center; /* Centraliza o texto */
+  width: 100%; /* O container ocupa toda a largura */
+  height: 100%; /* O container ocupa toda a altura */
+  max-width: none; /* Remove a limitação de largura */
+  max-height: none; /* Remove a limitação de altura */
+}
+
+h2 {
+  margin-bottom: 15px; /* Espaçamento abaixo do título */
+  color: #333; /* Cor do texto do título */
+}
+
+p {
+  margin: 5px 0; /* Espaçamento entre os parágrafos */
+  color: #666; /* Cor do texto dos parágrafos */
+}
+
+.online {
+  color: green; /* Cor para online */
+}
+
+.offline {
+  color: red; /* Cor para offline */
+}

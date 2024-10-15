@@ -1,0 +1,56 @@
+.skills-carousel {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 20px 0;
+  }
+  
+  .carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    width: 80%;
+  }
+  
+  .carousel img {
+    margin: 0 10px;
+    height: 50px;
+  }
+  
+  .scroll-button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 2rem;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+  }
+  
+  .scroll-button:hover {
+    background-color: #555;
+  }
+  
+  .back-button {
+    background-color: #777;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+  
+  .back-button:hover {
+    background-color: #555;
+  }
+  
