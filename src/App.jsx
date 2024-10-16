@@ -7,8 +7,6 @@ import Skills from './components/Skills/Skills';
 import Contact from './components/Contact/Contact';
 import NotFound from './components/404/404';
 import Status from './api/Status/Status';
-import Robots from '../robots.txt';
-import SiteMap from '../sitemap.xml';
 
 
 const App = () => {
@@ -20,8 +18,6 @@ const App = () => {
         <Route path="/skills" element={<Skills />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/status" element={<Status />} />
-        <Route path="/sitemap.xml" element={<SiteMap />} />
-        <Route path="/robots.txt" element={<Robots />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     <Analytics/>
