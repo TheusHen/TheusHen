@@ -1,0 +1,68 @@
+.about-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  background-color: #111;
+  color: #fff;
+  min-height: 100vh; /* Adicionado para garantir que ocupe a altura total da viewport */
+}
+
+.about-content {
+  max-width: 600px;
+  margin-right: 3rem;
+}
+
+.title { 
+  font-family: 'Konkhmer Sleokchher', sans-serif;
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.subtitle {
+  font-family: 'Kodchasan', sans-serif;
+  font-size: 2rem;
+  margin-bottom: 3rem;
+  color: #fff;
+}
+
+.about-description {
+  font-family: 'Kodchasan', sans-serif;
+  font-size: 1.5rem;
+  color: #bbb;
+  line-height: 1.8;
+}
+
+.about-image {
+  max-width: 400px;
+}
+
+.about-image img {
+  max-width: 100%;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.822);
+  transition: transform 0.3s ease;
+}
+
+.about-image img:hover {
+  transform: scale(1.05);
+}
+
+.skills-container {
+  padding: 2rem;
+  background-color: #222;
+}
+
+.back-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.back-icon:hover {
+  color: #1db954;  /* Cor de destaque ao passar o mouse */
+}

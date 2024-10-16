@@ -34,7 +34,7 @@ body {
 
 .repo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Muda para 250px para maior flexibilidade */
   gap: 20px;
 }
 
@@ -46,25 +46,18 @@ body {
   color: #eaeaea;
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   display: block;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 .repo-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 .repo-header {
   display: flex;
   align-items: center;
   margin-bottom: 15px;
-}
-
-.repo-image {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-right: 15px;
 }
 
 .repo-details h2 {
@@ -82,40 +75,6 @@ body {
   font-size: 1em;
   margin-bottom: 10px;
   color: #cccccc;
-}
-
-/* Estilos do README */
-.repo-readme {
-  background-color: #1a1a1a;
-  padding: 15px;
-  border-radius: 8px;
-  color: #ddd;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.repo-readme pre, code {
-  background-color: #333;
-  color: #ffcc99;
-  padding: 2px 5px;
-  border-radius: 4px;
-  font-size: 0.9em;
-}
-
-.repo-readme h1, h2, h3, h4 {
-  color: #f9f871;
-  font-weight: bold;
-}
-
-.repo-readme img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 5px;
-}
-
-.repo-readme a {
-  color: #f9f871;
-  text-decoration: underline;
 }
 
 /* Scroll minimalista */

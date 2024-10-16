@@ -1,84 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Landscape from '../../assets/landscapes/codecode.webp'
+import { FaArrowDown, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
+import './Home.css'; // Estilos externos para manter a organização
 
 const Home = () => {
   const navigate = useNavigate();
+  const [hovered, setHovered] = useState(null); // Controlar qual seta está sendo "hovered"
+
+  const handleHover = (direction) => setHovered(direction);
+  const handleLeave = () => setHovered(null);
 
   return (
-    <div style={styles.container}>
-      <h1 style={styles.title}>I&apos;m Matheus</h1>
-      <p style={styles.subtitle}>SayesCode</p>
-      <div style={styles.imageContainer}>
-        <div
-          style={styles.card}
-          onClick={() => navigate('/projects')}
-        >
-          <img src={Landscape} alt="Projects" style={styles.image} />
-        </div>
-        <div
-          style={styles.card}
-          onClick={() => navigate('/skills')}
-        >
-          <img src={Landscape} alt="Skills" style={styles.image} />
-        </div>
-        <div
-          style={styles.card}
-          onClick={() => navigate('/contact')}
-        >
-          <img src={Landscape} alt="Contact" style={styles.image} />
-        </div>
+    <div className="container">
+      <h1 className="title">I&apos;m Matheus</h1>
+      <p className="subtitle">SayesCode</p>
+      
+      {/* Setas nas bordas */}
+      <div
+        className="arrow arrow-left"
+        onMouseEnter={() => handleHover('projects')}
+        onMouseLeave={handleLeave}
+        onClick={() => navigate('/projects')}
+      >
+        <FaArrowLeft className="icon" />
+        {hovered === 'projects' && <span className="tooltip">Projects</span>}
+      </div>
+
+      <div
+        className="arrow arrow-bottom"
+        onMouseEnter={() => handleHover('about')}
+        onMouseLeave={handleLeave}
+        onClick={() => navigate('/about')}
+      >
+        <FaArrowDown className="icon" />
+        {hovered === 'about' && <span className="tooltip">About</span>}
+      </div>
+
+      <div
+        className="arrow arrow-right"
+        onMouseEnter={() => handleHover('contact')}
+        onMouseLeave={handleLeave}
+        onClick={() => navigate('/contact')}
+      >
+        <FaArrowRight className="icon" />
+        {hovered === 'contact' && <span className="tooltip">Contact</span>}
       </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'flex-start', // Título e subtítulo para cima
-    height: '100vh',
-    width: '100vw',
-    backgroundColor: '#121212',
-    color: '#fff',
-    margin: 0,
-    paddingTop: '5rem', // Distância do topo
-  },
-  title: {
-    fontFamily: "'Konkhmer Sleokchher', sans-serif",
-    fontSize: '4rem', // Tamanho aumentado do título
-    marginBottom: '1rem',
-    color: '#fff',
-  },
-  subtitle: {
-    fontFamily: "'Kodchasan', sans-serif",
-    fontSize: '2rem', // Tamanho aumentado do subtítulo
-    marginBottom: '3rem',
-    color: '#fff',
-  },
-  imageContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    width: '80%', // Aumentar largura da área de botões
-  },
-  card: {
-    width: '200px', // Tamanho aumentado do card
-    height: '300px', // Tamanho aumentado do card
-    backgroundColor: '#ccc',
-    borderRadius: '15px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover', // Ajustar a imagem dentro do card
-    borderRadius: '15px', // Manter bordas arredondadas nas imagens
-  },
 };
 
 export default Home;

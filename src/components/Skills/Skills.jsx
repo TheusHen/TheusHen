@@ -19,14 +19,6 @@ const Skills = () => {
     autoplaySpeed: 2000,
   };
 
-  const handleToggle = () => {
-    setShowAll(!showAll);
-  };
-
-  const handleBack = () => {
-    navigate('/');
-  };
-
   const skills = [
     "git", "docker", "anaconda", "androidstudio", "arch", "arduino", 
     "aws", "bash", "bootstrap", "c", "cpp", "cloudflare", "cmake", 
@@ -66,10 +58,10 @@ const Skills = () => {
         </div>
       )}
       <div className="button-container">
-        <button className="toggle-button" onClick={handleToggle}>
+        <button className="toggle-button" onClick={() => setShowAll(!showAll)}>
           {showAll ? "Carousel" : "All Skills"}
         </button>
-        <button className="back-button" onClick={handleBack}>Back</button>
+        <button className="back-button" onClick={() => navigate('/')}>Back</button>
       </div>
     </div>
   );

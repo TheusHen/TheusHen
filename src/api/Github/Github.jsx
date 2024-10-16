@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import ReactMarkdown from 'react-markdown';
-import rehypeRaw from 'rehype-raw';  // Para suportar HTML
 import './Github.css'; // Estilos atualizados
 
 const GitHubRepos = () => {
@@ -15,20 +13,13 @@ const GitHubRepos = () => {
       if (!response.ok) throw new Error('Erro ao buscar os repositórios.');
       const data = await response.json();
 
-      const reposWithDetails = await Promise.all(data.map(async (repo) => {
-        const readmeResponse = await fetch(`https://api.github.com/repos/${username}/${repo.name}/readme`, {
-          headers: { Accept: 'application/vnd.github.v3.raw' }
-        });
-        const readme = await readmeResponse.text();
-
-        // Corrigindo caminho relativo para imagens
-        const fixedReadme = readme.replace(/\!\[([^\]]*)\]\((?!http)([^\)]+)\)/g, (match, alt, src) => {
-          return `![${alt}](https://raw.githubusercontent.com/${username}/${repo.name}/main/${src})`;
-        });
-
-        const repoImage = `https://opengraph.githubassets.com/1/${username}/${repo.name}`;
-
-        return { ...repo, readme: fixedReadme, repoImage };
+      // Adiciona apenas o nome e a descrição dos repositórios
+      const reposWithDetails = data.map(repo => ({
+        id: repo.id,
+        name: repo.name,
+        description: repo.description,
+        html_url: repo.html_url,
+        created_at: repo.created_at,
       }));
 
       setRepos(reposWithDetails);
@@ -51,15 +42,11 @@ const GitHubRepos = () => {
           repos.map((repo) => (
             <a href={repo.html_url} target="_blank" rel="noopener noreferrer" key={repo.id} className="repo-card">
               <div className="repo-header">
-                <img src={repo.repoImage} alt={`${repo.name} thumbnail`} className="repo-image" />
                 <div className="repo-details">
                   <h2>{repo.name}</h2>
+                  <p>{repo.description || 'Sem descrição'}</p> {/* Exibe 'Sem descrição' se não houver descrição */}
                   <p>{new Date(repo.created_at).toDateString()}</p>
                 </div>
-              </div>
-              <p>{repo.description}</p>
-              <div className="repo-readme">
-                <ReactMarkdown rehypePlugins={[rehypeRaw]}>{repo.readme}</ReactMarkdown> {/* Suporta HTML embutido */}
               </div>
             </a>
           ))

@@ -1,125 +1,54 @@
-@import url('https://fonts.googleapis.com/css2?family=Kodchasan:wght@400;600&family=Roboto+Mono:wght@500&display=swap');
-
-.icon-link {
-    color:white
-}
-
 .contact-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     height: 100vh;
-    background-color: #000;
-    font-family: 'Kodchasan', sans-serif;
-    color: white;
+    background-color: #121212;
 }
 
-.contact-title {
-    font-family: 'Kodchasan', cursive;
-    font-size: 3.5rem;
-    margin-bottom: 40px;
-    color: white;
+.contact-card {
+    margin: 0 2rem;
+    padding: 2rem;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    background-color: #1e1e1e;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.icons-container {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-bottom: 40px;
+.contact-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
 }
 
-.icon {
-    color: white;
-    transition: transform 0.3s ease-in-out;
-    padding: 20px;
-    background-color: #444;
-    border-radius: 25px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.icon:hover {
-    transform: scale(1.2);
-    background-color: #555;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
-}
-
-.email-form {
+.icon-link {
+    color: #fff;
+    text-decoration: none;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 30px;
 }
 
-.email-input {
-    padding: 15px;
-    width: 300px;
-    border: none;
-    border-radius: 25px;
-    margin-bottom: 15px;
-    font-size: 1rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    outline: none;
-    background-color: #333;
-    color: white;
-}
-
-.email-input::placeholder {
-    color: #bbb;
-}
-
-.submit-button {
-    padding: 15px 30px;
-    border: none;
-    background-color: #777;
-    color: white;
+.icon-link .icon-label {
+    margin-top: 1rem;
     font-size: 1.2rem;
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+.icon-link:hover .icon-label {
+    color: #1db954; /* Cor de destaque ao passar o mouse */
+}
+
+.back-icon {
+    position: absolute;
+    top: 20px;
+    left: 20px;
     cursor: pointer;
-    border-radius: 25px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    color: #fff;
+    transition: color 0.3s ease;
 }
 
-.submit-button:hover {
-    background-color: #999;
-    transform: scale(1.1);
-}
-
-.back-button {
-    background-color: #777;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    border-radius: 25px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-.back-button:hover {
-    background-color: #999;
-    transform: scale(1.1);
-}
-
-@media (max-width: 600px) {
-    .icon {
-        padding: 15px;
-    }
-
-    .contact-title {
-        font-size: 2.5rem;
-    }
-
-    .email-input {
-        width: 250px;
-    }
-
-    .back-button, .submit-button {
-        font-size: 1rem;
-        padding: 10px 20px;
-    }
+.back-icon:hover {
+    color: #ffffff;  /* Cor de destaque ao passar o mouse */
 }

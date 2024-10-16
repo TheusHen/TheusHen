@@ -10,22 +10,24 @@
 }
 
 .skills-carousel img {
-  max-width: 65%; /* Reduzir o tamanho das imagens */
+  max-width: 50%; /* Ajuste para tamanho menor */
   height: auto;
-  margin: 0 4px; /* Espaçamento entre imagens */
+  margin: 0 8px; /* Espaçamento entre imagens */
   transition: transform 0.2s;
 }
 
 .skills-carousel img:hover {
-  transform: scale(0.8);
+  transform: scale(0.9); /* Efeito de hover mais sutil */
 }
 
 .button-container {
   margin-top: 20px;
+  display: flex;
+  justify-content: center; /* Centraliza os botões */
 }
 
 .back-button, .toggle-button {
-  padding: 10px 20px;
+  padding: 10px 15px;
   font-size: 1rem;
   color: white;
   border: none;
@@ -36,19 +38,11 @@
 }
 
 .back-button {
-  background-color: #007bff; /* Cor de fundo do botão "Back" */
-}
-
-.back-button:hover {
-  background-color: #0056b3; /* Cor ao passar o mouse */
+  background-color: #ffffff; /* Cor de fundo do botão "Back" */
 }
 
 .toggle-button {
   background-color: #28a745; /* Cor de fundo do botão "Ver Todas as Skills" */
-}
-
-.toggle-button:hover {
-  background-color: #218838; /* Cor ao passar o mouse */
 }
 
 .skills-container {
@@ -63,6 +57,6 @@
 }
 
 .skill-item {
-  max-width: 80px; /* Limitar a largura das imagens */
+  max-width: 60px; /* Limitar a largura das imagens */
   margin: 10px;
 }

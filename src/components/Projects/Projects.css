@@ -1,0 +1,13 @@
+.back-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    color: #fff;
+    transition: color 0.3s ease;
+  }
+  
+  .back-icon:hover {
+    color: #1db954;  /* Cor de destaque ao passar o mouse */
+  }
+  
