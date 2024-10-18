@@ -31,7 +31,7 @@ const About = () => {
           </p>
         </div>
         <div className="about-image">
-          <img src="../../../icon.png" alt="Matheus Henrique" />
+          <img src="./icon.png" alt="Matheus Henrique" />
         </div>
       </div>
 
