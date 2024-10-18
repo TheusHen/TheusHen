@@ -8,7 +8,7 @@ import "./Skills.css";
 const Skills = () => {
   const [showAll, setShowAll] = useState(false);
   const navigate = useNavigate();
-
+  
   const settings = {
     dots: true,
     infinite: true,
@@ -29,6 +29,7 @@ const Skills = () => {
     "robloxstudio", "tensorflow", "unity", "vercel", "vite", "windows", 
     "yarn"
   ];
+  
 
   return (
     <div className="skills-carousel">
@@ -57,11 +58,11 @@ const Skills = () => {
           ))}
         </div>
       )}
+        
       <div className="button-container">
         <button className="toggle-button" onClick={() => setShowAll(!showAll)}>
           {showAll ? "Carousel" : "All Skills"}
         </button>
-        <button className="back-button" onClick={() => navigate('/')}>Back</button>
       </div>
     </div>
   );

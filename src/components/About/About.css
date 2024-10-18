@@ -12,6 +12,10 @@
   display: none; /* Oculta a seção quando aplicável */
 }
 
+.visible {
+  display: flex; /* Mostra a seção quando aplicável */
+}
+
 .about-content {
   max-width: 600px;
   margin-right: 3rem;
@@ -53,10 +57,9 @@
   transform: scale(1.05);
 }
 
+/* Remover qualquer estilo adicional para skills-container */
 .skills-container {
-  padding: 2rem;
-  background-color: #222;
-  min-height: 100vh;
+  display: flex; /* Use apenas a estrutura do Skills */
 }
 
 .back-icon {

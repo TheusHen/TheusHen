@@ -5,23 +5,23 @@ import Skills from '../Skills/Skills';
 import { useNavigate } from 'react-router-dom';
 
 const About = () => {
-  const [showSkills, setShowSkills] = useState(false); // Estado para controlar exibição
-  const navigate = useNavigate(); // Hook para navegação
-
+  const [showSkills, setShowSkills] = useState(false);
+  const navigate = useNavigate();
+  
   const handleBackClick = () => {
-    navigate("/"); // Navega para a página inicial
+    navigate("/");
   };
 
-  // Função para alternar entre About e Skills
   const toggleSection = () => {
     setShowSkills(!showSkills);
   };
 
   return (
     <>
-      <div className={`about-container ${showSkills ? 'hidden' : ''}`}>
+      {/* Seção About */}
+      <div className={`about-container ${showSkills ? 'hidden' : 'visible'}`}>
         <div className="back-icon" onClick={handleBackClick}>
-          <Undo2 size={32} /> {/* Ícone para voltar */}
+          <Undo2 size={32} />
         </div>
         <div className="about-content">
           <h1 className="title">I'm Matheus</h1>
@@ -35,16 +35,17 @@ const About = () => {
         </div>
       </div>
 
-      <div className={`skills-container ${showSkills ? '' : 'hidden'}`}>
-        <Skills/>
+      {/* Seção Skills */}
+      <div className={`skills-container ${showSkills ? 'active' : 'hidden'}`}>
+        <Skills />
       </div>
 
-      {/* Botão para descer e mostrar Skills ou subir para About */}
+      {/* Botão para alternar entre About e Skills */}
       <div className="toggle-icon" onClick={toggleSection}>
         {showSkills ? (
-          <ChevronUp size={32} />  // Seta para cima quando está nas Skills
+          <ChevronUp size={32} />
         ) : (
-          <ChevronDown size={32} />  // Seta para baixo quando está no About
+          <ChevronDown size={32} />
         )}
       </div>
     </>
