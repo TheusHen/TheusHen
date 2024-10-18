@@ -7,7 +7,6 @@ import About from './components/About/About';
 import Contact from './components/Contact/Contact';
 import NotFound from './components/404/404';
 import Status from './api/Status/Status';
-import Speed from './utils/Speed';
 
 
 const App = () => {
@@ -22,7 +21,6 @@ const App = () => {
         <Route path="*" element={<NotFound />} />
       </Routes>
     <Analytics/>
-    <Speed/>
     </Router>
   );
 };
