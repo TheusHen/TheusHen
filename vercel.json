@@ -4,11 +4,11 @@
   ],
   "headers": [
     {
-      "source": "/sitemap.txt",
+      "source": "/sitemap.xml",
       "headers": [
         {
           "key": "Content-Type",
-          "value": "text/plain"
+          "value": "application/xml"
         }
       ]
     },
