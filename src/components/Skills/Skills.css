@@ -1,29 +1,35 @@
-.skills-carousel {
+/* Garantir que o corpo da página possa rolar adequadamente */
+body {
+  overflow-y: auto;
+}
+
+.skills-page {
+  min-height: 100vh; /* Garante que a página ocupe ao menos 100% da altura da janela */
   padding: 20px;
   text-align: center;
 }
 
-.skills-carousel h2 {
+.skills-page h2 {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: #333; /* Cor do título */
+  color: white;
 }
 
-.skills-carousel img {
-  max-width: 75%; /* Ajuste para tamanho menor */
+.skills-page img {
+  max-width: 75%;
   height: auto;
-  margin: 0 8px; /* Espaçamento entre imagens */
+  margin: 0 8px;
   transition: transform 0.2s;
 }
 
-.skills-carousel img:hover {
-  transform: scale(0.9); /* Efeito de hover mais sutil */
+.skills-page img:hover {
+  transform: scale(0.9);
 }
 
 .button-container {
   margin-top: 20px;
   display: flex;
-  justify-content: center; /* Centraliza os botões */
+  justify-content: center;
 }
 
 .back-button, .toggle-button {
@@ -34,25 +40,39 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin: 0 5px; /* Espaçamento entre botões */
+  margin: 0 5px;
 }
-
-
 
 .toggle-button {
-  background-color: #28a745; /* Cor de fundo do botão "Ver Todas as Skills" */
+  background-color: #28a745;
 }
 
+/* Skills container no modo "All Skills" */
 .skills-container {
   display: none; /* Oculta por padrão */
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
 }
 
 .skills-container.active {
-  display: flex; /* Exibe quando ativo */
+  display: flex; /* Mostra no modo ativo */
+  flex-wrap: wrap; /* Habilita a quebra de linha */
+  justify-content: center; /* Centraliza as skills */
 }
 
-
 .skill-item {
-  max-width: 60px; /* Limitar a largura das imagens */
+  max-width: 100px;
   margin: 10px;
+  transition: transform 0.3s;
+}
+
+.skill-item img {
+  width: 100px;
+  height: 100px;
+}
+
+.skill-item img:hover {
+  transform: scale(1.1);
 }

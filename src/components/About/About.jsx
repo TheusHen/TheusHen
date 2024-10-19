@@ -36,7 +36,7 @@ const About = () => {
       </div>
 
       {/* Seção Skills */}
-      <div className={`skills-container ${showSkills ? 'active' : 'hidden'}`}>
+      <div>
         <Skills />
       </div>
 

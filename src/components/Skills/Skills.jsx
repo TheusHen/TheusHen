@@ -29,10 +29,9 @@ const Skills = () => {
     "robloxstudio", "tensorflow", "unity", "vercel", "vite", "windows", 
     "yarn"
   ];
-  
 
   return (
-    <div className="skills-carousel">
+    <div className="skills-page">
       <h2>Skills</h2>
       {!showAll ? (
         <Slider {...settings}>
