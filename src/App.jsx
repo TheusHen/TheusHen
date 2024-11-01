@@ -13,8 +13,8 @@ import Status from './api/Status/Status';
 const App = () => {
   return (
     <Router>
-      <Routes>
       <SpeedInsights/>
+      <Routes>
         <Route path="/" element={<Boot />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/about" element={<About />} />
