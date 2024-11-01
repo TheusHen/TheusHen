@@ -2,6 +2,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import Boot from './components/Boot/Boot';
 import Projects from './components/Projects/Projects';
 import About from './components/About/About';
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Analytics />
+      <SpeedInsights/>
     </Router>
   );
 };

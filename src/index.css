@@ -1,17 +1,25 @@
-/* index.css */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* Definindo um layout responsivo para fontes e espaçamentos */
 html, body, #root {
   height: 100%;
   width: 100%;
-  overflow: hidden;
   font-family: 'Kodchasan', sans-serif;
+  overflow-x: hidden; /* Evita o scroll horizontal em telas menores */
 }
 
 body {
-  background-color: #121212; /* Fundo escuro por padrão */
+  background-color: #121212;
+  padding: 1rem;
+}
+
+/* Ajuste para fontes e layout em telas menores */
+@media (max-width: 768px) {
+  body {
+    padding: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 0.25rem;
+  }
 }
