@@ -14,6 +14,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
+      <SpeedInsights/>
         <Route path="/" element={<Boot />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/about" element={<About />} />
@@ -22,7 +23,6 @@ const App = () => {
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Analytics />
-      <SpeedInsights/>
     </Router>
   );
 };
