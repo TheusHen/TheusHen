@@ -14,10 +14,10 @@ body {
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box; /* Aplica border-box globalmente */
+  max-width: 100%; /* Garante que nenhum elemento exceda a largura do viewport */
+  overflow-x: hidden; /* Oculta o conteúdo que ultrapassa */
 }
+
 
 /* Ajuste para fontes e layout em telas menores */
 @media (max-width: 768px) {
