@@ -17,6 +17,7 @@
   font-size: 4rem;
   margin-bottom: 1rem;
   color: #fff;
+  text-align: center; /* Centraliza o texto para telas menores */
 }
 
 .subtitle {
@@ -24,6 +25,7 @@
   font-size: 2rem;
   margin-bottom: 3rem;
   color: #fff;
+  text-align: center; /* Centraliza o texto para telas menores */
 }
 
 /* Estilo das setas */
@@ -35,19 +37,19 @@
 }
 
 .arrow-left {
-  left: 5px; /* Reduzi de 20px para 5px */
+  left: 5px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .arrow-right {
-  right: 5px; /* Reduzi de 20px para 5px */
+  right: 5px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .arrow-bottom {
-  bottom: 5px; /* Reduzi de 20px para 5px */
+  bottom: 5px;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -77,5 +79,54 @@
   }
   to {
     opacity: 1;
+  }
+}
+
+/* Responsividade */
+@media (max-width: 1200px) {
+  .title {
+    font-size: 3.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.8rem;
+  }
+
+  .icon {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.5rem;
+  }
+
+  .icon {
+    font-size: 2rem;
+  }
+
+  .arrow-left,
+  .arrow-right,
+  .arrow-bottom {
+    display: none; /* Oculta as setas em telas pequenas */
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .tooltip {
+    font-size: 1rem;
   }
 }
