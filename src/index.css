@@ -1,14 +1,22 @@
-/* Definindo um layout responsivo para fontes e espaçamentos */
 html, body, #root {
   height: 100%;
   width: 100%;
   font-family: 'Kodchasan', sans-serif;
-  overflow-x: hidden; /* Evita o scroll horizontal em telas menores */
+  overflow-x: hidden; /* Evita o scroll horizontal */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Garante que padding e border não ultrapassem os limites */
 }
 
 body {
   background-color: #121212;
   padding: 1rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Aplica border-box globalmente */
 }
 
 /* Ajuste para fontes e layout em telas menores */
