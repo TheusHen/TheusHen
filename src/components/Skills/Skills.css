@@ -1,6 +1,7 @@
-/* Garantir que a página role no modo All Skills */
 body {
   overflow-y: auto;
+  overflow-x: hidden; /* Evita scroll horizontal */
+  margin: 0;
 }
 
 .skills-page {

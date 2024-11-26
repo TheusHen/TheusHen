@@ -5,7 +5,7 @@ import './Home.css'; // Estilos externos para manter a organização
 
 const Home = () => {
   const navigate = useNavigate();
-  const [hovered, setHovered] = useState(null); // Controlar qual seta está sendo "hovered"
+  const [hovered, setHovered] = useState(null);
 
   const handleHover = (direction) => setHovered(direction);
   const handleLeave = () => setHovered(null);
