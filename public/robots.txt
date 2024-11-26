@@ -1,7 +1,3 @@
 User-agent: *
-Allow: /
-Allow: /projects/
-Allow: /about/
-Allow: /contact/
 Disallow: /status
 Sitemap: https://sayes.vercel.app/sitemap.xml

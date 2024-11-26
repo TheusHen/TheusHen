@@ -1,21 +1,19 @@
+/* index.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html, body, #root {
   height: 100%;
   width: 100%;
+  overflow: hidden;
   font-family: 'Kodchasan', sans-serif;
-  overflow-x: hidden; /* Evita o scroll horizontal */
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box; /* Garante que padding e border não ultrapassem os limites */
 }
 
 body {
-  background-color: #121212;
-  padding: 1rem;
-}
-
-* {
-  max-width: 100%; /* Garante que nenhum elemento exceda a largura do viewport */
-  overflow-x: hidden; /* Oculta o conteúdo que ultrapassa */
+  background-color: #121212; /* Fundo escuro por padrão */
 }
 
 

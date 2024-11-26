@@ -1,12 +1,14 @@
-/* Garantir que o corpo da página possa rolar adequadamente */
+/* Garantir que a página role no modo All Skills */
 body {
   overflow-y: auto;
 }
 
 .skills-page {
-  min-height: 100vh; /* Garante que a página ocupe ao menos 100% da altura da janela */
+  min-height: 100vh;
   padding: 20px;
   text-align: center;
+  background-color: #121212; /* Ajuste para uma boa visualização */
+  color: white;
 }
 
 .skills-page h2 {
@@ -45,21 +47,21 @@ body {
 
 .toggle-button {
   background-color: #28a745;
+  color: white;
 }
 
 /* Skills container no modo "All Skills" */
 .skills-container {
-  display: none; /* Oculta por padrão */
+  display: none;
   flex-wrap: wrap;
   justify-content: center;
   gap: 15px;
   margin-top: 20px;
+  overflow-y: auto;
 }
 
 .skills-container.active {
-  display: flex; /* Mostra no modo ativo */
-  flex-wrap: wrap; /* Habilita a quebra de linha */
-  justify-content: center; /* Centraliza as skills */
+  display: flex;
 }
 
 .skill-item {
