@@ -18,8 +18,3 @@
     />
   </div>
 </div>
-
-[![Skills](https://skillicons.dev/icons?i=nodejs,figma,yarn,workers,windows,vite,vscode,visualstudio,vercel,fastapi,ubuntu,sqlite,replit,redis,raspberrypi,pytorch,py,react,postgres,postman,notion,nginx,mongodb,linux,md,kali,js,html,go,github,githubactions,flask,electron,docker,discord,cloudflare,cmake,c,bash&theme=light&perline=13)](https://skillicons.dev)
-
-### Learning 🤓:
-[![Learning](https://skillicons.dev/icons?i=java,kotlin,webpack,unity,blender,sentry,spring,nextjs,maven,kubernetes,gcp,cs,aws&theme=light&perline=13)](https://skillicons.dev)
