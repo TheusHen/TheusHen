@@ -8,13 +8,13 @@
     <img
       style="min-width: 160px;"
       height="160"
-      src="http://streak-stats.demolab.com?user=SayesCode&theme=tokyonight-duo"
+      src="http://streak-stats.demolab.com?user=TheusHen&theme=tokyonight-duo"
     />
   </div>
   <div style="display: flex; flex-direction: column">
     <img
       width="730"
-      src="http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=SayesCode&theme=tokyonight"
+      src="http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=TheusHen&theme=tokyonight"
     />
   </div>
 </div>
