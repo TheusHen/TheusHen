@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import Particles from "./components/particles";
 import { ArrowUp } from "lucide-react";
+import "./globals.css"
 
 const navigation = [
     { name: "Projects", href: "/projects" },

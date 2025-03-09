@@ -1,6 +1,7 @@
 import { FaArrowLeft, FaGithub, FaEnvelope, FaInstagram } from "react-icons/fa";
 import Link from "next/link";
 import { ReactNode } from "react";
+import "../globals.css"
 
 export default function ContactPage() {
     return (
