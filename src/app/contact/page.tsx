@@ -1,5 +1,6 @@
 import { FaArrowLeft, FaGithub, FaEnvelope, FaInstagram } from "react-icons/fa";
 import Link from "next/link";
+import { ReactNode } from "react";
 
 export default function ContactPage() {
     return (
@@ -46,7 +47,7 @@ export default function ContactPage() {
     );
 }
 
-function ContactCard({ icon, title, subtitle, link }: { icon: JSX.Element; title: string; subtitle: string; link: string }) {
+function ContactCard({ icon, title, subtitle, link }: { icon: ReactNode; title: string; subtitle: string; link: string }) {
     return (
         <Link href={link} target="_blank" rel="noopener noreferrer">
             <div className="border border-gray-600 rounded-lg p-12 text-center cursor-pointer transform transition duration-200 hover:scale-105">
