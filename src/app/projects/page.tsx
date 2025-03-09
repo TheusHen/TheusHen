@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from 'next/image';
 import { FaArrowLeft, FaArrowRight, FaFilter } from "react-icons/fa";
 import mitpaLogo from "../../assets/mitpa.png";
 import optifyxLogo from "../../assets/optifyx.png";
@@ -122,7 +123,7 @@ export default function ProjectsPage() {
                             className="md:col-span-1 bg-gray-0 p-6 rounded-xl border border-gray-700"
                         >
                             <div className="flex justify-between items-center mb-4">
-                                <img src={mitpaLogo.src} alt="MITPA Logo" className="h-24" />
+                                <Image src={mitpaLogo.src} alt="MITPA Logo" className="h-24" />
                             </div>
                             <p className="text-gray-300 text-sm mb-4">
                                 MITPA is an open-source community focused on helping students
@@ -176,7 +177,7 @@ export default function ProjectsPage() {
                                     id="optifyx"
                                     className="bg-gray-0 p-6 rounded-xl border border-gray-700"
                                 >
-                                    <img src={optifyxLogo.src} alt="Optifyx Logo" className="h-24 mb-2" />
+                                    <Image src={optifyxLogo.src} alt="Optifyx Logo" className="h-24 mb-2" />
                                     <p className="text-gray-300 text-sm mt-2">
                                         Optifyx is an app that allows a smartphone to fully monitor a
                                         desktop in real-time over a Wi-Fi connection. It provides

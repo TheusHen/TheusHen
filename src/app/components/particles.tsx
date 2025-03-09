@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import { useMousePosition } from "@/utils/mouse";
 
 interface ParticlesProps {
@@ -9,6 +9,19 @@ interface ParticlesProps {
     staticity?: number;
     ease?: number;
     refresh?: boolean;
+}
+
+interface Circle {
+    x: number;
+    y: number;
+    translateX: number;
+    translateY: number;
+    size: number;
+    alpha: number;
+    targetAlpha: number;
+    dx: number;
+    dy: number;
+    magnetism: number;
 }
 
 export default function Particles({
@@ -21,7 +34,7 @@ export default function Particles({
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const canvasContainerRef = useRef<HTMLDivElement>(null);
     const context = useRef<CanvasRenderingContext2D | null>(null);
-    const circles = useRef<any[]>([]);
+    const circles = useRef<Circle[]>([]);  // Tipo específico para circles
     const mousePosition = useMousePosition();
     const mouse = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
     const canvasSize = useRef<{ w: number; h: number }>({ w: 0, h: 0 });
@@ -42,7 +55,7 @@ export default function Particles({
 
     useEffect(() => {
         onMouseMove();
-    }, [mousePosition.x, mousePosition.y]);
+    }, [mousePosition.x, mousePosition.y]);  // Dependência adicionada
 
     useEffect(() => {
         initCanvas();
@@ -65,19 +78,6 @@ export default function Particles({
                 mouse.current.y = y;
             }
         }
-    };
-
-    type Circle = {
-        x: number;
-        y: number;
-        translateX: number;
-        translateY: number;
-        size: number;
-        alpha: number;
-        targetAlpha: number;
-        dx: number;
-        dy: number;
-        magnetism: number;
     };
 
     const resizeCanvas = () => {
