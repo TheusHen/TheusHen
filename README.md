@@ -1,36 +1,20 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<div style="display: flex; flex-direction: column">
+  <div style="display: flex; flex-direction: row;">
+    <img
+      style="min-width: 134px; max-height: 134px;"
+      width="320"
+      src="http://lanyard.kyrie25.me/api/646462656408059914?waveColor=9745F5&waveSpotifyColor=9745F5&theme=dark&bg=000000&animated=false&borderRadius=10px&&idleMessage=wow%20my%20spotify%20isn%27t%20playing%20anything%20right%20now?%20Im%20probably%20focused%20on%20my%20code%20then"
+    />
+    <img
+      style="min-width: 160px;"
+      height="160"
+      src="http://streak-stats.demolab.com?user=TheusHen&theme=tokyonight-duo"
+    />
+  </div>
+  <div style="display: flex; flex-direction: column">
+    <img
+      width="730"
+      src="http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=TheusHen&theme=tokyonight"
+    />
+  </div>
+</div>
