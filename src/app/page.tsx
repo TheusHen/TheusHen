@@ -21,7 +21,11 @@ export default function Home() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center w-screen h-screen overflow-hidden bg-gradient-to-tl from-black via-zinc-600/20 to-black relative">
+        <div
+        className="flex flex-col items-center justify-center w-screen h-screen overflow-hidden bg-gradient-to-tl from-black via-zinc-600/20 to-black relative"
+        style={{ backgroundImage: "linear-gradient(to top left, black, rgba(82, 82, 82, 0.2), black)" }}
+        >
+
             <nav className="mt-12 animate-fade-in">
                 <ul className="flex items-center justify-center gap-4">
                     {navigation.map((item) => (

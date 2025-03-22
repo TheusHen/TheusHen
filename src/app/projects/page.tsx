@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { FaArrowLeft, FaArrowRight, FaFilter } from "react-icons/fa";
 import mitpaLogo from "../../assets/mitpa.png";
 import optifyxLogo from "../../assets/optifyx.png";
-import "./globals.css"
 
 export default function ProjectsPage() {
     const [showFilterMenu, setShowFilterMenu] = useState(false);
