@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import Particles from "./components/particles";
 import { ArrowUp } from "lucide-react";
 
+// Este site foi inspirado no repositório chronark/chronark.com e utilizou partes e trechos do código do mesmo, partes não somente neste arquivo mas presente em outros
+
 const navigation = [
     { name: "Projects", href: "/projects" },
     { name: "Contact", href: "/contact" },
