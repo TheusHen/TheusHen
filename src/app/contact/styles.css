@@ -1,0 +1,23 @@
+.red-hover-effect {
+    position: relative;
+    overflow: hidden;
+}
+.red-hover-effect::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle 400px at 50% 50%,
+    rgba(220, 38, 127, 0.35) 0%,
+    rgba(239, 68, 68, 0.25) 40%,
+    transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+.red-hover-effect:hover::before {
+    opacity: 1;
+}

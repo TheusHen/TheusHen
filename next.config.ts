@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+    images: {
+        domains: [
+            'avatars.githubusercontent.com', "images.fillout.com", "mitpa-tech.vercel.app",
+        ],
+    },
 };
 
 export default nextConfig;
