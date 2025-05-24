@@ -16,8 +16,8 @@
     right: 0;
     bottom: 0;
     background: radial-gradient(circle 400px at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(220, 38, 127, 0.35) 0%,
-    rgba(239, 68, 68, 0.25) 40%,
+    rgba(255,255,255,0.35) 0%,      /* white instead of red */
+    rgba(255,255,255,0.25) 40%,     /* white instead of red */
     transparent 70%);
     opacity: 0;
     transition: opacity 0.4s ease;
@@ -56,15 +56,15 @@
     mask-composite: xor;
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
-    animation: rainbow-spin 3s linear infinite;
+    animation: rainbow-spin 8s cubic-bezier(0.77,0,0.18,1) infinite;
     opacity: 0;
-    transition: opacity 0.3s ease;
-    filter: blur(2px) brightness(1.8);
+    transition: opacity 0.5s cubic-bezier(0.77,0,0.18,1);
+    filter: blur(2.5px) brightness(1.8);
 }
 .rainbow-border:hover::before {
     opacity: 1;
     filter: blur(1.5px) brightness(2.2);
-    animation-duration: 1.5s;
+    animation-duration: 12s; /* On hover, even slower for a smooth effect */
 }
 .rainbow-border-content {
     position: relative;
@@ -91,13 +91,13 @@
     25% {
         background: conic-gradient(
                 from 90deg,
-                rgba(255, 0, 150, 0.9),
-                rgba(255, 100, 0, 0.9),
-                rgba(255, 255, 0, 0.9),
-                rgba(0, 255, 100, 0.9),
-                rgba(0, 150, 255, 0.9),
-                rgba(150, 0, 255, 0.9),
-                rgba(255, 0, 150, 0.9)
+                rgba(255, 0, 150, 0.7),
+                rgba(255, 100, 0, 0.7),
+                rgba(255, 255, 0, 0.7),
+                rgba(0, 255, 100, 0.7),
+                rgba(0, 150, 255, 0.7),
+                rgba(150, 0, 255, 0.7),
+                rgba(255, 0, 150, 0.7)
         );
     }
     50% {

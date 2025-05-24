@@ -8,7 +8,7 @@ export const metadata: Metadata = {
         default: "TheusHen",
         template: "%s | TheusHen",
     },
-    description: "CEO of ArcadeLunar and founder of MITPA",
+    description: "Founder of MITPA",
     openGraph: {
         title: "TheusHen",
         description:
@@ -17,9 +17,9 @@ export const metadata: Metadata = {
         siteName: "https://theushen.me",
         images: [
             {
-                url: "https://theushen.me/favicon.png",
-                width: 1920,
-                height: 1080,
+                url: "https://theushen.me/banner.jpg",
+                width: 780,
+                height: 400,
             },
         ],
         locale: "en-US",
