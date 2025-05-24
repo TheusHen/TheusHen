@@ -124,8 +124,16 @@ async function fetchGitHubProjects(username: string): Promise<GitHubRepo[]> {
 // Handler para o endpoint /api/about
 export async function GET() {
     const githubProjects = await fetchGitHubProjects("TheusHen");
-    return Response.json({
-        ...aboutInfo,
-        githubProjects,
-    });
+    return new Response(
+        JSON.stringify({
+            ...aboutInfo,
+            githubProjects,
+        }),
+        {
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+            }
+        }
+    );
 }
