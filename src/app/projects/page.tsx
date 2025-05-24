@@ -8,14 +8,9 @@ import Image from "next/image";
 import * as React from "react";
 import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
 
-// --- cn utility ---
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
 import './styles.css'
 
-export function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs));
-}
+import { cn } from "@/app/lib/cn";
 
 // --- ScrollArea definition ---
 const ScrollArea = React.forwardRef<
