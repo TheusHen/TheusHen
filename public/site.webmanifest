@@ -1,0 +1,18 @@
+{
+  "name": "TheusHen Portfolio",
+  "short_name": "TheusHen",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "description": "Founder of MITPA, developer focused on open source and innovation.",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "500x500",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
