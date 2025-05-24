@@ -67,16 +67,25 @@ export default function RootLayout({
             />
             <Script id="google-analytics" strategy="afterInteractive">
                 {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-DWX5JVERXC');
-          `}
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', 'G-DWX5JVERXC');
+                    `}
+            </Script>
+            {/* Plausible Analytics */}
+            <Script
+                defer
+                data-domain="theushen.me"
+                src="https://plausible.io/js/script.js"
+            />
+            <Script id="plausible-init" strategy="afterInteractive">
+                {`
+                        window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }
+                    `}
             </Script>
         </head>
-        <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
         </body>
         </html>
