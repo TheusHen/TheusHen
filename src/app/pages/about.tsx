@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
+import { useTranslation } from "next-i18next";
 
 const PROFILE_IMAGE = "https://avatars.githubusercontent.com/u/180109164";
 const HACKCLUB_IMAGE =
@@ -61,6 +62,7 @@ function ProfileImage() {
 
 function TextSection() {
     const textRef = useRef<HTMLDivElement>(null);
+    const { t } = useTranslation("common");
 
     useEffect(() => {
         if (textRef.current)
@@ -77,23 +79,23 @@ function TextSection() {
             className="flex-1 p-8 flex flex-col gap-2 justify-center"
         >
             <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg animate-pulse">
-                Hello, I&apos;m <span className="text-red-800">TheusHen</span>!
+                {t("hello")} <span className="text-red-800">TheusHen</span>!
             </h1>
             <div className="flex flex-col gap-3 text-lg md:text-xl text-white/90 mb-2 leading-relaxed">
                 <span>
-                    14-year-old student dreaming big and building the future with code. I&apos;m determined to get into <span className="font-bold text-red-600">MIT</span> with a full-ride scholarship, where I plan to major in Aerospace Engineering and Computer Engineering.
+                    {t("intro1")} <span className="font-bold text-red-600">MIT</span> {t("intro2")}
                 </span>
                 <span>
-                    Founder of <span className="font-bold text-red-600">MITPA</span>, an open source community that helps students achieve their academic and personal goals with lots of code, collaboration, and resilience.
+                    {t("founder")} <span className="font-bold text-red-600">MITPA</span> {t("community")}
                 </span>
                 <span>
-                    I&apos;ve already developed projects such as viral mutation simulators, digital organizers, and remote diagnosis systems, and I actively participate in hackathons like <span className="text-red-600 font-bold">Shipwrecked</span> and events from <span className="text-red-600 font-bold">Hack Club</span>.
+                    {t("projects")} <span className="text-red-600 font-bold">Shipwrecked</span> {t("events")} <span className="text-red-600 font-bold">Hack Club</span>.
                 </span>
                 <span>
-                    I&apos;m always looking to learn new technologies, contribute to open source repositories, and grow as a developer and as a person.
+                    {t("learning")}
                 </span>
                 <span>
-                    If you want to chat about programming, science, communities, or how to turn dreams into projects, reach out to me!
+                    {t("reachOut")}
                 </span>
             </div>
             <div className="flex gap-4 mt-4">
