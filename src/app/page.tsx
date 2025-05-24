@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import Particles from "./components/particles";
 import { ArrowUp, ArrowDownCircle } from "lucide-react";
 import About from "./pages/about";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import './index.css'
 
 // Este site foi inspirado no repositório chronark/chronark.com e utilizou partes e trechos do código do mesmo, partes não somente neste arquivo mas presente em outros
@@ -33,6 +34,7 @@ export default function Home() {
 
     return (
         <>
+            <SpeedInsights />
             <div
                 className="flex flex-col items-center justify-center w-screen h-screen overflow-hidden bg-gradient-to-tl from-black via-zinc-600/20 to-black relative"
                 style={{ backgroundImage: "linear-gradient(to top left, black, rgba(82, 82, 82, 0.2), black)" }}
