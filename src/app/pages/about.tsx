@@ -36,7 +36,7 @@ function ProfileImage() {
     return (
         <div
             ref={imgRef}
-            className="flex items-center justify-center md:justify-end md:items-center p-8 bg-gradient-to-bl from-red-900/50 to-red-800/30 relative"
+            className="flex items-center justify-center md:justify-end md:items-center p-8 bg-transparent relative "
         >
             <Image
                 src={PROFILE_IMAGE}
@@ -133,7 +133,7 @@ function HackClubSection() {
     return (
         <div
             ref={hackRef}
-            className="flex items-center gap-6 bg-zinc-900/80 backdrop-blur-lg rounded-xl p-6 shadow-lg border border-red-400/20"
+            className="flex items-center gap-6 bg-zinc-900/80 backdrop-blur-lg rounded-xl p-6 shadow-lg border border-red-400/20 hidden sm:flex"
         >
             <Image
                 src={HACKCLUB_IMAGE}
@@ -220,7 +220,7 @@ export default function About() {
                 <TextSection />
                 <ProfileImage />
             </div>
-            <div className="flex flex-col md:flex-row gap-8 items-center mt-12">
+            <div className="flex flex-col gap-8 items-center mt-12 sm:flex-row">
                 <HackClubSection />
                 <TimerSection />
             </div>

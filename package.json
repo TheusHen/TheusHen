@@ -15,16 +15,21 @@
     "clsx": "^2.1.1",
     "framer-motion": "^12.4.10",
     "gsap": "^3.13.0",
+    "leaflet": "^1.9.4",
     "lucide-react": "^0.479.0",
     "next": "15.2.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-globe.gl": "^2.33.2",
     "react-icons": "^5.5.0",
-    "tailwind-merge": "^3.3.0"
+    "react-leaflet": "^5.0.0",
+    "tailwind-merge": "^3.3.0",
+    "three": "^0.176.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/leaflet": "^1.9.18",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
