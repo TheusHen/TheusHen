@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
+import AnimatedEquationFall from "../components/EquationFall";
 
 const PROFILE_IMAGE = "https://avatars.githubusercontent.com/u/180109164";
 const HACKCLUB_IMAGE =
@@ -76,7 +77,7 @@ function TextSection() {
             ref={textRef}
             className="flex-1 p-8 flex flex-col gap-2 justify-center"
         >
-            <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg animate-pulse">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg">
                 Hello, I&apos;m <span className="text-red-800">TheusHen</span>!
             </h1>
             <div className="flex flex-col gap-3 text-lg md:text-xl text-white/90 mb-2 leading-relaxed">
@@ -224,6 +225,7 @@ export default function About() {
                 <HackClubSection />
                 <TimerSection />
             </div>
+            <AnimatedEquationFall />
         </div>
     );
 }

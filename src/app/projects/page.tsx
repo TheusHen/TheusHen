@@ -419,8 +419,8 @@ const ProjectsPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
                     {/* MITPA Project */}
                     {showMitpa && (
-                        <div className="rainbow-border red-hover-effect">
-                            <div className="rainbow-border-content p-6">
+                        <div className="red-spin-border red-hover-effect">
+                            <div className="red-spin-border-content p-6">
                                 <div className="flex justify-between items-center mb-4">
                                     <Image
                                         src="https://mitpa-tech.vercel.app/Logo.png"
@@ -460,9 +460,9 @@ const ProjectsPage = () => {
                                 href="https://arcadelunar.com.br"
                                 target="_blank"
                                 rel="noreferrer"
-                                className="rainbow-border red-hover-effect"
+                                className="red-spin-border red-hover-effect"
                             >
-                                <div className="rainbow-border-content p-6">
+                                <div className="red-spin-border-content p-6">
                                     <Image
                                         src="https://avatars.githubusercontent.com/u/174283552"
                                         alt="Arcade Lunar"
@@ -488,9 +488,9 @@ const ProjectsPage = () => {
                                 href="https://optifyx.live"
                                 target="_blank"
                                 rel="noreferrer"
-                                className="rainbow-border red-hover-effect"
+                                className="red-spin-border red-hover-effect"
                             >
-                                <div className="rainbow-border-content p-6">
+                                <div className="red-spin-border-content p-6">
                                     <Image
                                         src="/optifyx.png"
                                         alt="Optifyx"
@@ -529,9 +529,10 @@ const ProjectsPage = () => {
                                 href={repo.html_url}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="rainbow-border red-hover-effect transition-transform hover:scale-105"
+                                className="transition-transform hover:scale-105 red-hover-effect"
+                                style={{ border: "none" }}
                             >
-                                <div className="rainbow-border-content p-5 h-full flex flex-col">
+                                <div className="p-5 h-full flex flex-col bg-transparent border-none">
                                     <div className="flex items-center space-x-3 mb-3">
                                         <Image
                                             src={repo.owner.avatar_url || fallbackImg}

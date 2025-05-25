@@ -16,8 +16,8 @@
     right: 0;
     bottom: 0;
     background: radial-gradient(circle 400px at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(255,255,255,0.35) 0%,      /* white instead of red */
-    rgba(255,255,255,0.25) 40%,     /* white instead of red */
+    rgba(255,255,255,0.15) 0%,      /* subtle light spot */
+    rgba(255,255,255,0.10) 40%,
     transparent 70%);
     opacity: 0;
     transition: opacity 0.4s ease;
@@ -27,13 +27,17 @@
 .red-hover-effect:hover::before {
     opacity: 1;
 }
-.rainbow-border {
+
+/* --- RED SPIN BORDER (Darker Red) --- */
+.red-spin-border {
     position: relative;
     background: #111111;
     border-radius: 12px;
-    padding: 3px;
+    padding: 2px;
+    width: 100%;
+    height: 100%;
 }
-.rainbow-border::before {
+.red-spin-border::before {
     content: '';
     position: absolute;
     top: 0;
@@ -41,32 +45,31 @@
     right: 0;
     bottom: 0;
     border-radius: 12px;
-    padding: 3px;
+    padding: 2px;
+    /* Darker reds for the conic-gradient */
     background: conic-gradient(
             from 0deg,
-            rgba(255, 0, 150, 0.8),
-            rgba(255, 100, 0, 0.8),
-            rgba(255, 255, 0, 0.8),
-            rgba(0, 255, 100, 0.8),
-            rgba(0, 150, 255, 0.8),
-            rgba(150, 0, 255, 0.8),
-            rgba(255, 0, 150, 0.8)
+            rgba(110, 0, 0, 0.92),
+            rgba(140, 5, 5, 0.89),
+            rgba(90, 0, 0, 0.87),
+            rgba(120, 10, 10, 0.90),
+            rgba(110, 0, 0, 0.92)
     );
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: xor;
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
-    animation: rainbow-spin 8s cubic-bezier(0.77,0,0.18,1) infinite;
+    animation: red-spin 14s cubic-bezier(0.77,0,0.18,1) infinite;
     opacity: 0;
     transition: opacity 0.5s cubic-bezier(0.77,0,0.18,1);
-    filter: blur(2.5px) brightness(1.8);
+    filter: blur(2px) brightness(1.25);
 }
-.rainbow-border:hover::before {
+.red-spin-border:hover::before {
     opacity: 1;
-    filter: blur(1.5px) brightness(2.2);
-    animation-duration: 12s; /* On hover, even slower for a smooth effect */
+    filter: blur(1px) brightness(1.45);
+    animation-duration: 18s;
 }
-.rainbow-border-content {
+.red-spin-border-content {
     position: relative;
     z-index: 2;
     background: #111111;
@@ -74,67 +77,37 @@
     height: 100%;
     width: 100%;
 }
-@keyframes rainbow-spin {
+@keyframes red-spin {
     0% {
         transform: rotate(0deg);
         background: conic-gradient(
                 from 0deg,
-                rgba(255, 0, 150, 0.8),
-                rgba(255, 100, 0, 0.8),
-                rgba(255, 255, 0, 0.8),
-                rgba(0, 255, 100, 0.8),
-                rgba(0, 150, 255, 0.8),
-                rgba(150, 0, 255, 0.8),
-                rgba(255, 0, 150, 0.8)
-        );
-    }
-    25% {
-        background: conic-gradient(
-                from 90deg,
-                rgba(255, 0, 150, 0.7),
-                rgba(255, 100, 0, 0.7),
-                rgba(255, 255, 0, 0.7),
-                rgba(0, 255, 100, 0.7),
-                rgba(0, 150, 255, 0.7),
-                rgba(150, 0, 255, 0.7),
-                rgba(255, 0, 150, 0.7)
+                rgba(110, 0, 0, 0.92),
+                rgba(140, 5, 5, 0.89),
+                rgba(90, 0, 0, 0.87),
+                rgba(120, 10, 10, 0.90),
+                rgba(110, 0, 0, 0.92)
         );
     }
     50% {
         background: conic-gradient(
                 from 180deg,
-                rgba(255, 0, 150, 0.8),
-                rgba(255, 100, 0, 0.8),
-                rgba(255, 255, 0, 0.8),
-                rgba(0, 255, 100, 0.8),
-                rgba(0, 150, 255, 0.8),
-                rgba(150, 0, 255, 0.8),
-                rgba(255, 0, 150, 0.8)
-        );
-    }
-    75% {
-        background: conic-gradient(
-                from 270deg,
-                rgba(255, 0, 150, 0.7),
-                rgba(255, 100, 0, 0.7),
-                rgba(255, 255, 0, 0.7),
-                rgba(0, 255, 100, 0.7),
-                rgba(0, 150, 255, 0.7),
-                rgba(150, 0, 255, 0.7),
-                rgba(255, 0, 150, 0.7)
+                rgba(90, 0, 0, 0.89),
+                rgba(140, 5, 5, 0.87),
+                rgba(80, 0, 0, 0.82),
+                rgba(120, 10, 10, 0.88),
+                rgba(90, 0, 0, 0.89)
         );
     }
     100% {
         transform: rotate(360deg);
         background: conic-gradient(
                 from 360deg,
-                rgba(255, 0, 150, 0.8),
-                rgba(255, 100, 0, 0.8),
-                rgba(255, 255, 0, 0.8),
-                rgba(0, 255, 100, 0.8),
-                rgba(0, 150, 255, 0.8),
-                rgba(150, 0, 255, 0.8),
-                rgba(255, 0, 150, 0.8)
+                rgba(110, 0, 0, 0.92),
+                rgba(140, 5, 5, 0.89),
+                rgba(90, 0, 0, 0.87),
+                rgba(120, 10, 10, 0.90),
+                rgba(110, 0, 0, 0.92)
         );
     }
 }
