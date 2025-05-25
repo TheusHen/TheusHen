@@ -103,8 +103,7 @@ function EquationLatex({
                     setHtml(out);
                     if (onLoaded) onLoaded();
                 }
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            } catch (err) {
+            } catch {
                 setHtml("<span style='color:#ccc'>Invalid LaTeX</span>");
             }
         });
@@ -133,18 +132,31 @@ function EquationLatex({
 }
 
 export default function AnimatedEquationFall() {
-    const [dimensions, setDimensions] = useState({ w: window.innerWidth, h: window.innerHeight });
+    // SSR safe initial dimensions, update on client
+    const [dimensions, setDimensions] = useState({ w: 800, h: 600 });
+
     useEffect(() => {
-        const onResize = () => setDimensions({ w: window.innerWidth, h: window.innerHeight });
-        window.addEventListener("resize", onResize);
-        return () => window.removeEventListener("resize", onResize);
+        if (typeof window !== "undefined") {
+            const setDims = () =>
+                setDimensions({ w: window.innerWidth, h: window.innerHeight });
+            setDims();
+            window.addEventListener("resize", setDims);
+            return () => window.removeEventListener("resize", setDims);
+        }
     }, []);
 
-    // Equation particles
-    const [particles, setParticles] = useState<EqParticle[]>(() => {
-        const n = Math.floor(randf(MIN_PARTICLES, MIN_PARTICLES + 2));
-        return Array.from({ length: n }, () => createEqParticle(window.innerWidth, window.innerHeight));
-    });
+    // Particle initialization: only on client
+    const [particles, setParticles] = useState<EqParticle[]>([]);
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const n = Math.floor(randf(MIN_PARTICLES, MIN_PARTICLES + 2));
+            setParticles(
+                Array.from({ length: n }, () =>
+                    createEqParticle(window.innerWidth, window.innerHeight)
+                )
+            );
+        }
+    }, []);
 
     // For per-particle visibility (wait for LaTeX to load)
     const [visibleMap, setVisibleMap] = useState<Record<string, boolean>>({});
@@ -161,15 +173,11 @@ export default function AnimatedEquationFall() {
     }, []);
 
     // Animation loop
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    const reqRef = useRef<number>();
+    const reqRef = useRef<number | null>(null);
     const lastUpdate = useRef(Date.now());
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
     useEffect(() => {
-        function animate() {
+        const animate = () => {
             const now = Date.now();
             const dt = Math.min((now - lastUpdate.current) / 1000, 0.04);
             lastUpdate.current = now;
@@ -231,10 +239,14 @@ export default function AnimatedEquationFall() {
                 return updated;
             });
 
-            reqRef.current = requestAnimationFrame(animate);
-        }
-        reqRef.current = requestAnimationFrame(animate);
-        return () => reqRef.current && cancelAnimationFrame(reqRef.current);
+            reqRef.current = window.requestAnimationFrame(animate);
+        };
+        reqRef.current = window.requestAnimationFrame(animate);
+        return () => {
+            if (reqRef.current !== null) {
+                window.cancelAnimationFrame(reqRef.current);
+            }
+        };
     }, [dimensions.w, dimensions.h]);
 
     // Reset visibleMap only when particle IDs actually change
@@ -455,4 +467,3 @@ ${eqs.map(eq => eq + " \\\\").join("\n")}
         </div>
     );
 }
-
