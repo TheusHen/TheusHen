@@ -213,7 +213,7 @@ export default function About() {
     }, []);
 
     return (
-        <div className="min-h-screen w-full bg-gradient-to-bl from-black/40 via-zinc-600/20 to-red-900 flex flex-col items-center justify-center p-6 transition-colors duration-1000">
+        <div className="min-h-screen w-[-100px] bg-gradient-to-bl from-black/40 via-zinc-600/20 to-red-900 flex flex-col items-center justify-center p-6 transition-colors duration-1000">
             <div
                 ref={cardRef}
                 className="w-full max-w-4xl mt-20 bg-zinc-900/80 backdrop-blur-2xl rounded-3xl shadow-2xl flex flex-col md:flex-row items-center md:items-stretch overflow-hidden border border-white/10"
