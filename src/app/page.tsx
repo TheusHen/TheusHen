@@ -110,13 +110,13 @@ export default function Home() {
                 </h1>
                 {/* Decorative gradient line */}
                 <div className="hidden w-screen h-px animate-glow md:block animate-fade-right bg-gradient-to-r from-transparent via-zinc-300/40 to-transparent mt-4" />
-                <div className="flex items-center bg-white/70 rounded-full p-1.5 shadow w-full max-w-md mt-8 sm:max-w-xs border bord        er-zinc-200 backdrop-blur">
+                <div className="flex items-center bg-white/70 rounded-full p-1.5 shadow w-full max-w-md mt-8 sm:max-w-xs border border-zinc-200 backdrop-blur">
                     <input
                         type="text"
                         placeholder="Need some help?"
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
-                        className="flex-1 bg-transparent outline-none text-black px-3 text-sm sm:text-xs placeholder:text-red-700 animate-pulse"
+                        className="flex-1 bg-transparent outline-none text-black px-3 text-sm sm:text-xs placeholder:text-black-500"
                     />
                     <button
                         onClick={handleSend}
