@@ -1,8 +1,8 @@
-.red-hover-effect {
+.white-hover-effect {
     position: relative;
     overflow: hidden;
 }
-.red-hover-effect::before {
+.white-hover-effect::before {
     content: '';
     position: absolute;
     top: 0;
@@ -18,6 +18,6 @@
     pointer-events: none;
     z-index: 1;
 }
-.red-hover-effect:hover::before {
+.white-hover-effect:hover::before {
     opacity: 1;
 }

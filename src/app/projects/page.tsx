@@ -114,7 +114,7 @@ const ProjectsPage = () => {
         };
 
         const handleMouseMove = (e: MouseEvent) => {
-            const hoverElements = document.querySelectorAll('.red-hover-effect');
+            const hoverElements = document.querySelectorAll('.white-hover-effect');
             hoverElements.forEach((element) => {
                 updateMousePosition(element as HTMLElement, e.clientX, e.clientY);
             });
@@ -419,8 +419,8 @@ const ProjectsPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
                     {/* MITPA Project */}
                     {showMitpa && (
-                        <div className="red-spin-border red-hover-effect">
-                            <div className="red-spin-border-content p-6">
+                        <div className="white-spin-border white-hover-effect">
+                            <div className="white-spin-border-content p-6">
                                 <div className="flex justify-between items-center mb-4">
                                     <Image
                                         src="https://mitpa-tech.vercel.app/Logo.png"
@@ -460,9 +460,9 @@ const ProjectsPage = () => {
                                 href="https://arcadelunar.com.br"
                                 target="_blank"
                                 rel="noreferrer"
-                                className="red-spin-border red-hover-effect"
+                                className="white-spin-border white-hover-effect"
                             >
-                                <div className="red-spin-border-content p-6">
+                                <div className="white-spin-border-content p-6">
                                     <Image
                                         src="https://avatars.githubusercontent.com/u/174283552"
                                         alt="Arcade Lunar"
@@ -488,9 +488,9 @@ const ProjectsPage = () => {
                                 href="https://optifyx.live"
                                 target="_blank"
                                 rel="noreferrer"
-                                className="red-spin-border red-hover-effect"
+                                className="white-spin-border white-hover-effect"
                             >
-                                <div className="red-spin-border-content p-6">
+                                <div className="white-spin-border-content p-6">
                                     <Image
                                         src="/optifyx.png"
                                         alt="Optifyx"
@@ -524,12 +524,9 @@ const ProjectsPage = () => {
                         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
                     >
                         {sortedRepos.map((repo) => (
-                            <a
+                            <div
                                 key={repo.id}
-                                href={repo.html_url}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="transition-transform hover:scale-105 red-hover-effect"
+                                className="transition-transform hover:scale-105 white-hover-effect"
                                 style={{ border: "none" }}
                             >
                                 <div className="p-5 h-full flex flex-col bg-transparent border-none">
@@ -591,8 +588,17 @@ const ProjectsPage = () => {
                                             <Star className="mr-1" size={12} /> {repo.stargazers_count}
                                         </span>
                                     </div>
+                                    {/* Overlay link to make the whole card clickable, but avoid nested <a> */}
+                                    <a
+                                        href={repo.html_url}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="absolute inset-0"
+                                        aria-label={`View ${repo.name} on GitHub`}
+                                        style={{ zIndex: 10 }}
+                                    />
                                 </div>
-                            </a>
+                            </div>
                         ))}
                     </div>
                 )}
