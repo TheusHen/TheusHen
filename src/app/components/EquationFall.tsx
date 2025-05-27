@@ -93,13 +93,8 @@ function getInitialParticle(
         t: randomBetween(0, 10000)
     };
 }
-function respawnParticle(
-    old: Particle,
-    width: number,
-    height: number
-): Particle {
-    return getInitialParticle(old.id, width, height);
-}
+
+// Removed respawnParticle (unused)
 
 type KatexProps = {
     latex: string;
@@ -120,11 +115,11 @@ const KatexEquation: React.FC<KatexProps> = ({ latex, color, size = 1, onLoad })
                 if (color) ref.current.style.color = color;
                 if (size) ref.current.style.fontSize = `${size}em`;
                 if (onLoad) onLoad();
-            } catch (e) {
+            } catch {
                 if (ref.current) ref.current.innerText = "Error";
             }
         }
-    }, [latex, color, size]);
+    }, [latex, color, size, onLoad]); // Added onLoad to deps
     return <span ref={ref} aria-label={latex} tabIndex={0} />;
 };
 
@@ -148,7 +143,8 @@ const AnimatedEquationFall: React.FC = () => {
 
     useEffect(() => {
         const count = getResponsiveParticleCount(dimensions.width, dimensions.height);
-        setParticles(p =>
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        setParticles(_ =>
             Array.from({ length: count }, (_, i) =>
                 getInitialParticle(i, dimensions.width, dimensions.height)
             )
@@ -162,8 +158,8 @@ const AnimatedEquationFall: React.FC = () => {
             const dt = Math.min((now - last) / 1000, 0.04);
             last = now;
             setParticles(prevParticles => {
-                let next = prevParticles.map(p => ({ ...p }));
-                for (let p of next) {
+                const next = prevParticles.map(p => ({ ...p }));
+                for (const p of next) {
                     p.t += dt;
                     const floatY = Math.sin(p.t * 0.65 + p.id) * 6;
                     const floatX = Math.cos(p.t * 0.52 + p.id) * 5;
@@ -191,7 +187,7 @@ const AnimatedEquationFall: React.FC = () => {
                         }
                     }
                 }
-                for (let p of next) {
+                for (const p of next) {
                     if (p.collisionCooldown > 0) p.collisionCooldown -= dt * 1000;
                 }
                 for (let i = 0; i < next.length; i++) {
@@ -430,7 +426,6 @@ const AnimatedButton: React.FC<AnimatedButtonProps> = ({
                                                            ariaLabel,
                                                            icon
                                                        }) => {
-    // Do not use border shorthand, use borderWidth, borderStyle, borderColor separately to avoid conflicts with borderColor on hover
     const baseStyles: React.CSSProperties = {
         background: "linear-gradient(90deg, #fff2 0%, #ff1010cc 100%)",
         color: "#fff",
@@ -455,7 +450,6 @@ const AnimatedButton: React.FC<AnimatedButtonProps> = ({
         transition: "all 0.19s cubic-bezier(.22,1,.36,1)"
     };
 
-    // Do not set border property here; only change borderColor if needed
     const hoverStyles: React.CSSProperties = {
         background: "#fff0",
         color: color,
