@@ -12,8 +12,15 @@ const nextConfig: NextConfig = {
                 source: "/(.*)",
                 headers: [
                     {
-                        key: "Content-Security-Policy",
-                        value: "default-src 'self'",
+                      key: "Content-Security-Policy",
+                      value: `
+                        default-src 'self';
+                        script-src 'self' https://www.googletagmanager.com https://plausible.io 'unsafe-inline' 'unsafe-eval';
+                        style-src 'self' 'unsafe-inline';
+                        img-src 'self' data: https:;
+                        connect-src 'self' https:;
+                        font-src 'self' https:;
+                      `.replace(/\s{2,}/g, ' ').trim()
                     },
                     {
                         key: "X-Frame-Options",
