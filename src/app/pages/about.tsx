@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
@@ -9,6 +11,11 @@ const HACKCLUB_IMAGE =
 const COLLEGE_APP_DATE = new Date("2027-11-01T00:00:00Z");
 
 function getTimeLeft() {
+    // This function should only be called on the client
+    if (typeof window === "undefined") {
+        // Avoids hydration mismatch: always return the same for SSR
+        return { days: 0, hours: 0, mins: 0, secs: 0 };
+    }
     const target = COLLEGE_APP_DATE.getTime();
     const now = new Date().getTime();
     const diff = target - now;
@@ -152,8 +159,16 @@ function HackClubSection() {
 }
 
 function TimerSection() {
-    const [timer, setTimer] = useState(getTimeLeft());
+    // Always render 0s on the server, only start timer on client
+    const [timer, setTimer] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
     const timerRef = useRef<HTMLDivElement>(null);
+
+    // Start timer on client only, after hydration
+    useEffect(() => {
+        setTimer(getTimeLeft());
+        const interval = setInterval(() => setTimer(getTimeLeft()), 1000);
+        return () => clearInterval(interval);
+    }, []);
 
     useEffect(() => {
         if (timerRef.current)
@@ -162,11 +177,6 @@ function TimerSection() {
                 { x: 100, opacity: 0 },
                 { x: 0, opacity: 1, duration: 1, delay: 2, ease: "power2.out" }
             );
-    }, []);
-
-    useEffect(() => {
-        const interval = setInterval(() => setTimer(getTimeLeft()), 1000);
-        return () => clearInterval(interval);
     }, []);
 
     return (
@@ -213,7 +223,7 @@ export default function About() {
     }, []);
 
     return (
-        <div className="min-h-screen w-[-100px] bg-gradient-to-bl from-black/40 via-zinc-600/20 to-red-900 flex flex-col items-center justify-center p-6 transition-colors duration-1000">
+        <div className="min-h-screen w-full bg-gradient-to-bl from-black/40 via-zinc-600/20 to-red-900 flex flex-col items-center justify-center p-6 transition-colors duration-1000">
             <div
                 ref={cardRef}
                 className="w-full max-w-4xl mt-20 bg-zinc-900/80 backdrop-blur-2xl rounded-3xl shadow-2xl flex flex-col md:flex-row items-center md:items-stretch overflow-hidden border border-white/10"

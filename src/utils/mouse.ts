@@ -13,7 +13,14 @@ export function useMousePosition(): MousePosition {
 
     useEffect(() => {
         const handleMouseMove = (event: MouseEvent) => {
-            setMousePosition({ x: event.clientX, y: event.clientY });
+            const newPosition = { x: event.clientX, y: event.clientY };
+            // Só atualiza se realmente mudou
+            if (
+                newPosition.x !== mousePosition.x ||
+                newPosition.y !== mousePosition.y
+            ) {
+                setMousePosition(newPosition);
+            }
         };
 
         window.addEventListener("mousemove", handleMouseMove);
@@ -21,7 +28,7 @@ export function useMousePosition(): MousePosition {
         return () => {
             window.removeEventListener("mousemove", handleMouseMove);
         };
-    }, []);
+    }, [mousePosition]); // Dependendo do caso, pode-se usar [] para só adicionar uma vez. Se usar [], a closure vai capturar o valor antigo, então pode ser interessante usar um ref, mas nesse caso, para evitar update loop, é melhor [] e sempre setar novo valor.
 
     return mousePosition;
 }

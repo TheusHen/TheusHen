@@ -8,6 +8,7 @@ import About from "./pages/about";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import './index.css'
 import LoadingDots from "./components/LoadingDots";
+import ClientRemount from "./client-remount";
 
 // This site was inspired by chronark/chronark.com and uses some code snippets from it, not only in this file but also in others.
 
@@ -54,6 +55,7 @@ export default function Home() {
 
     return (
         <>
+            <ClientRemount>
             <SpeedInsights />
             <div className="fixed top-4 left-4 z-50">
                 <Link
@@ -108,13 +110,13 @@ export default function Home() {
                 </h1>
                 {/* Decorative gradient line */}
                 <div className="hidden w-screen h-px animate-glow md:block animate-fade-right bg-gradient-to-r from-transparent via-zinc-300/40 to-transparent mt-4" />
-                <div className="flex items-center bg-white/70 rounded-full p-1.5 shadow w-full max-w-md mt-8 sm:max-w-xs border border-zinc-200 backdrop-blur">
+                <div className="flex items-center bg-white/70 rounded-full p-1.5 shadow w-full max-w-md mt-8 sm:max-w-xs border bord        er-zinc-200 backdrop-blur">
                     <input
                         type="text"
                         placeholder="Need some help?"
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
-                        className="flex-1 bg-transparent outline-none text-zinc-700 px-3 text-sm sm:text-xs placeholder:text-zinc-400"
+                        className="flex-1 bg-transparent outline-none text-black px-3 text-sm sm:text-xs placeholder:text-red-700 animate-pulse"
                     />
                     <button
                         onClick={handleSend}
@@ -151,6 +153,7 @@ export default function Home() {
                 />
                 <About />
             </div>
+            </ClientRemount>
         </>
     );
 }
