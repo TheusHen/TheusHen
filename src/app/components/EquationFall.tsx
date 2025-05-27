@@ -356,7 +356,7 @@ const AnimatedEquationFall: React.FC = () => {
                     }}
                 >
                     <a
-                        href="https://github.com/TheusHen/AnimatedEquationFall"
+                        href="https://github.com/TheusHen/TheusHen"
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ textDecoration: "underline dashed", color: "#fff" }}
