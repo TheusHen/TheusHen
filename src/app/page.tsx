@@ -89,13 +89,14 @@ export default function Home() {
                 <nav className="mt-12 animate-fade-in">
                     <ul className="flex items-center justify-center gap-4">
                         {navigation.map((item) => (
-                            <Link
-                                key={item.href}
-                                href={item.href}
-                                className="text-xs sm:text-sm duration-500 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:text-white transition-colors px-3 py-1 rounded"
-                            >
-                                {item.name}
-                            </Link>
+                            <li key={item.href}>
+                                <Link
+                                    href={item.href}
+                                    className="text-xs sm:text-sm duration-500 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:text-white transition-colors px-3 py-1 rounded"
+                                >
+                                    {item.name}
+                                </Link>
+                            </li>
                         ))}
                     </ul>
                 </nav>
