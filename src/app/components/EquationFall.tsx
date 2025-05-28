@@ -1,7 +1,7 @@
 import React from "react";
+import { motion } from "framer-motion";
 
-// LICENSE and Source Code message component
-function LicenseAndSource() {
+export default function AnimatedEquationFall() {
     return (
         <div
             style={{
@@ -10,88 +10,31 @@ function LicenseAndSource() {
                 background: "transparent",
                 overflow: "hidden",
                 position: "relative",
+                touchAction: "none",
                 fontFamily: "system-ui,Roboto,sans-serif",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
             }}
         >
-            <div
+            {/* Instructions (in English, subtle, smaller) */}
+            <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 0.25, y: 0 }}
+                exit={{ opacity: 0 }}
                 style={{
-                    background: "rgba(0,0,0,0.42)",
-                    borderRadius: 8,
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    bottom: 54,
                     color: "#fff",
-                    fontSize: 16,
-                    padding: "24px 32px",
-                    fontWeight: 500,
-                    boxShadow: "0 1px 6px #0002",
-                    backdropFilter: "blur(2px)",
+                    fontSize: 13,
                     textAlign: "center",
-                    marginBottom: 24,
+                    zIndex: 2,
+                    pointerEvents: "none",
+                    textShadow: "0 0 5px #000a, 0 0 1px #fff",
+                    letterSpacing: 1,
                 }}
             >
-                <div>
-                    <strong>LICENSE</strong>: MIT<br />
-                    <span>
-                        Source code available on{" "}
-                        <a
-                            href="https://github.com/TheusHen"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: "#ff3131", textDecoration: "underline" }}
-                        >
-                            GitHub
-                        </a>
-                        .
-                    </span>
-                </div>
-            </div>
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: "18px",
-                    marginTop: 24,
-                }}
-            >
-                <button
-                    style={{
-                        background: "rgba(0,0,0,0.42)",
-                        border: "none",
-                        borderRadius: 8,
-                        color: "#fff",
-                        fontSize: 15,
-                        padding: "10px 28px",
-                        fontWeight: 500,
-                        cursor: "pointer",
-                        boxShadow: "0 1px 6px #0002",
-                        outline: "none",
-                        transition: "background 0.18s",
-                    }}
-                >
-                    Action 1
-                </button>
-                <button
-                    style={{
-                        background: "rgba(0,0,0,0.42)",
-                        border: "none",
-                        borderRadius: 8,
-                        color: "#fff",
-                        fontSize: 15,
-                        padding: "10px 28px",
-                        fontWeight: 500,
-                        cursor: "pointer",
-                        boxShadow: "0 1px 6px #0002",
-                        outline: "none",
-                        transition: "background 0.18s",
-                    }}
-                >
-                    Action 2
-                </button>
-            </div>
+                LICENSE and source code available.
+            </motion.div>
         </div>
     );
 }
-
-export default LicenseAndSource;
