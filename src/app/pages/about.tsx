@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
-import AnimatedEquationFall from "../components/EquationFall";
+import Fall from "../components/Fall";
 
 const PROFILE_IMAGE = "https://avatars.githubusercontent.com/u/180109164";
 const HACKCLUB_IMAGE =
@@ -235,7 +235,7 @@ export default function About() {
                 <HackClubSection />
                 <TimerSection />
             </div>
-            <AnimatedEquationFall />
+            <Fall />
         </div>
     );
 }
