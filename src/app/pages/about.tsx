@@ -159,11 +159,9 @@ function HackClubSection() {
 }
 
 function TimerSection() {
-    // Always render 0s on the server, only start timer on client
     const [timer, setTimer] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
     const timerRef = useRef<HTMLDivElement>(null);
 
-    // Start timer on client only, after hydration
     useEffect(() => {
         setTimer(getTimeLeft());
         const interval = setInterval(() => setTimer(getTimeLeft()), 1000);

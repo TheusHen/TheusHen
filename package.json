@@ -22,10 +22,12 @@
     "lucide-react": "^0.479.0",
     "next": "15.2.1",
     "react": "^19.0.0",
+    "react-confetti": "^6.4.0",
     "react-dom": "^19.0.0",
     "react-globe.gl": "^2.33.2",
     "react-icons": "^5.5.0",
     "react-leaflet": "^5.0.0",
+    "swiper": "^11.2.8",
     "tailwind-merge": "^3.3.0",
     "three": "^0.176.0"
   },

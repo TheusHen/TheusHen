@@ -212,7 +212,7 @@ const ProjectsPage = () => {
     }, [allTopics.length, topicsPage, totalTopicsPages]);
 
     return (
-        <div className="min-h-screen bg-black text-white relative overflow-x-hidden">
+        <div className="min-h-screen bg-black text-white relative overflow-x-hidden mt-10">
             {/* Cursor light effect */}
             <div
                 className="pointer-events-none absolute bg-red-200 opacity-20 blur-[120px] rounded-full w-64 h-64 z-0 transition-all duration-300 ease-out"

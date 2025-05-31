@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     domains: [
-      'avatars.githubusercontent.com', 'images.fillout.com', 'mitpa-tech.vercel.app',
+      'avatars.githubusercontent.com', 'images.fillout.com', 'mitpa-tech.vercel.app', 'upload.wikimedia.org',
     ],
   },
   async headers() {

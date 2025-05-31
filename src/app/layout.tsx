@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
+import CollegeDecisionsBar from "./components/CollegeDecisionsBar";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -135,6 +136,7 @@ export default function RootLayout({
             </Script>
         </head>
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <CollegeDecisionsBar />
         {children}
         </body>
         </html>

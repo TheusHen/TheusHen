@@ -57,7 +57,7 @@ export default function Home() {
         <>
             <ClientRemount>
             <SpeedInsights />
-            <div className="fixed top-4 left-4 z-50">
+            <div className="fixed top-4 left-4 z-40 mt-10">
                 <Link
                     href={`https://github.com/${REPO_OWNER}/${REPO_NAME}`}
                     target="_blank"
@@ -140,7 +140,6 @@ export default function Home() {
                 </div>
             </div>
 
-            {/* Sutil divisor entre a página principal e o About */}
             <div className="relative w-full flex justify-center items-center my-0">
                 <div className="w-3/4 h-px bg-gradient-to-r from-transparent via-zinc-500/40 to-transparent" />
             </div>
