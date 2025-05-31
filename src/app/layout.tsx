@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import CollegeDecisionsBar from "./components/CollegeDecisionsBar";
 import "./globals.css";
+import { PostHogProvider } from "./providers/PostHogProvider";
 
 export const metadata: Metadata = {
     title: {
@@ -136,8 +137,10 @@ export default function RootLayout({
             </Script>
         </head>
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <PostHogProvider>
         <CollegeDecisionsBar />
         {children}
+        </PostHogProvider>
         </body>
         </html>
     );
