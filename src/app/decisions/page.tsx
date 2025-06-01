@@ -70,8 +70,6 @@ export default function AutoCarousel() {
     const [mobile, setMobile] = useState(false);
     // Estado para mostrar confete só quando timer zerar
     const [showConfetti, setShowConfetti] = useState(false);
-    // Controle do timer zerado
-    const [isTimerZero, setIsTimerZero] = useState(false);
 
     // Data alvo (estável)
     const targetDate = useMemo(() => new Date("2027-11-01T00:00:00Z"), []);
@@ -97,7 +95,6 @@ export default function AutoCarousel() {
 
     // Monitorar se timer chegou a zero
     const handleTimerZero = React.useCallback(() => {
-        setIsTimerZero(true);
         setShowConfetti(true);
     }, []);
 
