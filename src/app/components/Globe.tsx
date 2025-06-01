@@ -96,7 +96,7 @@ export const GlobeBrazil: React.FC<GlobeBrazilProps> = ({
                         "country" + ((d.id === BRAZIL_ID || d.id === "76" || d.id === 76 || d.properties?.name === "Brazil") ? " brazil" : "")
                     )
                     .attr("d", path as unknown as string)
-                    .on("mouseover", function (_event, d) {
+                    .on("mouseover", function () {
                         if (!d3.select(this).classed("brazil")) {
                             d3.select(this).raise();
                         }
@@ -168,8 +168,8 @@ export const GlobeBrazil: React.FC<GlobeBrazilProps> = ({
                 svg.on("wheel", function (event: WheelEvent) {
                     event.preventDefault();
                     let scale = projection.scale();
-                    const d = event.deltaY * -0.03;
-                    scale += d;
+                    const delta = event.deltaY * -0.03; // Renomeado para evitar confusão com 'd'
+                    scale += delta;
                     scale = Math.max(
                         80,
                         Math.min(scale, Math.min(width, height) / 2.2)
