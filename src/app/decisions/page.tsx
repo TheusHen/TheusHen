@@ -67,7 +67,7 @@ export default function AutoCarousel() {
     // Responsividade: define slidesPerView conforme a largura da tela
     const [slidesPerView, setSlidesPerView] = useState(3);
     // Estado para saber se é mobile
-    const [mobile, setMobile] = useState(false);
+    const [mobile, setMobile] = useState(isMobile());
     // Estado para mostrar confete só quando timer zerar
     const [showConfetti, setShowConfetti] = useState(false);
 
@@ -97,6 +97,10 @@ export default function AutoCarousel() {
     const handleTimerZero = React.useCallback(() => {
         setShowConfetti(true);
     }, []);
+
+    // Garante que o autoplay inicia junto com o carregamento, inclusive no mobile
+    // Swiper com autoplay inicia automaticamente, mas garantimos reatividade ao "mobile"
+    // Não precisa de useEffect extra, pois o Swiper lê o valor de "mobile" dinamicamente
 
     return (
         <div
@@ -161,7 +165,7 @@ export default function AutoCarousel() {
                     slidesPerView={slidesPerView}
                     loop={true}
                     autoplay={{
-                        delay: mobile ? 900 : 2100,
+                        delay: mobile ? 700 : 2100, // velocidade maior no mobile
                         disableOnInteraction: false,
                         pauseOnMouseEnter: !mobile, // No mobile, ignore hover
                     }}

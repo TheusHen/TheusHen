@@ -17,7 +17,7 @@ export default function ContactPage() {
     }, []);
 
     return (
-        <div className="bg-black text-white flex flex-col min-h-screen relative overflow-x-hidden mt-10">
+        <div className="bg-black text-white flex flex-col h-screen relative overflow-hidden">
             {/* Cursor light effect */}
             <div
                 className="pointer-events-none absolute bg-red-200 opacity-20 blur-[120px] rounded-full w-64 h-64 z-0 transition-all duration-300 ease-out"
@@ -26,7 +26,7 @@ export default function ContactPage() {
                     top: `${mousePosition.y - 128}px`,
                 }}
             />
-            <div className="container mx-auto p-4">
+            <div className="container mx-auto p-4 mt-12">
                 <div className="flex justify-between items-center mb-8">
                     <Link href="/">
                         <FaArrowLeft className="text-2xl cursor-pointer transition-transform hover:-translate-x-1 text-white" />

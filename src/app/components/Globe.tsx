@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import * as topojson from "topojson-client";
 import type { FeatureCollection, Geometry, Feature, GeoJsonProperties } from "geojson";
@@ -13,6 +13,12 @@ function getGlobeScale(width: number, height: number) {
 }
 function getGlobeRadius(width: number, height: number) {
     return Math.min(width, height) / 2.3;
+}
+
+// Função utilitária para detectar dispositivos móveis
+function isMobileDevice() {
+    if (typeof window === "undefined") return false;
+    return /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(navigator.userAgent);
 }
 
 type GlobeBrazilProps = {
@@ -29,8 +35,15 @@ export const GlobeBrazil: React.FC<GlobeBrazilProps> = ({
                                                             style = {},
                                                         }) => {
     const svgRef = useRef<SVGSVGElement>(null);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
+        setIsMobile(isMobileDevice());
+    }, []);
+
+    useEffect(() => {
+        if (isMobile) return;
+
         let animationFrame: number | null = null;
 
         d3.select(svgRef.current).selectAll("*").remove();
@@ -93,7 +106,13 @@ export const GlobeBrazil: React.FC<GlobeBrazilProps> = ({
                     .data(countries)
                     .join("path")
                     .attr("class", (d) =>
-                        "country" + ((d.id === BRAZIL_ID || d.id === "76" || d.id === 76 || d.properties?.name === "Brazil") ? " brazil" : "")
+                        "country" +
+                        ((d.id === BRAZIL_ID ||
+                            d.id === "76" ||
+                            d.id === 76 ||
+                            d.properties?.name === "Brazil")
+                            ? " brazil"
+                            : "")
                     )
                     .attr("d", path as unknown as string)
                     .on("mouseover", function () {
@@ -102,10 +121,12 @@ export const GlobeBrazil: React.FC<GlobeBrazilProps> = ({
                         }
                     });
 
-                // Corrigido: a função filter do D3 espera (datum, index, groups)
                 countryPaths
                     .filter((d: Feature<Geometry, GeoJsonProperties>) =>
-                        (d.id === BRAZIL_ID || d.id === "76" || d.id === 76 || d.properties?.name === "Brazil")
+                        d.id === BRAZIL_ID ||
+                        d.id === "76" ||
+                        d.id === 76 ||
+                        d.properties?.name === "Brazil"
                     )
                     .raise();
 
@@ -168,7 +189,7 @@ export const GlobeBrazil: React.FC<GlobeBrazilProps> = ({
                 svg.on("wheel", function (event: WheelEvent) {
                     event.preventDefault();
                     let scale = projection.scale();
-                    const delta = event.deltaY * -0.03; // Renomeado para evitar confusão com 'd'
+                    const delta = event.deltaY * -0.03;
                     scale += delta;
                     scale = Math.max(
                         80,
@@ -187,7 +208,9 @@ export const GlobeBrazil: React.FC<GlobeBrazilProps> = ({
         return () => {
             if (animationFrame) cancelAnimationFrame(animationFrame);
         };
-    }, [width, height]);
+    }, [width, height, isMobile]);
+
+    if (isMobile) return null;
 
     return (
         <div

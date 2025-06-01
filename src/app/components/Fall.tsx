@@ -8,21 +8,22 @@ export default function Fall() {
             style={{
                 width: 380,
                 height: 240,
-                background: "transparent", // fully transparent background
+                background: "transparent",
                 overflow: "hidden",
                 position: "relative",
                 touchAction: "none",
                 fontFamily: "system-ui,Roboto,sans-serif",
                 margin: "40px auto",
                 borderRadius: 16,
-                boxShadow: "none", // remove shadow
+                boxShadow: "none",
+                border: "none",
                 display: "flex",
-                flexDirection: "column",
-                border: "none", // remove border
-                // The content (children) will be centered via the inner wrapper
+                alignItems: "center",
+                justifyContent: "center",
+                // Remove flexDirection, let inner wrapper handle content direction
             }}
         >
-            {/* Centralize absolutely everything inside the container, including buttons and text */}
+            {/* Center absolutely everything inside the container */}
             <div
                 style={{
                     width: "100%",
@@ -34,6 +35,7 @@ export default function Fall() {
                     position: "absolute",
                     top: 0,
                     left: 0,
+                    // Remove any margin or gap here to ensure full centralization
                 }}
             >
                 {/* Centralized Buttons */}
@@ -47,21 +49,18 @@ export default function Fall() {
                         width: "100%",
                     }}
                 >
-                    {/* Projects button on the left */}
                     <Link href="/projects" legacyBehavior>
                         <a className="custom-btn projects-btn">
                             Projects
                         </a>
                     </Link>
-                    {/* Contact button on the right */}
                     <Link href="/contact" legacyBehavior>
                         <a className="custom-btn contact-btn">
                             Contact
                         </a>
                     </Link>
                 </div>
-
-                {/* LICENSE and source code message */}
+                {/* Centralized LICENSE and source code message */}
                 <motion.div
                     initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 0.25, y: 0 }}
@@ -74,6 +73,10 @@ export default function Fall() {
                         pointerEvents: "none",
                         textShadow: "0 0 5px #000a, 0 0 1px #fff",
                         letterSpacing: 1,
+                        width: "100%", // Ensures text stays centered even if it wraps
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
                     }}
                 >
                     LICENSE and source code available.
@@ -95,6 +98,9 @@ export default function Fall() {
                     overflow: hidden;
                     z-index: 1;
                     box-shadow: 0 2px 12px #0008, 0 0 0 transparent;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                 }
 
                 .custom-btn:before {
@@ -126,7 +132,6 @@ export default function Fall() {
                     background: rgba(255, 20, 20, 0.35);
                 }
 
-                /* Extra: subtle button animation */
                 .custom-btn:active {
                     transform: scale(0.95);
                 }
