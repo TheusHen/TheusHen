@@ -57,7 +57,7 @@ export default function Home() {
         <>
             <ClientRemount>
             <SpeedInsights />
-            <div className="fixed top-4 left-4 z-40 mt-10">
+            <div className="absolute top-4 left-4 z-40 mt-10">
                 <Link
                     href={`https://github.com/${REPO_OWNER}/${REPO_NAME}`}
                     target="_blank"

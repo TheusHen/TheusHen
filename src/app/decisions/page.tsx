@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useMemo } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -43,14 +43,10 @@ const images = [
     },
 ];
 
-// CORREÇÃO: Garante que durante SSR o valor inicial é sempre o mesmo (0), evitando mismatch
-function getTimeLeft() {
-    if (typeof window === "undefined") {
-        // Durante SSR, retorna sempre 0 para todos para evitar mismatch
-        return { days: 0, hours: 0, mins: 0, secs: 0 };
-    }
-    const target = new Date("2027-11-01T00:00:00Z").getTime();
-    const now = new Date().getTime();
+// Calcula o tempo restante até a data alvo
+function getTimeLeft(targetDate: Date) {
+    const now = typeof window !== "undefined" ? new Date().getTime() : 0;
+    const target = targetDate.getTime();
     const diff = Math.max(0, target - now);
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -61,11 +57,26 @@ function getTimeLeft() {
     return { days, hours, mins, secs };
 }
 
+// Helper para saber se está em mobile
+function isMobile() {
+    if (typeof window === "undefined") return false;
+    return window.innerWidth < 600;
+}
+
 export default function AutoCarousel() {
     // Responsividade: define slidesPerView conforme a largura da tela
     const [slidesPerView, setSlidesPerView] = useState(3);
+    // Estado para saber se é mobile
+    const [mobile, setMobile] = useState(false);
+    // Estado para mostrar confete só quando timer zerar
     const [showConfetti, setShowConfetti] = useState(false);
+    // Controle do timer zerado
+    const [isTimerZero, setIsTimerZero] = useState(false);
 
+    // Data alvo (estável)
+    const targetDate = useMemo(() => new Date("2027-11-01T00:00:00Z"), []);
+
+    // Atualiza responsividade
     useEffect(() => {
         function handleResize() {
             if (window.innerWidth >= 1280) {
@@ -77,19 +88,17 @@ export default function AutoCarousel() {
             } else {
                 setSlidesPerView(1.3);
             }
+            setMobile(isMobile());
         }
         handleResize();
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    useEffect(() => {
-        // Simula o contador chegando a 0
-        const timer = setTimeout(() => {
-            setShowConfetti(true);
-        }, 1000); // Ajuste o tempo conforme necessário
-
-        return () => clearTimeout(timer);
+    // Monitorar se timer chegou a zero
+    const handleTimerZero = React.useCallback(() => {
+        setIsTimerZero(true);
+        setShowConfetti(true);
     }, []);
 
     return (
@@ -107,7 +116,7 @@ export default function AutoCarousel() {
                 paddingBottom: "60px",
             }}
         >
-            {/* Efeito de Confeti */}
+            {/* Efeito de Confeti só quando timer zerar */}
             {showConfetti && <Confetti />}
             <Particles
                 className="absolute inset-0 -z-10 animate-fade-in"
@@ -155,10 +164,11 @@ export default function AutoCarousel() {
                     slidesPerView={slidesPerView}
                     loop={true}
                     autoplay={{
-                        delay: 2100,
+                        delay: mobile ? 900 : 2100,
                         disableOnInteraction: false,
-                        pauseOnMouseEnter: true, // melhor UX em desktop
+                        pauseOnMouseEnter: !mobile, // No mobile, ignore hover
                     }}
+                    speed={mobile ? 650 : 480}
                     coverflowEffect={{
                         rotate: 30,
                         stretch: 0,
@@ -200,7 +210,10 @@ export default function AutoCarousel() {
                 </Swiper>
             </div>
             {/* TimerSection logo abaixo do carrossel */}
-            <TimerSection />
+            <TimerSection
+                targetDate={targetDate}
+                onTimerZero={handleTimerZero}
+            />
             <style jsx global>{`
                 @media (max-width: 900px) {
                     .swiper-slide img {
@@ -220,17 +233,34 @@ export default function AutoCarousel() {
 }
 
 // TimerSection: sempre abaixo do carrossel, com animação GSAP
-function TimerSection() {
-    // Inicializa com todos os valores em 0 para evitar mismatch
-    const [timer, setTimer] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
+function TimerSection({
+                          targetDate,
+                          onTimerZero,
+                      }: {
+    targetDate: Date;
+    onTimerZero: () => void;
+}) {
+    // Inicializa o timer "hidratado" já no client, usando um fallback estável no SSR
+    const [timer, setTimer] = useState(() =>
+        typeof window === "undefined"
+            ? { days: 0, hours: 0, mins: 0, secs: 0 }
+            : getTimeLeft(targetDate)
+    );
     const timerRef = useRef<HTMLDivElement>(null);
 
+    // Evita hydration mismatch: só atualiza timer após montagem
     useEffect(() => {
-        // Atualiza o timer imediatamente no client após montagem
-        setTimer(getTimeLeft());
-        const interval = setInterval(() => setTimer(getTimeLeft()), 1000);
+        setTimer(getTimeLeft(targetDate));
+        const interval = setInterval(() => {
+            const t = getTimeLeft(targetDate);
+            setTimer(t);
+            // Confete só quando zerar
+            if (t.days === 0 && t.hours === 0 && t.mins === 0 && t.secs === 0) {
+                onTimerZero();
+            }
+        }, 1000);
         return () => clearInterval(interval);
-    }, []);
+    }, [targetDate, onTimerZero]);
 
     // GSAP animação ao atualizar o timer
     useEffect(() => {

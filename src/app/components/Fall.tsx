@@ -18,52 +18,67 @@ export default function Fall() {
                 boxShadow: "none", // remove shadow
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
                 border: "none", // remove border
+                // The content (children) will be centered via the inner wrapper
             }}
         >
-            {/* Centralized Buttons */}
+            {/* Centralize absolutely everything inside the container, including buttons and text */}
             <div
                 style={{
+                    width: "100%",
+                    height: "100%",
                     display: "flex",
-                    gap: 16,
-                    justifyContent: "center",
+                    flexDirection: "column",
                     alignItems: "center",
-                    marginBottom: 36,
+                    justifyContent: "center",
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
                 }}
             >
-                {/* Projects button on the left */}
-                <Link href="/projects" legacyBehavior>
-                    <a className="custom-btn projects-btn">
-                        Projects
-                    </a>
-                </Link>
-                {/* Contact button on the right */}
-                <Link href="/contact" legacyBehavior>
-                    <a className="custom-btn contact-btn">
-                        Contact
-                    </a>
-                </Link>
-            </div>
+                {/* Centralized Buttons */}
+                <div
+                    style={{
+                        display: "flex",
+                        gap: 16,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginBottom: 36,
+                        width: "100%",
+                    }}
+                >
+                    {/* Projects button on the left */}
+                    <Link href="/projects" legacyBehavior>
+                        <a className="custom-btn projects-btn">
+                            Projects
+                        </a>
+                    </Link>
+                    {/* Contact button on the right */}
+                    <Link href="/contact" legacyBehavior>
+                        <a className="custom-btn contact-btn">
+                            Contact
+                        </a>
+                    </Link>
+                </div>
 
-            {/* LICENSE and source code message */}
-            <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 0.25, y: 0 }}
-                exit={{ opacity: 0 }}
-                style={{
-                    color: "#fff",
-                    fontSize: 13,
-                    textAlign: "center",
-                    zIndex: 2,
-                    pointerEvents: "none",
-                    textShadow: "0 0 5px #000a, 0 0 1px #fff",
-                    letterSpacing: 1,
-                }}
-            >
-                LICENSE and source code available.
-            </motion.div>
+                {/* LICENSE and source code message */}
+                <motion.div
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 0.25, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    style={{
+                        color: "#fff",
+                        fontSize: 13,
+                        textAlign: "center",
+                        zIndex: 2,
+                        pointerEvents: "none",
+                        textShadow: "0 0 5px #000a, 0 0 1px #fff",
+                        letterSpacing: 1,
+                    }}
+                >
+                    LICENSE and source code available.
+                </motion.div>
+            </div>
             <style jsx>{`
                 .custom-btn {
                     position: relative;

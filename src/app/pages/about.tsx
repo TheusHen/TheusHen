@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
 import Fall from "../components/Fall";
+import GlobeBrazil from "../components/Globe";
 
 const PROFILE_IMAGE = "https://avatars.githubusercontent.com/u/180109164";
 const HACKCLUB_IMAGE =
@@ -233,6 +234,7 @@ export default function About() {
                 <HackClubSection />
                 <TimerSection />
             </div>
+            <GlobeBrazil />
             <Fall />
         </div>
     );
