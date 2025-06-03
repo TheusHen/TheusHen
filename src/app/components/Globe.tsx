@@ -5,6 +5,7 @@ import * as d3 from "d3";
 import * as topojson from "topojson-client";
 import type { FeatureCollection, Geometry, Feature, GeoJsonProperties } from "geojson";
 import type { Topology, Objects } from "topojson-specification";
+import { useGlobe } from "../contexts/GlobeContext";
 
 const BRAZIL_ID = 76;
 
@@ -15,7 +16,6 @@ function getGlobeRadius(width: number, height: number) {
     return Math.min(width, height) / 2.3;
 }
 
-// Função utilitária para detectar dispositivos móveis
 function isMobileDevice() {
     if (typeof window === "undefined") return false;
     return /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(navigator.userAgent);
@@ -35,17 +35,25 @@ export const GlobeBrazil: React.FC<GlobeBrazilProps> = ({
                                                             style = {},
                                                         }) => {
     const svgRef = useRef<SVGSVGElement>(null);
+    const globeContainerRef = useRef<HTMLDivElement>(null);
     const [isMobile, setIsMobile] = useState(false);
+    const { globeActive } = useGlobe();
 
     useEffect(() => {
         setIsMobile(isMobileDevice());
     }, []);
 
+    // Scroll até o globo quando ativar o switch global
     useEffect(() => {
-        if (isMobile) return;
+        if (globeActive && globeContainerRef.current) {
+            globeContainerRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+    }, [globeActive]);
+
+    useEffect(() => {
+        if (isMobile || !globeActive) return;
 
         let animationFrame: number | null = null;
-
         d3.select(svgRef.current).selectAll("*").remove();
 
         const svg = d3
@@ -208,12 +216,13 @@ export const GlobeBrazil: React.FC<GlobeBrazilProps> = ({
         return () => {
             if (animationFrame) cancelAnimationFrame(animationFrame);
         };
-    }, [width, height, isMobile]);
+    }, [width, height, isMobile, globeActive]);
 
-    if (isMobile) return null;
+    if (isMobile || !globeActive) return null;
 
     return (
         <div
+            ref={globeContainerRef}
             className={`mt-6 ${className}`}
             style={{
                 width,

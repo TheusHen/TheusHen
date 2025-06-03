@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import CollegeDecisionsBar from "./components/CollegeDecisionsBar";
+import GlobalSwitch from "./components/Switch";
 import "./globals.css";
 import { PostHogProvider } from "./providers/PostHogProvider";
+import { GlobeProvider } from "./contexts/GlobeContext";
 
 export const metadata: Metadata = {
     title: {
@@ -27,7 +29,6 @@ export const metadata: Metadata = {
     ],
     generator: "Next.js",
     referrer: "origin-when-cross-origin",
-    colorScheme: "dark",
     creator: "Matheus Henrique",
     publisher: "TheusHen",
     metadataBase: new URL("https://theushen.me"),
@@ -72,6 +73,10 @@ export const metadata: Metadata = {
         apple: "/favicon.png",
     },
     manifest: "/site.webmanifest",
+};
+
+export const viewport: Viewport = {
+    colorScheme: "dark",
 };
 
 const geistSans = Geist({
@@ -138,8 +143,11 @@ export default function RootLayout({
         </head>
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <PostHogProvider>
-        <CollegeDecisionsBar />
-        {children}
+            <GlobeProvider>
+                <CollegeDecisionsBar />
+                <GlobalSwitch />
+                {children}
+            </GlobeProvider>
         </PostHogProvider>
         </body>
         </html>
