@@ -2,6 +2,7 @@
 import React from "react";
 import { useGlobe } from "../contexts/GlobeContext";
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 const switchVariants = {
     active: {
@@ -29,6 +30,9 @@ const knobVariants = {
 
 const GlobalSwitch = () => {
     const { globeActive, setGlobeActive } = useGlobe();
+    const pathname = usePathname();
+
+    if (pathname !== "/") return null;
 
     return (
         <div
