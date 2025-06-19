@@ -4,6 +4,11 @@ import { useGlobe } from "../contexts/GlobeContext";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 
+function isMobile() {
+    if (typeof window === "undefined") return false;
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent);
+}
+
 const switchVariants = {
     active: {
         backgroundColor: "#3B82F6",
@@ -33,6 +38,8 @@ const GlobalSwitch = () => {
     const pathname = usePathname();
 
     if (pathname !== "/") return null;
+
+    if (typeof window !== "undefined" && isMobile()) return null;
 
     return (
         <div
