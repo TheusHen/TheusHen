@@ -123,6 +123,13 @@ function TextSection() {
                     LinkedIn
                 </a>
             </div>
+            <div className="flex justify-center mt-8">
+                <img
+                    src="https://raw.githubusercontent.com/TheusHen/TheusHen/output/snake.svg"
+                    alt="GitHub Contribution Snake"
+                    className="max-w-full h-auto"
+                />
+            </div>
         </div>
     );
 }
