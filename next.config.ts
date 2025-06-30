@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
       'images.fillout.com',
       'mitpa-tech.vercel.app',
       'upload.wikimedia.org',
+      'practa.tech',
     ],
   },
   async headers() {
