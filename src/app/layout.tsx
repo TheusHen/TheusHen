@@ -112,6 +112,11 @@ export default function RootLayout({
             gtag('config', 'G-DWX5JVERXC');
           `}
             </Script>
+            <Script
+              src="https://analytics.ahrefs.com/analytics.js"
+              data-key="7pSFS8uTZPgZ6+AQJF9oRg"
+              async
+            />
 
             {/* Plausible Analytics */}
             <Script defer data-domain="theushen.me" src="https://plausible.io/js/script.js" />
