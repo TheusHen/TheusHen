@@ -114,20 +114,10 @@ export default function RootLayout({
             </Script>
             
             {/* Ahrefs Analytics */}
-            <Script
-              id="ahrefs-analytics"
-              strategy="beforeInteractive"
-              dangerouslySetInnerHTML={{
-                __html: `
-                  (function() {
-                    var s = document.createElement('script');
-                    s.src = "https://analytics.ahrefs.com/analytics.js";
-                    s.setAttribute("data-key", "7pSFS8uTZPgZ6+AQJF9oRg");
-                    s.async = true;
-                    document.head.appendChild(s);
-                  })();
-                `,
-              }}
+            <script
+                src="https://analytics.ahrefs.com/analytics.js"
+                data-key="7pSFS8uTZPgZ6+AQJF9oRg"
+                async
             />
 
             {/* Plausible Analytics */}
