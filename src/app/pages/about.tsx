@@ -93,7 +93,7 @@ function TextSection() {
                     14-year-old student dreaming big and building the future with code. I&apos;m determined to get into <span className="font-bold text-red-600">MIT</span> with a full-ride scholarship, where I plan to major in Aerospace Engineering and Computer Engineering.
                 </span>
                 <span>
-                    Founder of <span className="font-bold text-red-600">MITPA</span>, an open source community that helps students achieve their academic and personal goals with lots of code, collaboration, and resilience.
+                    Founder of <span className="font-bold text-red-600">PRACTA</span>, an open source community that helps students achieve their academic and personal goals with lots of code, collaboration, and resilience.
                 </span>
                 <span>
                     I&apos;ve already developed projects such as viral mutation simulators, digital organizers, and remote diagnosis systems, and I actively participate in hackathons like <span className="text-red-600 font-bold">Shipwrecked</span> and events from <span className="text-red-600 font-bold">Hack Club</span>.
