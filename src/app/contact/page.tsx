@@ -17,7 +17,7 @@ export default function ContactPage() {
     }, []);
 
     return (
-        <div className="bg-black text-white flex flex-col h-screen relative overflow-hidden">
+        <div className="bg-black text-white flex flex-col min-h-screen relative">
             {/* Cursor light effect */}
             <div
                 className="pointer-events-none absolute bg-red-200 opacity-20 blur-[120px] rounded-full w-64 h-64 z-0 transition-all duration-300 ease-out"
