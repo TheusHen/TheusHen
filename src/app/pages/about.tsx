@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import Image from "next/image";
 import Fall from "../components/Fall";
 import GlobeBrazil from "../components/Globe";
+import TechCarousel from "../components/TechCarousel";
 
 const PROFILE_IMAGE = "https://avatars.githubusercontent.com/u/180109164";
 const HACKCLUB_IMAGE =
@@ -243,6 +244,7 @@ export default function About() {
             </div>
             <GlobeBrazil />
             <Fall />
+            <TechCarousel />
         </div>
     );
 }
