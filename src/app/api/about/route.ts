@@ -21,7 +21,7 @@ const aboutInfo = {
         flag: "https://upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg",
         bio: [
             "14-year-old student dreaming big and building the future with code. I’m determined to get into MIT with a full-ride scholarship, where I plan to major in Aerospace Engineering and Computer Engineering.",
-            "Founder of MITPA, an open source community that helps students achieve their academic and personal goals with lots of code, collaboration, and resilience.",
+            "Founder of PRACTA, an open source community that helps students achieve their academic and personal goals with lots of code, collaboration, and resilience.",
             "I’ve already developed projects such as viral mutation simulators, digital organizers, and remote diagnosis systems, and I actively participate in hackathons like Shipwrecked and events from Hack Club.",
             "I’m always looking to learn new technologies, contribute to open source repositories, and grow as a developer and as a person.",
             "If you want to chat about programming, science, communities, or how to turn dreams into projects, reach out to me!",
@@ -31,6 +31,7 @@ const aboutInfo = {
             { label: "LinkedIn", url: "https://www.linkedin.com/in/matheus-henrique-741776367/" },
             { label: "Email", url: "mailto:dev@theushen.me" },
             { label: "Instagram", url: "https://www.instagram.com/mmatheus_henriquee" },
+            { label: "Reddit", url: "https://www.reddit.com/user/TheusHen" },
         ],
         hackclub: {
             image: "https://images.fillout.com/orgid-81/flowpublicid-eLhFehpKG6us/widgetid-cbsLd1W9tHmPW9frkYFap2/3G6y1B7Rk3agk6YVqtLmJN/Group-106.png?a=hcRnPh87k73TcrVHzBe6UW",
@@ -69,10 +70,10 @@ const aboutInfo = {
     ],
     featuredProjects: [
         {
-            name: "MITPA",
-            description: "MITPA is an open-source community focused on helping students prepare for admission to MIT. It provides a platform for students worldwide to discuss study strategies, share experiences, and connect with like-minded individuals.",
-            url: "https://mitpa.tech",
-            image: "https://mitpa-tech.vercel.app/Logo.png",
+            name: "PRACTA",
+            description: "PRACTA is an open-source community focused on helping students prepare for admission to MIT. It provides a platform for students worldwide to discuss study strategies, share experiences, and connect with like-minded individuals.",
+            url: "https://PRACTA.tech",
+            image: "https://PRACTA-tech.vercel.app/Logo.png",
             type: ["openSource", "website"]
         },
         {
