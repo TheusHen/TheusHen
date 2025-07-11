@@ -12,12 +12,12 @@ export const metadata: Metadata = {
         default: "TheusHen",
         template: "%s | TheusHen",
     },
-    description: "Founder of MITPA, developer focused on open source, aerospace innovation and impactful tools.",
+    description: "Founder of PRACTA, developer focused on open source, aerospace innovation and impactful tools.",
     applicationName: "TheusHen Portfolio",
     authors: [{ name: "Matheus Henrique", url: "https://theushen.me" }],
     keywords: [
         "theushen",
-        "MITPA",
+        "PRACTA",
         "developer",
         "portfolio",
         "aerospace",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     metadataBase: new URL("https://theushen.me"),
     openGraph: {
         title: "TheusHen",
-        description: "Founder of MITPA, developer focused on open source and innovation.",
+        description: "Founder of PRACTA, developer focused on open source and innovation.",
         url: "https://theushen.me",
         siteName: "TheusHen",
         images: [
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     twitter: {
         card: "summary_large_image",
         title: "TheusHen",
-        description: "Founder of MITPA, focused on open source, aerospace and technology.",
+        description: "Founder of PRACTA, focused on open source, aerospace and technology.",
         images: ["https://theushen.me/banner.jpg"],
     },
     robots: {
@@ -143,7 +143,7 @@ export default function RootLayout({
                     jobTitle: "Full-Stack Developer",
                     worksFor: {
                         "@type": "Organization",
-                        name: "MITPA",
+                        name: "PRACTA",
                     },
                 })}
             </Script>
