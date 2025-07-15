@@ -484,7 +484,7 @@ const ProjectsPage = () => {
                         {/* Optifyx */}
                         {showOptifyx && (
                             <a
-                                href="https://optifyx.live"
+                                href="https://github.com/optifyx"
                                 target="_blank"
                                 rel="noreferrer"
                                 className="white-spin-border white-hover-effect"
