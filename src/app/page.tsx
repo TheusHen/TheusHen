@@ -109,12 +109,12 @@ export default function Home() {
                     <h1 className="py-2 px-1 z-10 text-4xl text-transparent duration-1000 bg-gradient-to-r from-zinc-100 via-white to-zinc-300 bg-clip-text cursor-default text-edge-outline animate-title font-display sm:text-6xl md:text-8xl whitespace-nowrap select-none drop-shadow-glow">
                         TheusHen
                     </h1>
-                    <nav className="mt-8 animate-fade-in">
+                    <nav className="mt-6 animate-fade-in">
                         <Link
-                            href="https://study.theushen.me/"
-                            className="text-xs sm:text-sm duration-500 text-red-600 hover:text-zinc-200 focus:outline-none focus:text-white transition-colors px-3 py-1 rounded"
+                          href="https://study.theushen.me/"
+                          className="text-xs sm:text-sm duration-500 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:text-white transition-colors px-3 py-1 rounded"
                         >
-                            Study Dashboard
+                          Study Dashboard
                         </Link>
                     </nav>
                     {/* Decorative gradient line */}
