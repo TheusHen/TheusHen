@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: `
               default-src 'self';
-              script-src 'self' https://www.googletagmanager.com https://plausible.io https://vercel.live https://analytics.ahrefs.com 'unsafe-inline' 'unsafe-eval';
+              script-src 'self' https://www.googletagmanager.com https://plausible.io https://vercel.live https://analytics.ahrefs.com https://static.hotjar.com 'unsafe-inline' 'unsafe-eval';
               style-src 'self' 'unsafe-inline';
               img-src 'self' data: https:;
               connect-src 'self' https:;
