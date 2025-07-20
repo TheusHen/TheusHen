@@ -8,6 +8,7 @@ import About from "./pages/about";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import './index.css'
 import LoadingDots from "./components/LoadingDots";
+import hotjar from '@hotjar/browser';
 import ClientRemount from "./client-remount";
 
 // This site was inspired by chronark/chronark.com and uses some code snippets from it, not only in this file but also in others.
@@ -26,6 +27,9 @@ export default function Home() {
     const [stars, setStars] = useState<number | null>(null);
 
     useEffect(() => {
+        if (typeof window !== 'undefined') {
+            hotjar.init(6469301, 6);
+        }
         // Fetch the number of stars from GitHub API
         fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`)
             .then((res) => res.json())
