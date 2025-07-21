@@ -1,6 +1,6 @@
 "use client";
 
-import { FaArrowLeft, FaGithub, FaEnvelope, FaInstagram, FaLinkedin, FaReddit } from "react-icons/fa";
+import { FaArrowLeft, FaGithub, FaEnvelope, FaInstagram, FaLinkedin } from "react-icons/fa";
 import Link from "next/link";
 import { ReactNode, useEffect, useState } from "react";
 import './styles.css'
@@ -67,12 +67,6 @@ export default function ContactPage() {
                         title="Matheus Henrique"
                         subtitle="LinkedIn"
                         link="https://www.linkedin.com/in/matheus-henrique-741776367/"
-                    />
-                    <ContactCard
-                        icon={<FaReddit className="text-4xl" />}
-                        title="u/TheusHen"
-                        subtitle="Reddit"
-                        link="https://www.reddit.com/user/TheusHen"
                     />
                 </div>
             </div>
