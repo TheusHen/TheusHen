@@ -43,7 +43,7 @@ export default function ContactPage() {
             </div>
 
             <div className="flex items-center justify-center flex-grow">
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <ContactCard
                         icon={<FaGithub className="text-4xl" />}
                         title="TheusHen"
