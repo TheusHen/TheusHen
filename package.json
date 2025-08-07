@@ -15,6 +15,7 @@
     "@radix-ui/react-scroll-area": "^1.2.9",
     "@vercel/speed-insights": "^1.2.0",
     "cheerio": "^1.0.0",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "d3": "^7.9.0",
     "framer-motion": "^12.12.2",
@@ -34,7 +35,8 @@
     "swiper": "^11.2.10",
     "tailwind-merge": "^3.3.0",
     "three": "^0.176.0",
-    "topojson-client": "^3.1.0"
+    "topojson-client": "^3.1.0",
+    "vanta": "^0.5.24"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

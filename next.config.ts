@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
               script-src 'self' https://www.googletagmanager.com https://plausible.io https://vercel.live https://analytics.ahrefs.com https://static.hotjar.com https://script.hotjar.com 'unsafe-inline' 'unsafe-eval';
               style-src 'self' 'unsafe-inline';
               img-src 'self' data: https:;
-              connect-src 'self' https:;
+              connect-src 'self' https: wss://ws.hotjar.com;
               font-src 'self' https:;
               frame-src 'self' https://vercel.live;
             `.replace(/\s{2,}/g, ' ').trim(),
