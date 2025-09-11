@@ -2,7 +2,7 @@
 
 A modern, interactive portfolio website showcasing the projects and aspirations of TheusHen (Matheus Henrique), a 14-year-old student from Brazil with dreams of attending MIT.
 
-## 🌟 Project Overview
+## Project Overview
 
 This website serves as a comprehensive portfolio and personal brand for TheusHen, featuring:
 
@@ -11,7 +11,7 @@ This website serves as a comprehensive portfolio and personal brand for TheusHen
 - **Social Connectivity**: Easy access to GitHub, LinkedIn, Instagram, and email
 - **Interactive Elements**: Dynamic animations, 3D graphics, and engaging user experience
 
-## 🎯 About TheusHen
+## About TheusHen
 
 **Matheus Henrique** is a 14-year-old student from Brazil who is:
 - Aspiring to attend **MIT** with a full-ride scholarship
@@ -20,7 +20,7 @@ This website serves as a comprehensive portfolio and personal brand for TheusHen
 - Active participant in hackathons like **Shipwrecked** and **Hack Club** events
 - Developer of innovative projects in various domains
 
-## 🚀 Featured Projects
+## Featured Projects
 
 ### PRACTA
 - **Description**: Open-source community focused on helping students prepare for SAT with focus on MIT university
@@ -37,7 +37,7 @@ This website serves as a comprehensive portfolio and personal brand for TheusHen
 - **Purpose**: Allows smartphone to fully monitor a desktop, providing seamless remote access
 - **Link**: [GitHub - Optifyx](https://github.com/optifyx)
 
-## 🛠️ Technical Stack
+## Technical Stack
 
 ### Frontend Framework
 - **Next.js 15.2.1** - React framework for production
@@ -71,7 +71,7 @@ This website serves as a comprehensive portfolio and personal brand for TheusHen
 - **ESLint** - JavaScript linting utility
 - **PostCSS** - Tool for transforming CSS
 
-## 📱 Website Features
+## Website Features
 
 ### Home Page
 - Interactive personal introduction with animated elements
@@ -93,7 +93,7 @@ This website serves as a comprehensive portfolio and personal brand for TheusHen
 - Clean, card-based layout for easy access
 - Direct links to social media profiles
 
-## 📸 Website Screenshots
+## Website Screenshots
 
 ### Home Page
 ![Home Page](https://github.com/user-attachments/assets/ff942070-710d-4471-bd06-c0ad7cedaec7)
@@ -110,11 +110,11 @@ The projects page showcases major works including PRACTA, Arcade Lunar, and Opti
 
 The contact page provides easy access to various communication channels with a minimalist card-based design.
 
-## 🌐 Live Website
+## Live Website
 
 **URL**: [theushen.me](https://www.theushen.me)
 
-## 🔗 Related Links
+## Related Links
 
 - **GitHub Repository**: [TheusHen/TheusHen](https://github.com/TheusHen/TheusHen)
 - **Study Dashboard**: [study.theushen.me](https://study.theushen.me/)
@@ -122,7 +122,7 @@ The contact page provides easy access to various communication channels with a m
 - **Personal GitHub**: [github.com/TheusHen](https://github.com/TheusHen)
 - **LinkedIn**: [linkedin.com/in/matheus-henrique-741776367](https://www.linkedin.com/in/matheus-henrique-741776367/)
 
-## 📦 Installation & Development
+## Installation & Development
 
 ### Prerequisites
 - Node.js 18+ and npm
@@ -155,7 +155,7 @@ npm start
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint
 
-## 🎨 Design Philosophy
+## Design Philosophy
 
 The website embodies a modern, professional aesthetic while maintaining a personal touch that reflects TheusHen's personality and aspirations. Key design principles include:
 
@@ -165,7 +165,7 @@ The website embodies a modern, professional aesthetic while maintaining a person
 - **Performance**: Optimized images and efficient code splitting
 - **Responsiveness**: Mobile-first design approach
 
-## 🚀 Future Enhancements
+## Future Enhancements
 
 - Integration with more real-time data sources
 - Enhanced project filtering and search capabilities
@@ -173,7 +173,7 @@ The website embodies a modern, professional aesthetic while maintaining a person
 - Improved accessibility features
 - Performance optimizations
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
