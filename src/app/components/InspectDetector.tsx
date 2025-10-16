@@ -186,7 +186,7 @@ const InspectDetector = () => {
 
                             <motion.a
                                 href="mailto:mmmatheushenriqueee@gmail.com"
-                                className="text-red-600 text-xl md:text-3xl font-thin hover:text-red-800 transition-colors tracking-wider"
+                                className="relative text-black text-xl md:text-3xl font-thin tracking-wider group cursor-pointer"
                                 style={{ 
                                     fontFamily: "'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
                                     letterSpacing: "0.05em",
@@ -196,7 +196,24 @@ const InspectDetector = () => {
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: 1.5, duration: 0.8, ease: "easeOut" }}
                             >
-                                mmmatheushenriqueee@gmail.com
+                                <span className="relative z-10">mmmatheushenriqueee@gmail.com</span>
+                                {/* Animated gradient on hover */}
+                                <motion.span
+                                    className="absolute inset-0 -z-0"
+                                    style={{
+                                        background: "linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.3), rgba(59, 130, 246, 0.3), rgba(168, 85, 247, 0.3), transparent)",
+                                        backgroundSize: "200% 100%",
+                                    }}
+                                    initial={{ backgroundPosition: "100% 0" }}
+                                    whileHover={{
+                                        backgroundPosition: ["100% 0", "-100% 0"],
+                                        transition: {
+                                            duration: 2,
+                                            repeat: Infinity,
+                                            ease: "linear"
+                                        }
+                                    }}
+                                />
                             </motion.a>
 
                             <motion.button
