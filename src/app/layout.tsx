@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import CollegeDecisionsBar from "./components/CollegeDecisionsBar";
 import GlobalSwitch from "./components/Switch";
+import InspectDetector from "./components/InspectDetector";
 import "./globals.css";
 import { PostHogProvider } from "./providers/PostHogProvider";
 import { GlobeProvider } from "./contexts/GlobeContext";
@@ -151,6 +152,7 @@ export default function RootLayout({
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <PostHogProvider>
             <GlobeProvider>
+                <InspectDetector />
                 <CollegeDecisionsBar />
                 <GlobalSwitch />
                 {children}
