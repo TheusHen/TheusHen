@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const InspectDetector = () => {
@@ -13,14 +13,14 @@ const InspectDetector = () => {
         const detectDevTools = () => {
             const widthThreshold = window.outerWidth - window.innerWidth > 160;
             const heightThreshold = window.outerHeight - window.innerHeight > 160;
-            const orientation = widthThreshold ? 'vertical' : 'horizontal';
             
             if (
                 widthThreshold || 
                 heightThreshold ||
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (window as any).Firebug?.chrome?.isInitialized ||
-                (window as any).outerWidth - (window as any).innerWidth > 100 ||
-                (window as any).outerHeight - (window as any).innerHeight > 100
+                window.outerWidth - window.innerWidth > 100 ||
+                window.outerHeight - window.innerHeight > 100
             ) {
                 if (!isInspecting) {
                     setIsInspecting(true);
@@ -50,11 +50,9 @@ const InspectDetector = () => {
         rafId = requestAnimationFrame(checkLoop);
 
         // DevTools detection using console
-        let devtoolsOpen = false;
         const element = new Image();
         Object.defineProperty(element, 'id', {
             get: function() {
-                devtoolsOpen = true;
                 if (!isInspecting) {
                     setIsInspecting(true);
                     setShowExplosion(true);
@@ -67,7 +65,9 @@ const InspectDetector = () => {
 
         // Trigger the getter by logging
         const checkConsole = setInterval(() => {
+            // eslint-disable-next-line no-console
             console.log(element);
+            // eslint-disable-next-line no-console
             console.clear();
         }, 1000);
 
