@@ -71,6 +71,26 @@ interface Repo {
     topics?: string[];
 }
 
+interface Gist {
+    id: string;
+    description: string;
+    html_url: string;
+    created_at: string;
+    updated_at: string;
+    files: {
+        [key: string]: {
+            filename: string;
+            language: string | null;
+            size: number;
+        };
+    };
+    owner: {
+        avatar_url: string;
+        login: string;
+    };
+    public: boolean;
+}
+
 const ProjectsPage = () => {
     const [showFilterMenu, setShowFilterMenu] = useState(false);
     // Featured projects filters
@@ -82,8 +102,11 @@ const ProjectsPage = () => {
     // GitHub projects filter
     const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
     const [repos, setRepos] = useState<Repo[]>([]);
+    const [gists, setGists] = useState<Gist[]>([]);
     const [loading, setLoading] = useState(true);
+    const [loadingGists, setLoadingGists] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [gistsError, setGistsError] = useState<string | null>(null);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [allTopics, setAllTopics] = useState<string[]>([]);
 
@@ -93,18 +116,31 @@ const ProjectsPage = () => {
 
     const gridRef = useRef<HTMLDivElement>(null);
 
-    // Track mouse position for red hover effect and light effect
+    // Track mouse position for red hover effect and light effect with real-time updates
     useEffect(() => {
+        let rafId: number;
         const handleMouseMove = (e: MouseEvent) => {
-            setMousePosition({ x: e.clientX, y: e.clientY });
+            // Use requestAnimationFrame for smooth real-time tracking
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+            }
+            rafId = requestAnimationFrame(() => {
+                setMousePosition({ x: e.clientX, y: e.clientY });
+            });
         };
 
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mousemove', handleMouseMove, { passive: true });
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+            }
+        };
     }, []);
 
-    // Update CSS custom properties for mouse position
+    // Update CSS custom properties for mouse position with real-time tracking
     useEffect(() => {
+        let rafId: number;
         const updateMousePosition = (element: HTMLElement, clientX: number, clientY: number) => {
             const rect = element.getBoundingClientRect();
             const x = ((clientX - rect.left) / rect.width) * 100;
@@ -114,14 +150,24 @@ const ProjectsPage = () => {
         };
 
         const handleMouseMove = (e: MouseEvent) => {
-            const hoverElements = document.querySelectorAll('.white-hover-effect');
-            hoverElements.forEach((element) => {
-                updateMousePosition(element as HTMLElement, e.clientX, e.clientY);
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+            }
+            rafId = requestAnimationFrame(() => {
+                const hoverElements = document.querySelectorAll('.white-hover-effect');
+                hoverElements.forEach((element) => {
+                    updateMousePosition(element as HTMLElement, e.clientX, e.clientY);
+                });
             });
         };
 
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mousemove', handleMouseMove, { passive: true });
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+            }
+        };
     }, []);
 
     useEffect(() => {
@@ -150,6 +196,24 @@ const ProjectsPage = () => {
             .catch(() => {
                 setError("Error fetching repositories.");
                 setLoading(false);
+            });
+        
+        // Fetch gists
+        setLoadingGists(true);
+        fetch(`https://api.github.com/users/${GITHUB_USERNAME}/gists?per_page=100`)
+            .then((res) => res.json())
+            .then((data) => {
+                if (Array.isArray(data)) {
+                    setGists(data);
+                    setGistsError(null);
+                } else {
+                    setGistsError("Error fetching gists.");
+                }
+                setLoadingGists(false);
+            })
+            .catch(() => {
+                setGistsError("Error fetching gists.");
+                setLoadingGists(false);
             });
     }, []);
 
@@ -213,12 +277,14 @@ const ProjectsPage = () => {
 
     return (
         <div className="min-h-screen bg-black text-white relative overflow-x-hidden mt-10">
-            {/* Cursor light effect */}
+            {/* Cursor light effect with real-time tracking */}
             <div
-                className="pointer-events-none absolute bg-red-200 opacity-20 blur-[120px] rounded-full w-64 h-64 z-0 transition-all duration-300 ease-out"
+                className="pointer-events-none fixed bg-red-200 opacity-20 blur-[120px] rounded-full w-64 h-64 z-0"
                 style={{
                     left: `${mousePosition.x - 128}px`,
                     top: `${mousePosition.y - 128}px`,
+                    transform: 'translate3d(0, 0, 0)',
+                    willChange: 'left, top'
                 }}
             />
             <div className="max-w-6xl mx-auto p-6">
@@ -599,6 +665,72 @@ const ProjectsPage = () => {
                                 </div>
                             </div>
                         ))}
+                    </div>
+                )}
+
+                {/* GitHub Gists Section */}
+                <h2 className="text-3xl font-extrabold mt-16 mb-6 text-white">
+                    GitHub Gists
+                </h2>
+                {loadingGists ? (
+                    <div className="text-gray-400">Loading gists…</div>
+                ) : gistsError ? (
+                    <div className="text-red-400">{gistsError}</div>
+                ) : gists.length === 0 ? (
+                    <div className="text-gray-400">No gists found.</div>
+                ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {gists.map((gist) => {
+                            const firstFile = Object.values(gist.files)[0];
+                            const fileCount = Object.keys(gist.files).length;
+                            const mainLanguage = firstFile?.language || "Text";
+
+                            return (
+                                <a
+                                    key={gist.id}
+                                    href={gist.html_url}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="white-hover-effect transition-transform hover:scale-105 block"
+                                >
+                                    <div className="p-5 h-full flex flex-col bg-gray-900/50 rounded-lg border border-gray-800">
+                                        <div className="flex items-center space-x-3 mb-3">
+                                            <Image
+                                                alt={gist.owner.login}
+                                                className="w-10 h-10 rounded-full"
+                                                height={40}
+                                                onError={(e) => {
+                                                    (e.target as HTMLImageElement).src = fallbackImg;
+                                                }}
+                                                src={gist.owner.avatar_url || fallbackImg}
+                                                width={40}
+                                            />
+                                            <div className="flex-1 min-w-0">
+                                                <span className="text-sm font-semibold text-white block truncate">
+                                                    {firstFile?.filename || "Untitled"}
+                                                </span>
+                                                {fileCount > 1 && (
+                                                    <span className="text-xs text-gray-400">
+                                                        +{fileCount - 1} more file{fileCount > 2 ? 's' : ''}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <p className="flex-1 text-gray-300 text-sm mb-4 line-clamp-3">
+                                            {gist.description || <span className="italic text-gray-500">No description</span>}
+                                        </p>
+                                        <div className="flex justify-between items-end">
+                                            <span className="text-xs px-2 py-1 rounded bg-red-600 text-white">
+                                                {mainLanguage}
+                                            </span>
+                                            <span className="text-xs text-gray-400">
+                                                {new Date(gist.updated_at).toLocaleDateString()}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            );
+                        })}
                     </div>
                 )}
             </div>

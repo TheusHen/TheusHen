@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import CollegeDecisionsBar from "./components/CollegeDecisionsBar";
 import GlobalSwitch from "./components/Switch";
+import InspectDetector from "./components/InspectDetector";
 import "./globals.css";
 import { PostHogProvider } from "./providers/PostHogProvider";
 import { GlobeProvider } from "./contexts/GlobeContext";
@@ -79,16 +79,6 @@ export const viewport: Viewport = {
     colorScheme: "dark",
 };
 
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
-});
-
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -148,9 +138,10 @@ export default function RootLayout({
                 })}
             </Script>
         </head>
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <body className="antialiased font-sans">
         <PostHogProvider>
             <GlobeProvider>
+                <InspectDetector />
                 <CollegeDecisionsBar />
                 <GlobalSwitch />
                 {children}
