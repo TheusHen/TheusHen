@@ -696,14 +696,14 @@ const ProjectsPage = () => {
                                     <div className="p-5 h-full flex flex-col bg-gray-900/50 rounded-lg border border-gray-800">
                                         <div className="flex items-center space-x-3 mb-3">
                                             <Image
-                                                src={gist.owner.avatar_url || fallbackImg}
                                                 alt={gist.owner.login}
-                                                width={40}
-                                                height={40}
                                                 className="w-10 h-10 rounded-full"
+                                                height={40}
                                                 onError={(e) => {
                                                     (e.target as HTMLImageElement).src = fallbackImg;
                                                 }}
+                                                src={gist.owner.avatar_url || fallbackImg}
+                                                width={40}
                                             />
                                             <div className="flex-1 min-w-0">
                                                 <span className="text-sm font-semibold text-white block truncate">
