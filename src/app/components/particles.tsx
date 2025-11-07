@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, memo } from "react";
 import { useMousePosition } from "@/utils/mouse";
 
 interface ParticlesProps {
@@ -24,13 +24,14 @@ interface Circle {
     magnetism: number;
 }
 
-export default function Particles({
-                                      className = "",
-                                      quantity = 30,
-                                      staticity = 50,
-                                      ease = 50,
-                                      refresh = false,
-                                  }: ParticlesProps) {
+const Particles: React.FC<ParticlesProps> = memo(
+    ({
+         className = "",
+         quantity = 30,
+         staticity = 50,
+         ease = 50,
+         refresh = false,
+     }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const canvasContainerRef = useRef<HTMLDivElement>(null);
     const context = useRef<CanvasRenderingContext2D | null>(null);
@@ -231,4 +232,8 @@ export default function Particles({
             <canvas ref={canvasRef} />
         </div>
     );
-}
+});
+
+Particles.displayName = "Particles";
+
+export default Particles;
