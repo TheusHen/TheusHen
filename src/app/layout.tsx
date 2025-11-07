@@ -93,8 +93,11 @@ export default function RootLayout({
             <meta name="theme-color" content="#000000" />
 
             {/* Google Analytics */}
-            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-DWX5JVERXC" />
-            <Script id="google-analytics" strategy="afterInteractive">
+            <Script
+                src="https://www.googletagmanager.com/gtag/js?id=G-DWX5JVERXC"
+                strategy="lazyOnload"
+            />
+            <Script id="google-analytics" strategy="lazyOnload">
                 {`
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){dataLayer.push(arguments);}
@@ -102,17 +105,21 @@ export default function RootLayout({
                     gtag('config', 'G-DWX5JVERXC');
                 `}
             </Script>
-            
+
             {/* Ahrefs Analytics */}
-            <script
+            <Script
                 src="https://analytics.ahrefs.com/analytics.js"
                 data-key="7pSFS8uTZPgZ6+AQJF9oRg"
-                async
+                strategy="lazyOnload"
             />
 
             {/* Plausible Analytics */}
-            <Script defer data-domain="theushen.me" src="https://plausible.io/js/script.js" />
-            <Script id="plausible-init" strategy="afterInteractive">
+            <Script
+                data-domain="theushen.me"
+                src="https://plausible.io/js/script.js"
+                strategy="lazyOnload"
+            />
+            <Script id="plausible-init" strategy="lazyOnload">
                 {`
                     window.plausible = window.plausible || function() {
                         (window.plausible.q = window.plausible.q || []).push(arguments)
