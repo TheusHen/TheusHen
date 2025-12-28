@@ -77,6 +77,12 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
     colorScheme: "dark",
+    themeColor: "#000000",
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+    viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -87,17 +93,32 @@ export default function RootLayout({
     return (
         <html lang="en">
         <head>
-            <link rel="icon" href="/favicon.ico" />
-            <link rel="apple-touch-icon" href="/favicon.ico" />
+            {/* Preload critical assets */}
+            <link rel="preload" href="/favicon.ico" as="image" type="image/x-icon" />
+            
+            <link rel="icon" href="/favicon.ico" sizes="48x48" />
+            <link rel="icon" href="/favicon.png" type="image/png" sizes="500x500" />
+            <link rel="apple-touch-icon" href="/favicon.png" sizes="500x500" />
             <link rel="manifest" href="/site.webmanifest" />
             <meta name="theme-color" content="#000000" />
+            <meta name="mobile-web-app-capable" content="yes" />
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+            <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+            
+            {/* Preconnect to external domains */}
+            <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+            <link rel="preconnect" href="https://plausible.io" crossOrigin="anonymous" />
+            <link rel="preconnect" href="https://analytics.ahrefs.com" crossOrigin="anonymous" />
+            <link rel="dns-prefetch" href="https://api.github.com" />
+            <link rel="dns-prefetch" href="https://us.i.posthog.com" />
+            <link rel="dns-prefetch" href="https://avatars.githubusercontent.com" />
 
             {/* Google Analytics */}
             <Script
                 src="https://www.googletagmanager.com/gtag/js?id=G-DWX5JVERXC"
-                strategy="lazyOnload"
+                strategy="afterInteractive"
             />
-            <Script id="google-analytics" strategy="lazyOnload">
+            <Script id="google-analytics" strategy="afterInteractive">
                 {`
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){dataLayer.push(arguments);}
@@ -110,16 +131,16 @@ export default function RootLayout({
             <Script
                 src="https://analytics.ahrefs.com/analytics.js"
                 data-key="7pSFS8uTZPgZ6+AQJF9oRg"
-                strategy="lazyOnload"
+                strategy="worker"
             />
 
             {/* Plausible Analytics */}
             <Script
                 data-domain="theushen.me"
                 src="https://plausible.io/js/script.js"
-                strategy="lazyOnload"
+                strategy="worker"
             />
-            <Script id="plausible-init" strategy="lazyOnload">
+            <Script id="plausible-init" strategy="worker">
                 {`
                     window.plausible = window.plausible || function() {
                         (window.plausible.q = window.plausible.q || []).push(arguments)
@@ -154,6 +175,24 @@ export default function RootLayout({
                 {children}
             </GlobeProvider>
         </PostHogProvider>
+        
+        {/* Service Worker Registration */}
+        <Script id="sw-register" strategy="afterInteractive">
+            {`
+                if ('serviceWorker' in navigator) {
+                    window.addEventListener('load', function() {
+                        navigator.serviceWorker.register('/sw.js').then(
+                            function(registration) {
+                                console.log('SW registered: ', registration);
+                            },
+                            function(err) {
+                                console.log('SW registration failed: ', err);
+                            }
+                        );
+                    });
+                }
+            `}
+        </Script>
         </body>
         </html>
     );

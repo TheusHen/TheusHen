@@ -1,4 +1,22 @@
 body, html {
     width: 100vw;
     overflow-x: hidden !important;
+    contain: layout style paint;
+}
+
+/* Optimize heavy elements */
+canvas {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* Reduce repaints for animations */
+.animate-fade-in,
+.animate-glow,
+.animate-fade-left,
+.animate-fade-right,
+.animate-title,
+.animate-bounce {
+    will-change: opacity, transform;
+    contain: layout;
 }

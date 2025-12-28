@@ -5,14 +5,31 @@
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
-  "description": "Founder of MITPA, developer focused on open source and innovation.",
+  "description": "Founder of PRACTA, developer focused on open source, aerospace innovation and impactful tools.",
   "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["education", "developer", "portfolio"],
   "icons": [
     {
       "src": "/favicon.png",
       "sizes": "500x500",
       "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/banner.jpg",
+      "sizes": "780x400",
+      "type": "image/jpeg",
+      "form_factor": "wide"
     }
   ]
 }

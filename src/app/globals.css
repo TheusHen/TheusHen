@@ -4,9 +4,32 @@
   color-scheme: dark;
 }
 
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
   background-color: #121212;
   color: #ffffff;
+  text-rendering: optimizeSpeed;
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    scroll-behavior: smooth;
+  }
+}
+
+/* GPU acceleration for transforms */
+[class*="transition-"],
+[class*="animate-"],
+[class*="hover:scale"],
+[class*="hover:rotate"] {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 @layer base {

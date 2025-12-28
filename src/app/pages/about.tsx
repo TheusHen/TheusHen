@@ -1,10 +1,19 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, memo } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
-import Fall from "../components/Fall";
-import LazyGlobe from "../components/LazyGlobe";
+import dynamic from "next/dynamic";
+
+// Lazy load heavy components
+const Fall = dynamic(() => import("../components/Fall"), { 
+  ssr: false,
+  loading: () => null
+});
+const LazyGlobe = dynamic(() => import("../components/LazyGlobe"), {
+  ssr: false,
+  loading: () => null
+});
 
 const PROFILE_IMAGE = "https://avatars.githubusercontent.com/u/180109164";
 const HACKCLUB_IMAGE =
@@ -54,6 +63,7 @@ function ProfileImage() {
                 height={160}
                 className="w-40 h-40 rounded-full shadow-xl border-4 border-red-500 object-cover hover:scale-110 transition-transform duration-300"
                 priority
+                quality={90}
             />
             <div className="absolute bottom-4 right-4 w-20 h-14 rounded shadow-lg" style={{ zIndex: 10 }}>
                 <Image
@@ -62,11 +72,14 @@ function ProfileImage() {
                     width={80}
                     height={56}
                     className="w-20 h-14 rounded shadow-lg"
+                    loading="lazy"
                 />
             </div>
         </div>
     );
 }
+
+const MemoizedProfileImage = memo(ProfileImage);
 
 function TextSection() {
     const textRef = useRef<HTMLDivElement>(null);
@@ -124,15 +137,20 @@ function TextSection() {
                 </a>
             </div>
             <div className="flex justify-center mt-8">
-                <img
+                <Image
                     src="https://raw.githubusercontent.com/TheusHen/TheusHen/output/snake.svg"
                     alt="GitHub Contribution Snake"
+                    width={800}
+                    height={200}
                     className="max-w-full h-auto"
+                    loading="lazy"
                 />
             </div>
         </div>
     );
 }
+
+const MemoizedTextSection = memo(TextSection);
 
 function HackClubSection() {
     const hackRef = useRef<HTMLDivElement>(null);
@@ -157,6 +175,7 @@ function HackClubSection() {
                 width={272}
                 height={112}
                 className="w-68 h-28 rounded-lg drop-shadow-lg hover:rotate-6 transition-transform duration-300"
+                loading="lazy"
             />
             <div>
                 <span className="text-2xl font-bold text-red-300">Hack Club</span>
@@ -165,6 +184,8 @@ function HackClubSection() {
         </div>
     );
 }
+
+const MemoizedHackClubSection = memo(HackClubSection);
 
 function TimerSection() {
     const [timer, setTimer] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
@@ -216,6 +237,8 @@ function TimerSection() {
     );
 }
 
+const MemoizedTimerSection = memo(TimerSection);
+
 export default function About() {
     const cardRef = useRef<HTMLDivElement>(null);
 
@@ -234,12 +257,12 @@ export default function About() {
                 ref={cardRef}
                 className="w-full max-w-4xl mt-20 bg-zinc-900/80 backdrop-blur-2xl rounded-3xl shadow-2xl flex flex-col md:flex-row items-center md:items-stretch overflow-hidden border border-white/10"
             >
-                <TextSection />
-                <ProfileImage />
+                <MemoizedTextSection />
+                <MemoizedProfileImage />
             </div>
             <div className="flex flex-col gap-8 items-center mt-12 sm:flex-row">
-                <HackClubSection />
-                <TimerSection />
+                <MemoizedHackClubSection />
+                <MemoizedTimerSection />
             </div>
             <LazyGlobe />
             <Fall />

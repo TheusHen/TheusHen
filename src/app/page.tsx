@@ -2,14 +2,22 @@
 
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
-import Particles from "./components/particles";
 import { ArrowUp, ArrowDownCircle, Star } from "lucide-react";
-import About from "./pages/about";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import dynamic from 'next/dynamic';
 import './index.css'
 import LoadingDots from "./components/LoadingDots";
-import hotjar from '@hotjar/browser';
 import ClientRemount from "./client-remount";
+
+// Lazy load components
+const Particles = dynamic(() => import("./components/particles"), { 
+  ssr: false,
+  loading: () => null
+});
+const About = dynamic(() => import("./pages/about"), {
+  ssr: true,
+  loading: () => <div className="flex items-center justify-center w-full h-screen"><LoadingDots color="#ffffff" size={10} /></div>
+});
 
 // This site was inspired by chronark/chronark.com and uses some code snippets from it, not only in this file but also in others.
 
@@ -27,20 +35,39 @@ export default function Home() {
     const [stars, setStars] = useState<number | null>(null);
 
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            hotjar.init(6469301, 6);
+        // Lazy load Hotjar
+        const loadHotjar = async () => {
+            if (typeof window !== 'undefined') {
+                const { default: hotjar } = await import('@hotjar/browser');
+                hotjar.init(6469301, 6);
+            }
+        };
+        
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => loadHotjar(), { timeout: 3000 });
+        } else {
+            setTimeout(loadHotjar, 2000);
         }
-        // Fetch the number of stars from GitHub API
-        fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`)
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.stargazers_count !== undefined) {
-                    setStars(data.stargazers_count);
-                }
-            })
-            .catch(() => {
-                setStars(null);
-            });
+
+        // Fetch GitHub stars with lower priority
+        const fetchStars = () => {
+            fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`)
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.stargazers_count !== undefined) {
+                        setStars(data.stargazers_count);
+                    }
+                })
+                .catch(() => {
+                    setStars(null);
+                });
+        };
+
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => fetchStars(), { timeout: 2000 });
+        } else {
+            setTimeout(fetchStars, 1000);
+        }
     }, []);
 
     const handleSend = () => {
