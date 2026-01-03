@@ -17,6 +17,7 @@
   <summary>GPG</summary>
 
 GPG Key ID: 3D969636DC9CC552
+
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
 mDMEaVliqhYJKwYBBAHaRw8BAQdAwIPSq224GclOlx8I+jtDAMWPhv0fv8AzhTZQ
