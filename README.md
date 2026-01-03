@@ -12,3 +12,24 @@
 </div>
 
 <img src="https://raw.githubusercontent.com/TheusHen/TheusHen/output/snake.svg" alt="Snake animation" />
+
+<details>
+  <summary>GPG</summary>
+
+GPG Key ID: 3D969636DC9CC552
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+mDMEaVliqhYJKwYBBAHaRw8BAQdAwIPSq224GclOlx8I+jtDAMWPhv0fv8AzhTZQ
+JmDVDLe0Rk1hdGhldXMgSGVucmlxdWUgKEFrYTogVGhldXNIZW4pIChnaXQpIDxt
+bW1hdGhldXNoZW5yaXF1ZWVlQGdtYWlsLmNvbT6ImQQTFgoAQRYhBOcSRz1WB3+u
+U9ZqDz2WljbcnMVSBQJpWWKqAhsDBQkB4TOABQsJCAcCAiICBhUKCQgLAgQWAgMB
+Ah4HAheAAAoJED2WljbcnMVS9NIA/RdN3D54h2q0bqTiQ+hDId/foI4K9dcsKwFG
+bywA/xzBAP9xJ074/3RtffiKiMLtphB5uxeCIYOFJuuWcQ5y/lTpC7g4BGlZYqoS
+CisGAQQBl1UBBQEBB0BlZjJAs4nP5qFGamvovXBywxQTq4HF878zchaYk2hqWAMB
+CAeIfgQYFgoAJhYhBOcSRz1WB3+uU9ZqDz2WljbcnMVSBQJpWWKqAhsMBQkB4TOA
+AAoJED2WljbcnMVSKkQA/iS4oGWxbLvJBhepRFLY/qA5aySD6GPZ+HomR9C4Uu26
+AP4kgZNTjTTcQAIWGJJ/LoGDybZUBV7mSeDJMlKY6u+ZCA==
+=F3T3
+-----END PGP PUBLIC KEY BLOCK-----
+
+</details>
