@@ -178,7 +178,7 @@ export default function Home() {
 
                 <div className="w-full h-[0.2px] bg-white shadow-lg opacity-90 my-0" />
 
-                <div id="about-me" className="w-screen min-h-screen flex justify-center items-center relative z-10">
+                <div id="about-me" className="w-screen min-h-screen flex flex-col justify-center items-center gap-12 relative z-10">
                     <Particles
                         className="absolute inset-0 -z-10 animate-fade-in"
                         quantity={75}
