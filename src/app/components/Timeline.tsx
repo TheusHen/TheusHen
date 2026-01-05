@@ -14,9 +14,9 @@ const GITHUB_BRANCH = "feat-add-timeline";
 // Folder that contains your markdown files (must be at repository root for the GitHub link builder below)
 const TIMELINE_FOLDER = "line";
 
-// Visual tuning
-const CARD_MAX_W = 340;
-const CARD_MIN_W = 260;
+// Visual tuning (bigger cards)
+const CARD_MAX_W = 520;
+const CARD_MIN_W = 360;
 const NODE_SIZE = 14;
 
 type TimelineItem = {
@@ -170,10 +170,7 @@ export default function Timeline() {
   const cardW = clamp(Math.floor((CARD_MAX_W + CARD_MIN_W) / 2), CARD_MIN_W, CARD_MAX_W);
 
   return (
-    <div
-      ref={rootRef}
-      className="relative w-full overflow-hidden bg-gradient-to-b from-neutral-950 via-neutral-950 to-neutral-950"
-    >
+    <div ref={rootRef} className="relative w-full overflow-hidden bg-gradient-to-b from-neutral-950 via-neutral-950 to-neutral-950">
       {/* soft background */}
       <div className="pointer-events-none absolute inset-0 opacity-90">
         <div className="absolute -top-40 left-1/2 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-white/5 blur-3xl" />
@@ -216,9 +213,7 @@ export default function Timeline() {
               <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_0_4px_rgba(52,211,153,0.12)]" />
               <span className="text-xs font-medium text-white/80">Journey</span>
               {activeId ? (
-                <span className="text-xs text-white/55">
-                  • {items.find((x) => x.id === activeId)?.dateISO ?? ""}
-                </span>
+                <span className="text-xs text-white/55">• {items.find((x) => x.id === activeId)?.dateISO ?? ""}</span>
               ) : null}
             </div>
 
@@ -231,13 +226,8 @@ export default function Timeline() {
                 {/* moving glow */}
                 <div className="pointer-events-none absolute left-8 right-8 top-1/2 h-[18px] -translate-y-1/2 bg-gradient-to-r from-indigo-500/0 via-indigo-500/15 to-cyan-500/0 blur-xl sm:left-10 sm:right-10" />
 
-                <div className="relative flex items-center gap-10 pr-[20vw]">
-                  {/* Start cap */}
-                  <div className="relative flex items-center">
-                    <div className="h-4 w-4 rounded-full bg-white/40" />
-                    <div className="ml-3 text-xs text-white/50">start</div>
-                  </div>
-
+                {/* ITEMS ONLY (no start / no now) */}
+                <div className="relative flex items-center gap-10 px-4">
                   {items.map((it, idx) => {
                     const isTop = idx % 2 === 0;
                     const isActive = activeId === it.id;
@@ -307,12 +297,12 @@ export default function Timeline() {
                           ].join(" ")}
                           style={{
                             width: cardW,
-                            top: isTop ? `calc(50% - ${62 + 46 + 140}px)` : `calc(50% + ${62 + 46}px)`,
+                            top: isTop ? `calc(50% - ${62 + 46 + 160}px)` : `calc(50% + ${62 + 46}px)`,
                           }}
                           onMouseEnter={() => setActiveId(it.id)}
                           onFocus={() => setActiveId(it.id)}
                         >
-                          <div className="relative p-4">
+                          <div className="relative p-5">
                             {/* glow */}
                             <div
                               className={[
@@ -327,27 +317,29 @@ export default function Timeline() {
 
                             <div className="relative flex items-start justify-between gap-3">
                               <div className="min-w-0">
-                                <div className="mb-2 flex flex-wrap items-center gap-2">
-                                  <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-medium text-white/75">
+                                <div className="mb-3 flex flex-wrap items-center gap-2">
+                                  <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[12px] font-medium text-white/75">
                                     <CalendarDays className="h-3.5 w-3.5 text-white/60" />
                                     {it.dateISO}
                                   </span>
-                                  <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-medium text-white/60">
+                                  <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[12px] font-medium text-white/60">
                                     <Clock3 className="h-3.5 w-3.5 text-white/50" />
                                     {it.timeHHMM}
                                   </span>
                                 </div>
 
-                                <div className="text-sm font-semibold leading-snug text-white">{it.title}</div>
+                                <div className="text-base sm:text-lg font-semibold leading-snug text-white break-words">
+                                  {it.title}
+                                </div>
 
-                                <div className="mt-2 text-xs leading-relaxed text-white/55">
+                                <div className="mt-2 text-sm leading-relaxed text-white/55">
                                   Click to open the full entry on GitHub.
                                 </div>
                               </div>
 
                               <div className="shrink-0">
-                                <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/70 transition-colors group-hover:bg-white/10 group-hover:text-white">
-                                  <ExternalLink className="h-4.5 w-4.5" />
+                                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/70 transition-colors group-hover:bg-white/10 group-hover:text-white">
+                                  <ExternalLink className="h-5 w-5" />
                                 </span>
                               </div>
                             </div>
@@ -365,12 +357,6 @@ export default function Timeline() {
                       </div>
                     );
                   })}
-
-                  {/* End cap */}
-                  <div className="relative flex items-center">
-                    <div className="h-4 w-4 rounded-full bg-white/40" />
-                    <div className="ml-3 text-xs text-white/50">now</div>
-                  </div>
                 </div>
               </div>
             </div>
