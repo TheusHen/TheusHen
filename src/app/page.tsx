@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic';
 import './index.css'
 import LoadingDots from "./components/LoadingDots";
 import ClientRemount from "./client-remount";
+import Timeline from "./components/Timeline";
 
 // Lazy load components
 const Particles = dynamic(() => import("./components/particles"), { 
@@ -183,6 +184,7 @@ export default function Home() {
                         quantity={75}
                     />
                     <About />
+                    <Timeline />
                 </div>
 
             </ClientRemount>
