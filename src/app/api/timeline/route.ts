@@ -33,7 +33,7 @@ function parseLinkOverride(md: string) {
 function dateToOrderKey(dateISO: string, timeHHMM: string) {
     const [y, m, d] = dateISO.split("-").map(Number);
     const [hh, mm] = timeHHMM.split(":").map(Number);
-    const t = new Date(y, (m ?? 1) - 1, d ?? 1, hh ?? 0, mm ?? 0, 0, 0).getTime();
+    const t = new Date(y || 0, (m || 1) - 1, d || 1, hh || 0, mm || 0, 0, 0).getTime();
     return Number.isFinite(t) ? t : 0;
 }
 
