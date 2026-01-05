@@ -23,6 +23,7 @@ const About = dynamic(() => import("./pages/about"), {
 
 const navigation = [
     { name: "Projects", href: "/projects" },
+    { name: "Timeline", href: "/timeline" },
     { name: "Contact", href: "/contact" },
 ];
 
