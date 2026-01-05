@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, useReducedMotion } from "framer-motion";
@@ -14,26 +14,26 @@ const GITHUB_BRANCH = "feat-add-timeline";
 // Folder that contains your markdown files (must be at repository root for the GitHub link builder below)
 const TIMELINE_FOLDER = "line";
 
-// Used to load local md files via Next bundler.
-// IMPORTANT: Your md files must live in: /line/*.md (at project root).
-const MD_GLOB = "../../../line/*.md";
-
-// "Time: HH:mm" in any line (ex: "Time: 18:40"). Otherwise it defaults to "00:00".
-const TIME_LINE_REGEX = /^time:\s*([0-2]\d:[0-5]\d)\s*$/im;
-
-const LINK_LINE_REGEX = /^link:\s*(https?:\/\/\S+)\s*$/im;
-
 // Visual tuning
 const CARD_MAX_W = 340;
 const CARD_MIN_W = 260;
 const NODE_SIZE = 14;
 
 type TimelineItem = {
-  id: string;
+  id: string; // filename: "2026-01-05.md"
   dateISO: string; // YYYY-MM-DD
   timeHHMM: string; // HH:mm
   title: string;
   githubUrl: string;
+  orderKey: number;
+};
+
+type ApiItem = {
+  id: string;
+  dateISO: string;
+  timeHHMM: string;
+  title: string;
+  linkOverride: string | null;
   orderKey: number;
 };
 
@@ -43,35 +43,9 @@ function clamp(n: number, min: number, max: number) {
   return Math.max(min, Math.min(max, n));
 }
 
-function parseFirstHeading(md: string) {
-  const lines = md.split("\n");
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (trimmed.startsWith("# ")) return trimmed.replace(/^#\s+/, "").trim();
-  }
-  return "Untitled";
-}
-
-function parseTime(md: string) {
-  const m = md.match(TIME_LINE_REGEX);
-  return m?.[1] ?? "00:00";
-}
-
-function parseLinkOverride(md: string) {
-  const m = md.match(LINK_LINE_REGEX);
-  return m?.[1] ?? null;
-}
-
 function buildGithubMdUrl(fileName: string) {
   const encodedPath = `${TIMELINE_FOLDER}/${fileName}`.split("/").map(encodeURIComponent).join("/");
   return `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/blob/${GITHUB_BRANCH}/${encodedPath}`;
-}
-
-function dateToOrderKey(dateISO: string, timeHHMM: string) {
-  const [y, m, d] = dateISO.split("-").map(Number);
-  const [hh, mm] = timeHHMM.split(":").map(Number);
-  const t = new Date(y, (m ?? 1) - 1, d ?? 1, hh ?? 0, mm ?? 0, 0, 0).getTime();
-  return Number.isFinite(t) ? t : 0;
 }
 
 export default function Timeline() {
@@ -85,44 +59,39 @@ export default function Timeline() {
   const [items, setItems] = useState<TimelineItem[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
 
-  const files = useMemo(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const ctx = require.context(MD_GLOB.replace("../../", ""), false, /\.md$/);
-    // This path trick keeps the "single file component only" request.
-    // If it fails in your setup, set MD_GLOB to "../..../line/*.md" and adjust accordingly.
-    return ctx.keys().map((k: string) => ({ key: k, loader: () => ctx(k) as string }));
-  }, []);
-
   useEffect(() => {
-    try {
-      const loaded: TimelineItem[] = files
-        .map(({ key, loader }) => {
-          const md = loader();
-          const fileName = key.replace(/^\.\//, "");
-          const dateISO = fileName.replace(/\.md$/i, "");
-          const title = parseFirstHeading(md);
-          const timeHHMM = parseTime(md);
-          const linkOverride = parseLinkOverride(md);
-          const githubUrl = linkOverride ?? buildGithubMdUrl(fileName);
+    let cancelled = false;
 
-          return {
-            id: fileName,
-            dateISO,
-            timeHHMM,
-            title,
-            githubUrl,
-            orderKey: dateToOrderKey(dateISO, timeHHMM),
-          };
-        })
-        .sort((a, b) => a.orderKey - b.orderKey);
+    (async () => {
+      try {
+        const res = await fetch("/api/timeline", { cache: "no-store" });
+        const data: { items: ApiItem[] } = await res.json();
 
-      setItems(loaded);
-      setActiveId(loaded[0]?.id ?? null);
-    } catch {
-      setItems([]);
-      setActiveId(null);
-    }
-  }, [files]);
+        const loaded: TimelineItem[] = (data.items ?? []).map((it) => ({
+          id: it.id,
+          dateISO: it.dateISO,
+          timeHHMM: it.timeHHMM,
+          title: it.title,
+          githubUrl: it.linkOverride ?? buildGithubMdUrl(it.id),
+          orderKey: it.orderKey,
+        }));
+
+        if (!cancelled) {
+          setItems(loaded);
+          setActiveId(loaded[0]?.id ?? null);
+        }
+      } catch {
+        if (!cancelled) {
+          setItems([]);
+          setActiveId(null);
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // GSAP horizontal scroll + pin
   useLayoutEffect(() => {
@@ -141,8 +110,6 @@ export default function Timeline() {
         return Math.max(0, railW - pinW);
       };
 
-      let maxX = measure();
-
       const tween = gsap.to(rail, {
         x: () => -measure(),
         ease: "none",
@@ -157,7 +124,6 @@ export default function Timeline() {
         anticipatePin: 1,
         scrub: 1,
         onRefresh: () => {
-          maxX = measure();
           tween.vars.x = () => -measure();
           tween.invalidate();
         },
@@ -178,11 +144,7 @@ export default function Timeline() {
       const nodes = gsap.utils.toArray<HTMLElement>("[data-tl-node]");
       const cards = gsap.utils.toArray<HTMLElement>("[data-tl-card]");
 
-      gsap.fromTo(
-        itemsEl,
-        { opacity: 0, y: 18 },
-        { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }
-      );
+      gsap.fromTo(itemsEl, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" });
 
       gsap.fromTo(
         nodes,
@@ -255,8 +217,7 @@ export default function Timeline() {
               <span className="text-xs font-medium text-white/80">Journey</span>
               {activeId ? (
                 <span className="text-xs text-white/55">
-                  •{" "}
-                  {items.find((x) => x.id === activeId)?.dateISO ?? ""}
+                  • {items.find((x) => x.id === activeId)?.dateISO ?? ""}
                 </span>
               ) : null}
             </div>
@@ -324,7 +285,8 @@ export default function Timeline() {
                           ].join(" ")}
                           style={{
                             height: 46,
-                            background: "linear-gradient(to bottom, rgba(255,255,255,0.0), rgba(255,255,255,0.18), rgba(255,255,255,0.0))",
+                            background:
+                              "linear-gradient(to bottom, rgba(255,255,255,0.0), rgba(255,255,255,0.18), rgba(255,255,255,0.0))",
                           }}
                         />
 
@@ -376,9 +338,7 @@ export default function Timeline() {
                                   </span>
                                 </div>
 
-                                <div className="text-sm font-semibold leading-snug text-white">
-                                  {it.title}
-                                </div>
+                                <div className="text-sm font-semibold leading-snug text-white">{it.title}</div>
 
                                 <div className="mt-2 text-xs leading-relaxed text-white/55">
                                   Click to open the full entry on GitHub.
