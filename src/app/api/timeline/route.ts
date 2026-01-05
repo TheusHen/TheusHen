@@ -4,7 +4,7 @@ import fs from "fs/promises";
 
 const TIMELINE_DIR = path.join(process.cwd(), "line");
 
-const TIME_LINE_REGEX = /^time:\s*([0-2]\d:[0-5]\d)\s*$/im;
+const TIME_LINE_REGEX = /^time:\s*(([01]\d|2[0-3]):[0-5]\d)\s*$/im;
 const LINK_LINE_REGEX = /^link:\s*(https?:\/\/\S+)\s*$/im;
 
 function parseFirstHeading(md: string) {

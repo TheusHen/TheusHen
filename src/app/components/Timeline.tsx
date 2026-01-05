@@ -262,7 +262,7 @@ export default function Timeline() {
           </div>
         ) : (
           <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-sm text-white/70">
-            No markdown files found in /line. Add files like 2026-01-05.md with a first line heading: &apos;# Title&apos;.
+            No markdown files found in /{TIMELINE_FOLDER}. Add files like 2026-01-05.md with a first line heading: &apos;# Title&apos;.
           </div>
         )}
       </div>
