@@ -8,10 +8,14 @@ const TIME_LINE_REGEX = /^time:\s*([0-2]\d:[0-5]\d)\s*$/im;
 const LINK_LINE_REGEX = /^link:\s*(https?:\/\/\S+)\s*$/im;
 
 function parseFirstHeading(md: string) {
-  const lines = md.split("\n");
+  const normalized = md.replace(/^\uFEFF/, "");
+  const lines = normalized.split("\n");
+
   for (const line of lines) {
     const trimmed = line.trim();
-    if (trimmed.startsWith("# ")) return trimmed.replace(/^#\s+/, "").trim();
+    if (!trimmed) continue;
+    const m = trimmed.match(/^#\s*(.+)$/);
+    if (m?.[1]) return m[1].trim();
   }
   return "Untitled";
 }
