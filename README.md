@@ -16,7 +16,7 @@
 <details>
   <summary>GPG</summary>
 
-GPG Key ID: 3D969636DC9CC552
+GPG ID: 3D969636DC9CC552
 
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
