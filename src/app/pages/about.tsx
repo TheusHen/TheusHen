@@ -18,7 +18,7 @@ const LazyGlobe = dynamic(() => import("../components/LazyGlobe"), {
 const PROFILE_IMAGE = "https://avatars.githubusercontent.com/u/180109164";
 const HACKCLUB_IMAGE =
     "https://images.fillout.com/orgid-81/flowpublicid-eLhFehpKG6us/widgetid-cbsLd1W9tHmPW9frkYFap2/3G6y1B7Rk3agk6YVqtLmJN/Group-106.png?a=hcRnPh87k73TcrVHzBe6UW";
-const COLLEGE_APP_DATE = new Date("2027-11-01T00:00:00Z");
+const COLLEGE_APP_DATE = new Date("2028-11-01T00:00:00Z");
 
 function getTimeLeft() {
     // This function should only be called on the client
