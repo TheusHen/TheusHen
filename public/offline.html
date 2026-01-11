@@ -281,22 +281,32 @@
         }
 
         // Check connection status periodically with exponential backoff
-        let checkInterval = 10000; // Start with 10 seconds
-        const maxInterval = 60000; // Max 60 seconds
+        const INITIAL_CHECK_INTERVAL = 10000; // Start with 10 seconds
+        const MAX_CHECK_INTERVAL = 60000; // Max 60 seconds
+        const BACKOFF_MULTIPLIER = 1.5; // Exponential backoff rate
+        let checkInterval = INITIAL_CHECK_INTERVAL;
+        let timeoutId = null;
         
         function scheduleNextCheck() {
-            setTimeout(function() {
+            timeoutId = setTimeout(function() {
                 updateConnectionStatus();
                 if (!navigator.onLine) {
                     // Increase interval up to max
-                    checkInterval = Math.min(checkInterval * 1.5, maxInterval);
+                    checkInterval = Math.min(checkInterval * BACKOFF_MULTIPLIER, MAX_CHECK_INTERVAL);
                 } else {
                     // Reset interval when back online
-                    checkInterval = 10000;
+                    checkInterval = INITIAL_CHECK_INTERVAL;
                 }
                 scheduleNextCheck();
             }, checkInterval);
         }
+        
+        // Clear timeout on page unload to prevent memory leaks
+        window.addEventListener('beforeunload', function() {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+        });
         
         scheduleNextCheck();
     </script>
