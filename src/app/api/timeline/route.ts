@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import path from "path";
 import fs from "fs/promises";
 
+export const dynamic = "force-dynamic";
+
 const TIMELINE_DIR = path.join(process.cwd(), "line");
 
 const TIME_LINE_REGEX = /^time:\s*(([01]\d|2[0-3]):[0-5]\d)\s*$/im;
