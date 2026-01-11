@@ -1,8 +1,9 @@
 "use client";
 
-import { FlowDiagram } from "../components/FlowDiagram";
-import { FeatureList } from "../components/FeatureList";
+import React from "react";
 import { ActionButtons } from "../components/ActionButtons";
+import { FeatureList } from "../components/FeatureList";
+import { FlowDiagram } from "../components/FlowDiagram";
 
 const Index = () => {
     return (

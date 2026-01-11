@@ -103,18 +103,10 @@ async function fetchGitHubProjects(username: string): Promise<GitHubRepo[]> {
             cache: 'no-store',
         });
         if (!res.ok) return [];
-        const repos = await res.json();
-        if (!Array.isArray(repos)) return [];
-        return repos.map((repo: Record<string, unknown>) => ({
-            id: repo.id as number,
-            name: repo.name as string,
-            description: repo.description as string,
-            html_url: repo.html_url as string,
-            stargazers_count: repo.stargazers_count as number,
-            language: repo.language as string | null,
+        const repos = (await res.json()) as GitHubRepo[] || [];
+        return repos.map((repo) => ({
+            ...repo,
             owner: { avatar_url: (repo.owner as { avatar_url: string }).avatar_url },
-            fork: repo.fork as boolean,
-            homepage: repo.homepage ? (repo.homepage as string) : null,
             topics: (repo.topics ?? []) as string[],
         }));
     } catch {
