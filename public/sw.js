@@ -1,53 +1,85 @@
-// Service Worker for caching static assets
-const CACHE_NAME = 'theushen-v1';
-const urlsToCache = [
+const VERSION = 'v2.0.0';
+
+const STATIC_CACHE = `theushen-static-${VERSION}`;
+const PAGE_CACHE   = `theushen-pages-${VERSION}`;
+
+const STATIC_ASSETS = [
   '/',
   '/favicon.ico',
   '/site.webmanifest',
+  '/offline.html',
 ];
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(urlsToCache))
-  );
-});
+  self.skipWaiting();
 
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        if (response) {
-          return response;
-        }
-        return fetch(event.request).then(
-          (response) => {
-            if (!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-            const responseToCache = response.clone();
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-                cache.put(event.request, responseToCache);
-              });
-            return response;
-          }
-        );
-      })
+  event.waitUntil(
+    caches.open(STATIC_CACHE).then((cache) => {
+      return cache.addAll(STATIC_ASSETS);
+    })
   );
 });
 
 self.addEventListener('activate', (event) => {
-  const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
+    caches.keys().then((keys) => {
       return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
+        keys.map((key) => {
+          if (![STATIC_CACHE, PAGE_CACHE].includes(key)) {
+            return caches.delete(key);
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
+});
+
+self.addEventListener('fetch', (event) => {
+  const { request } = event;
+
+  // Ignore non-GET
+  if (request.method !== 'GET') return;
+
+  const url = new URL(request.url);
+
+  if (request.headers.get('accept')?.includes('text/html')) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          const responseClone = response.clone();
+          caches.open(PAGE_CACHE).then((cache) => {
+            cache.put(request, responseClone);
+          });
+          return response;
+        })
+        .catch(() => {
+          return caches.match(request).then((cached) => {
+            return cached || caches.match('/offline.html');
+          });
+        })
+    );
+    return;
+  }
+
+  if (
+    url.pathname.match(/\.(js|css|png|jpg|jpeg|svg|webp|avif|woff2?)$/)
+  ) {
+    event.respondWith(
+      caches.match(request).then((cached) => {
+        const networkFetch = fetch(request).then((response) => {
+          if (response && response.status === 200) {
+            caches.open(STATIC_CACHE).then((cache) => {
+              cache.put(request, response.clone());
+            });
+          }
+          return response;
+        });
+
+        return cached || networkFetch;
+      })
+    );
+    return;
+  }
+
+  event.respondWith(fetch(request));
 });
