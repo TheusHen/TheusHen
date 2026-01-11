@@ -15,7 +15,7 @@ export function middleware(request: NextRequest) {
   // Add security and performance headers
   response.headers.set('X-Robots-Tag', 'index, follow');
   response.headers.set('X-Content-Type-Options', 'nosniff');
-  response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  response.headers.set('Strict-Transport-Security', 'max-age=0; includeSubDomains');
   
   return response;
 }
