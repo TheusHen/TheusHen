@@ -58,7 +58,7 @@ export default function ProjectsLayout({
                                 item: {
                                     "@type": "SoftwareApplication",
                                     name: "PRACTA",
-                                    description: "An open-source community platform focused on helping students prepare for SAT with focus on MIT university. Provides a platform for students worldwide to discuss study strategies, share experiences, and connect.",
+                                    description: "An open-source community platform focused on helping students prepare for SAT with a focus on MIT University. Provides a platform for students worldwide to discuss study strategies, share experiences, and connect.",
                                     url: "https://practa.tech",
                                     applicationCategory: "WebApplication",
                                     operatingSystem: "Web Browser",

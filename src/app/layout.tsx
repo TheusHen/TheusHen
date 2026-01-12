@@ -206,14 +206,6 @@ export default function RootLayout({
                         "@type": "Person",
                         name: "Matheus Henrique",
                         url: "https://theushen.me"
-                    },
-                    potentialAction: {
-                        "@type": "SearchAction",
-                        target: {
-                            "@type": "EntryPoint",
-                            urlTemplate: "https://theushen.me/projects?search={search_term_string}"
-                        },
-                        "query-input": "required name=search_term_string"
                     }
                 })}
             </Script>
