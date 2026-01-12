@@ -12,11 +12,12 @@ export const metadata: Metadata = {
         default: "TheusHen",
         template: "%s | TheusHen",
     },
-    description: "Founder of PRACTA, developer focused on open source, aerospace innovation and impactful tools.",
+    description: "Matheus Henrique (TheusHen) - Founder of PRACTA, full-stack developer passionate about open source software, aerospace engineering, and building impactful tools. Explore my projects, timeline, and get in touch.",
     applicationName: "TheusHen Portfolio",
     authors: [{ name: "Matheus Henrique", url: "https://theushen.me" }],
     keywords: [
         "theushen",
+        "Matheus Henrique",
         "PRACTA",
         "developer",
         "portfolio",
@@ -25,7 +26,15 @@ export const metadata: Metadata = {
         "open source",
         "programming",
         "software engineer",
+        "full-stack developer",
+        "web development",
         "MIT",
+        "Brazil",
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "Next.js",
+        "Node.js",
     ],
     generator: "Next.js",
     referrer: "origin-when-cross-origin",
@@ -33,26 +42,31 @@ export const metadata: Metadata = {
     publisher: "TheusHen",
     metadataBase: new URL("https://theushen.me"),
     openGraph: {
-        title: "TheusHen",
-        description: "Founder of PRACTA, developer focused on open source and innovation.",
+        title: "TheusHen - Full-Stack Developer & Open Source Advocate",
+        description: "Portfolio of Matheus Henrique, founder of PRACTA. Passionate about open source software, aerospace engineering, and creating impactful solutions. Discover my projects and journey in software development.",
         url: "https://theushen.me",
-        siteName: "TheusHen",
+        siteName: "TheusHen Portfolio",
         images: [
             {
                 url: "https://theushen.me/banner.jpg",
                 width: 780,
                 height: 400,
-                alt: "Banner - TheusHen Portfolio",
+                alt: "TheusHen Portfolio - Matheus Henrique, Full-Stack Developer",
             },
         ],
         locale: "en_US",
-        type: "website",
+        type: "profile",
+        firstName: "Matheus",
+        lastName: "Henrique",
+        username: "TheusHen",
     },
     twitter: {
         card: "summary_large_image",
-        title: "TheusHen",
-        description: "Founder of PRACTA, focused on open source, aerospace and technology.",
+        title: "TheusHen - Full-Stack Developer & Open Source Advocate",
+        description: "Portfolio of Matheus Henrique, founder of PRACTA. Passionate about open source, aerospace engineering, and building impactful solutions.",
         images: ["https://theushen.me/banner.jpg"],
+        creator: "@theushen",
+        site: "@theushen",
     },
     robots: {
         index: true,
@@ -148,21 +162,51 @@ export default function RootLayout({
                 `}
             </Script>
 
-            <Script id="structured-data" type="application/ld+json">
+            <Script id="structured-data-person" type="application/ld+json">
                 {JSON.stringify({
                     "@context": "https://schema.org",
                     "@type": "Person",
                     name: "Matheus Henrique",
+                    alternateName: "TheusHen",
                     url: "https://theushen.me",
+                    image: "https://avatars.githubusercontent.com/u/180109164",
                     sameAs: [
                         "https://github.com/theushen",
                         "https://www.linkedin.com/in/matheus-henrique-741776367/",
                     ],
                     jobTitle: "Full-Stack Developer",
+                    description: "Founder of PRACTA, developer focused on open source, aerospace innovation and impactful tools.",
                     worksFor: {
                         "@type": "Organization",
                         name: "PRACTA",
+                        url: "https://practa.tech"
                     },
+                    contactPoint: {
+                        "@type": "ContactPoint",
+                        contactType: "Personal",
+                        url: "https://theushen.me/contact"
+                    },
+                    knowsAbout: ["Software Development", "Aerospace Engineering", "Open Source", "Web Development", "Full-Stack Development"],
+                    alumniOf: {
+                        "@type": "EducationalOrganization",
+                        name: "Massachusetts Institute of Technology",
+                        alternateName: "MIT"
+                    }
+                })}
+            </Script>
+            <Script id="structured-data-website" type="application/ld+json">
+                {JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "WebSite",
+                    name: "TheusHen Portfolio",
+                    alternateName: "TheusHen",
+                    url: "https://theushen.me",
+                    description: "Portfolio of Matheus Henrique (TheusHen), founder of PRACTA, developer focused on open source, aerospace innovation and impactful tools.",
+                    author: {
+                        "@type": "Person",
+                        name: "Matheus Henrique",
+                        url: "https://theushen.me"
+                    }
                 })}
             </Script>
         </head>
