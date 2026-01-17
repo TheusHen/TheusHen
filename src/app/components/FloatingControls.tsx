@@ -40,7 +40,7 @@ export default function FloatingControls() {
     return (
         <div
             ref={containerRef}
-            className="fixed right-4 top-4 z-[9999] mt-10 flex flex-col gap-2 sm:gap-3"
+            className="fixed right-2 top-4 z-[9999] mt-10 flex flex-col gap-2 sm:right-3 sm:gap-3"
         >
             <div className="relative">
                 <button
@@ -48,18 +48,18 @@ export default function FloatingControls() {
                     onClick={() => togglePanel("accessibility")}
                     aria-label={t("accessibility.accessibilityLabel")}
                     aria-expanded={openPanel === "accessibility"}
-                    className="group flex items-center"
+                    className="group flex items-center flex-row-reverse"
                 >
                     <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-black shadow-lg transition-transform duration-200 group-hover:scale-105 sm:h-12 sm:w-12">
                         <Accessibility className="h-5 w-5 sm:h-6 sm:w-6" />
                     </span>
-                    <span className="ml-3 max-w-0 overflow-hidden rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-black opacity-0 shadow-lg transition-all duration-300 group-hover:max-w-[160px] group-hover:opacity-100">
+                    <span className="mr-3 max-w-0 overflow-hidden rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-black opacity-0 shadow-lg transition-all duration-300 group-hover:max-w-[160px] group-hover:opacity-100">
                         {t("accessibility.accessibilityLabel")}
                     </span>
                 </button>
 
                 {openPanel === "accessibility" && (
-                    <div className="absolute left-14 top-0 w-64 rounded-2xl border border-white/20 bg-black/90 p-4 text-white shadow-2xl backdrop-blur">
+                    <div className="absolute right-14 top-0 w-64 rounded-2xl border border-white/20 bg-black/90 p-4 text-white shadow-2xl backdrop-blur">
                         <div className="mb-3 text-sm font-semibold text-white">
                             {t("accessibility.accessibilityTitle")}
                         </div>
@@ -121,18 +121,18 @@ export default function FloatingControls() {
                     onClick={() => togglePanel("language")}
                     aria-label={t("accessibility.translationLabel")}
                     aria-expanded={openPanel === "language"}
-                    className="group flex items-center"
+                    className="group flex items-center flex-row-reverse"
                 >
                     <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-black shadow-lg transition-transform duration-200 group-hover:scale-105 sm:h-12 sm:w-12">
                         <Languages className="h-5 w-5 sm:h-6 sm:w-6" />
                     </span>
-                    <span className="ml-3 max-w-0 overflow-hidden rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-black opacity-0 shadow-lg transition-all duration-300 group-hover:max-w-[160px] group-hover:opacity-100">
+                    <span className="mr-3 max-w-0 overflow-hidden rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-black opacity-0 shadow-lg transition-all duration-300 group-hover:max-w-[160px] group-hover:opacity-100">
                         {t("accessibility.translationLabel")}
                     </span>
                 </button>
 
                 {openPanel === "language" && (
-                    <div className="absolute left-14 top-0 w-64 rounded-2xl border border-white/20 bg-black/90 p-4 text-white shadow-2xl backdrop-blur">
+                    <div className="absolute right-14 top-0 w-64 rounded-2xl border border-white/20 bg-black/90 p-4 text-white shadow-2xl backdrop-blur">
                         <div className="mb-3 text-sm font-semibold text-white">
                             {t("accessibility.languageTitle")}
                         </div>
