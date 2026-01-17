@@ -283,12 +283,17 @@ const translations = {
 const I18nContext = createContext<I18nContextValue | undefined>(undefined);
 
 function getTranslationValue(language: Language, key: string) {
-    return key.split(".").reduce((obj, part) => {
-        if (obj && typeof obj === "object" && part in obj) {
-            return (obj as Record<string, unknown>)[part];
+    let current: unknown = translations[language] as Record<string, unknown>;
+
+    for (const part of key.split(".")) {
+        if (current && typeof current === "object" && part in (current as Record<string, unknown>)) {
+            current = (current as Record<string, unknown>)[part];
+        } else {
+            return undefined;
         }
-        return undefined;
-    }, translations[language] as Record<string, unknown>);
+    }
+
+    return current;
 }
 
 function interpolate(message: string, values?: TranslationValues) {
