@@ -10,6 +10,7 @@ import { EffectCoverflow, Autoplay } from "swiper/modules";
 import { ArrowLeft } from "lucide-react";
 import Particles from "@/app/components/particles";
 import Confetti from "react-confetti";
+import { useI18n } from "@/app/contexts/I18nContext";
 
 // Lista das imagens do carrossel
 const images = [
@@ -64,6 +65,7 @@ function isMobile() {
 }
 
 export default function AutoCarousel() {
+    const { t } = useI18n();
     // Responsividade: define slidesPerView conforme a largura da tela
     const [slidesPerView, setSlidesPerView] = useState(3);
     // Estado para saber se é mobile
@@ -130,10 +132,10 @@ export default function AutoCarousel() {
                 </button>
                 <div className="flex space-x-6">
                     <button className="text-lg hover:text-red-400 transition-colors" onClick={() => window.location.href = '/projects'}>
-                        Projects
+                        {t("nav.projects")}
                     </button>
                     <button className="text-lg hover:text-red-400 transition-colors" onClick={() => window.location.href = '/contact'}>
-                        Contact
+                        {t("nav.contact")}
                     </button>
                 </div>
             </div>
@@ -296,27 +298,27 @@ function TimerSection({
             }}
         >
             <span className="text-lg font-semibold text-red-300 mb-2">
-                Time left until my College Application
+                {t("about.timerTitle")}
             </span>
             <div className="flex gap-3 text-white text-2xl font-mono tracking-wider">
                 <div className="flex flex-col items-center">
                     <span className="timer-value">{timer.days}</span>
-                    <span className="text-xs text-red-400">days</span>
+                    <span className="text-xs text-red-400">{t("time.days")}</span>
                 </div>
                 <span>:</span>
                 <div className="flex flex-col items-center">
                     <span className="timer-value">{timer.hours}</span>
-                    <span className="text-xs text-red-400">h</span>
+                    <span className="text-xs text-red-400">{t("time.hoursShort")}</span>
                 </div>
                 <span>:</span>
                 <div className="flex flex-col items-center">
                     <span className="timer-value">{timer.mins}</span>
-                    <span className="text-xs text-red-400">min</span>
+                    <span className="text-xs text-red-400">{t("time.minutesShort")}</span>
                 </div>
                 <span>:</span>
                 <div className="flex flex-col items-center">
                     <span className="timer-value">{timer.secs}</span>
-                    <span className="text-xs text-red-400">s</span>
+                    <span className="text-xs text-red-400">{t("time.secondsShort")}</span>
                 </div>
             </div>
         </div>

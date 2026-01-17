@@ -4,9 +4,11 @@ import { FaArrowLeft, FaGithub, FaEnvelope, FaInstagram, FaLinkedin } from "reac
 import Link from "next/link";
 import { ReactNode, useEffect, useState } from "react";
 import './styles.css'
+import { useI18n } from "../contexts/I18nContext";
 
 export default function ContactPage() {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const { t } = useI18n();
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
@@ -33,10 +35,10 @@ export default function ContactPage() {
                     </Link>
                     <div className="flex space-x-4">
                         <Link href="/projects" className="text-lg hover:text-red-400 transition-colors">
-                            Projects
+                            {t("nav.projects")}
                         </Link>
                         <Link href="/contact" className="text-lg hover:text-red-400 transition-colors">
-                            Contact
+                            {t("nav.contact")}
                         </Link>
                     </div>
                 </div>
@@ -47,25 +49,25 @@ export default function ContactPage() {
                     <ContactCard
                         icon={<FaGithub className="text-4xl" />}
                         title="TheusHen"
-                        subtitle="Github"
+                        subtitle={t("contact.github")}
                         link="https://github.com/TheusHen"
                     />
                     <ContactCard
                         icon={<FaEnvelope className="text-4xl" />}
                         title="dev@theushen.me"
-                        subtitle="Email"
+                        subtitle={t("contact.email")}
                         link="mailto:dev@theushen.me"
                     />
                     <ContactCard
                         icon={<FaInstagram className="text-4xl" />}
                         title="@mmatheus_henriquee"
-                        subtitle="Instagram"
+                        subtitle={t("contact.instagram")}
                         link="https://www.instagram.com/mmatheus_henriquee"
                     />
                     <ContactCard
                         icon={<FaLinkedin className="text-4xl" />}
                         title="Matheus Henrique"
-                        subtitle="LinkedIn"
+                        subtitle={t("contact.linkedin")}
                         link="https://www.linkedin.com/in/matheus-henrique-741776367/"
                     />
                 </div>

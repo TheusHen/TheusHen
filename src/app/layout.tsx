@@ -3,9 +3,12 @@ import Script from "next/script";
 import CollegeDecisionsBar from "./components/CollegeDecisionsBar";
 import GlobalSwitch from "./components/Switch";
 import InspectDetector from "./components/InspectDetector";
+import FloatingControls from "./components/FloatingControls";
 import "./globals.css";
 import { PostHogProvider } from "./providers/PostHogProvider";
 import { GlobeProvider } from "./contexts/GlobeContext";
+import { I18nProvider } from "./contexts/I18nContext";
+import { AccessibilityProvider } from "./contexts/AccessibilityContext";
 
 export const metadata: Metadata = {
     title: {
@@ -212,12 +215,17 @@ export default function RootLayout({
         </head>
         <body className="antialiased font-sans">
         <PostHogProvider>
-            <GlobeProvider>
-                <InspectDetector />
-                <CollegeDecisionsBar />
-                <GlobalSwitch />
-                {children}
-            </GlobeProvider>
+            <I18nProvider>
+                <AccessibilityProvider>
+                    <GlobeProvider>
+                        <InspectDetector />
+                        <CollegeDecisionsBar />
+                        <GlobalSwitch />
+                        <FloatingControls />
+                        {children}
+                    </GlobeProvider>
+                </AccessibilityProvider>
+            </I18nProvider>
         </PostHogProvider>
         
         {/* Service Worker Registration */}

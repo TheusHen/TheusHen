@@ -11,6 +11,7 @@ import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
 import './styles.css'
 
 import { cn } from "@/app/lib/cn";
+import { useI18n } from "@/app/contexts/I18nContext";
 
 // --- ScrollArea definition ---
 const ScrollArea = React.forwardRef<
@@ -105,14 +106,15 @@ const ProjectsPage = () => {
     const [gists, setGists] = useState<Gist[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadingGists, setLoadingGists] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-    const [gistsError, setGistsError] = useState<string | null>(null);
+    const [error, setError] = useState(false);
+    const [gistsError, setGistsError] = useState(false);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [allTopics, setAllTopics] = useState<string[]>([]);
 
     // New: Topics navigation state
     const [topicsPage, setTopicsPage] = useState(0);
     const TOPICS_PER_PAGE = 10;
+    const { t } = useI18n();
 
     const gridRef = useRef<HTMLDivElement>(null);
 
@@ -187,14 +189,14 @@ const ProjectsPage = () => {
                     });
                     setAllTopics(Array.from(topics).sort());
 
-                    setError(null);
+                    setError(false);
                 } else {
-                    setError("Error fetching repositories.");
+                    setError(true);
                 }
                 setLoading(false);
             })
             .catch(() => {
-                setError("Error fetching repositories.");
+                setError(true);
                 setLoading(false);
             });
         
@@ -205,14 +207,14 @@ const ProjectsPage = () => {
             .then((data) => {
                 if (Array.isArray(data)) {
                     setGists(data);
-                    setGistsError(null);
+                    setGistsError(false);
                 } else {
-                    setGistsError("Error fetching gists.");
+                    setGistsError(true);
                 }
                 setLoadingGists(false);
             })
             .catch(() => {
-                setGistsError("Error fetching gists.");
+                setGistsError(true);
                 setLoadingGists(false);
             });
     }, []);
@@ -290,36 +292,36 @@ const ProjectsPage = () => {
             <div className="max-w-6xl mx-auto p-6">
                 {/* Header */}
                 <div className="flex justify-between items-center mb-6 animate-fade-in">
-                    <button className="text-2xl cursor-pointer transition-transform hover:-translate-x-1 text-white" onClick={() => window.location.href = '/'}>
-                        <ArrowLeft />
-                    </button>
-                    <div className="flex space-x-6">
-                        <button className="text-lg hover:text-red-400 transition-colors" onClick={() => window.location.href = '/projects'}>
-                            Projects
+                        <button className="text-2xl cursor-pointer transition-transform hover:-translate-x-1 text-white" onClick={() => window.location.href = '/'}>
+                            <ArrowLeft />
                         </button>
-                        <button className="text-lg hover:text-red-400 transition-colors" onClick={() => window.location.href = '/contact'}>
-                            Contact
-                        </button>
+                        <div className="flex space-x-6">
+                            <button className="text-lg hover:text-red-400 transition-colors" onClick={() => window.location.href = '/projects'}>
+                                {t("nav.projects")}
+                            </button>
+                            <button className="text-lg hover:text-red-400 transition-colors" onClick={() => window.location.href = '/contact'}>
+                                {t("nav.contact")}
+                            </button>
+                        </div>
                     </div>
-                </div>
 
                 {/* Title */}
                 <h1 className="text-6xl font-extrabold text-white mb-2 animate-fade-in">
-                    Projects
+                    {t("projects.title")}
                 </h1>
                 <p className="text-xl text-gray-400 mb-6 animate-fade-in">
-                    Some of the projects are from work and some are on my own time.
+                    {t("projects.subtitle")}
                 </p>
 
                 {/* Filters */}
                 <div className="flex justify-between items-center mb-6 border-b border-gray-700 pb-2">
-                    <span className="text-lg text-gray-300">All Projects</span>
+                    <span className="text-lg text-gray-300">{t("projects.allProjects")}</span>
                     <div
                         className="flex items-center space-x-2 cursor-pointer transition-colors hover:text-red-400"
                         onClick={toggleFilterMenu}
                     >
                         <Filter size={16} />
-                        <span>Filters</span>
+                        <span>{t("projects.filters")}</span>
                     </div>
                 </div>
 
@@ -337,7 +339,7 @@ const ProjectsPage = () => {
                             <div className="bg-gray-900/95 backdrop-blur-md border border-gray-700 rounded-2xl shadow-2xl">
                                 {/* Header */}
                                 <div className="flex items-center justify-between p-6 border-b border-gray-700">
-                                    <h3 className="text-xl font-semibold text-white">Filters</h3>
+                                    <h3 className="text-xl font-semibold text-white">{t("projects.filterTitle")}</h3>
                                     <button
                                         onClick={toggleFilterMenu}
                                         className="text-gray-400 hover:text-white transition-colors p-1 hover:bg-gray-800 rounded-lg"
@@ -350,7 +352,7 @@ const ProjectsPage = () => {
                                 <div className="p-6 space-y-6">
                                     {/* Featured Project Types */}
                                     <div>
-                                        <h4 className="text-sm font-medium text-gray-300 mb-3">Featured Project Type</h4>
+                                        <h4 className="text-sm font-medium text-gray-300 mb-3">{t("projects.featuredType")}</h4>
                                         <div className="grid grid-cols-2 gap-3">
                                             <label className="flex items-center space-x-3 p-3 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors cursor-pointer">
                                                 <input
@@ -359,7 +361,7 @@ const ProjectsPage = () => {
                                                     onChange={(e) => setOpenSource(e.target.checked)}
                                                     className="w-4 h-4 text-red-500 bg-gray-800 border-gray-600 rounded focus:ring-red-500 focus:ring-2"
                                                 />
-                                                <span className="text-sm text-gray-300">Open Source</span>
+                                                <span className="text-sm text-gray-300">{t("projects.openSource")}</span>
                                             </label>
                                             <label className="flex items-center space-x-3 p-3 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors cursor-pointer">
                                                 <input
@@ -368,7 +370,7 @@ const ProjectsPage = () => {
                                                     onChange={(e) => setCloseSource(e.target.checked)}
                                                     className="w-4 h-4 text-red-500 bg-gray-800 border-gray-600 rounded focus:ring-red-500 focus:ring-2"
                                                 />
-                                                <span className="text-sm text-gray-300">Close Source</span>
+                                                <span className="text-sm text-gray-300">{t("projects.closeSource")}</span>
                                             </label>
                                             <label className="flex items-center space-x-3 p-3 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors cursor-pointer">
                                                 <input
@@ -377,7 +379,7 @@ const ProjectsPage = () => {
                                                     onChange={(e) => setWebsite(e.target.checked)}
                                                     className="w-4 h-4 text-red-500 bg-gray-800 border-gray-600 rounded focus:ring-red-500 focus:ring-2"
                                                 />
-                                                <span className="text-sm text-gray-300">Website</span>
+                                                <span className="text-sm text-gray-300">{t("projects.website")}</span>
                                             </label>
                                             <label className="flex items-center space-x-3 p-3 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors cursor-pointer">
                                                 <input
@@ -386,11 +388,11 @@ const ProjectsPage = () => {
                                                     onChange={(e) => setApplication(e.target.checked)}
                                                     className="w-4 h-4 text-red-500 bg-gray-800 border-gray-600 rounded focus:ring-red-500 focus:ring-2"
                                                 />
-                                                <span className="text-sm text-gray-300">Application</span>
+                                                <span className="text-sm text-gray-300">{t("projects.application")}</span>
                                             </label>
                                         </div>
                                         <div className="text-xs text-gray-500 mt-2">
-                                            <span>* Filters above affect only the featured projects.</span>
+                                            <span>{t("projects.filtersNote")}</span>
                                         </div>
                                     </div>
 
@@ -398,13 +400,13 @@ const ProjectsPage = () => {
                                     {allTopics.length > 0 && (
                                         <div>
                                             <div className="flex items-center justify-between mb-3">
-                                                <h4 className="text-sm font-medium text-gray-300">Topics</h4>
+                                                <h4 className="text-sm font-medium text-gray-300">{t("projects.topics")}</h4>
                                                 {selectedTopics.length > 0 && (
                                                     <button
                                                         onClick={() => setSelectedTopics([])}
                                                         className="text-xs text-red-400 hover:text-red-300 transition-colors"
                                                     >
-                                                        Clear ({selectedTopics.length})
+                                                        {t("projects.clear")} ({selectedTopics.length})
                                                     </button>
                                                 )}
                                             </div>
@@ -414,7 +416,7 @@ const ProjectsPage = () => {
                                                     className="mr-2 p-1 rounded hover:bg-gray-700 disabled:opacity-40"
                                                     onClick={goPrevTopics}
                                                     disabled={topicsPage === 0}
-                                                    aria-label="Previous topics page"
+                                                    aria-label={t("projects.previousTopics")}
                                                     type="button"
                                                 >
                                                     <ArrowLeft size={18} />
@@ -424,7 +426,7 @@ const ProjectsPage = () => {
                                                     className="ml-2 p-1 rounded hover:bg-gray-700 disabled:opacity-40"
                                                     onClick={goNextTopics}
                                                     disabled={topicsPage >= totalTopicsPages - 1}
-                                                    aria-label="Next topics page"
+                                                    aria-label={t("projects.nextTopics")}
                                                     type="button"
                                                 >
                                                     <ArrowRight size={18} />
@@ -459,20 +461,20 @@ const ProjectsPage = () => {
                                         onClick={clearAllFilters}
                                         className="text-sm text-gray-400 hover:text-white transition-colors"
                                     >
-                                        Clear All
+                                        {t("projects.clearAll")}
                                     </button>
                                     <div className="flex space-x-3">
                                         <button
                                             onClick={toggleFilterMenu}
                                             className="px-4 py-2 text-sm text-gray-300 hover:text-white transition-colors"
                                         >
-                                            Cancel
+                                            {t("projects.cancel")}
                                         </button>
                                         <button
                                             className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white text-sm rounded-lg transition-colors"
                                             onClick={applyFilters}
                                         >
-                                            Apply Filters
+                                            {t("projects.applyFilters")}
                                         </button>
                                     </div>
                                 </div>
@@ -499,10 +501,7 @@ const ProjectsPage = () => {
                                 </div>
                                 <h2 className="text-2xl font-bold text-white mb-4">PRACTA</h2>
                                 <p className="text-gray-300 text-sm mb-4">
-                                    PRACTA is an open-source community focused on helping students
-                                    prepare for SAT with focus in the MIT university. It provides a platform for students worldwide to discuss
-                                    study strategies, share experiences, and connect with like-minded
-                                    individuals.
+                                    {t("projects.practaDescription")}
                                 </p>
                                 <a
                                     className="text-sm flex items-center space-x-1 hover:underline cursor-pointer text-red-400 hover:text-red-300 transition-colors"
@@ -510,7 +509,7 @@ const ProjectsPage = () => {
                                     target="_blank"
                                     rel="noreferrer"
                                 >
-                                    <span>Read more</span>
+                                    <span>{t("projects.readMore")}</span>
                                     <ArrowRight size={14} />
                                 </a>
                             </div>
@@ -539,9 +538,7 @@ const ProjectsPage = () => {
                                         Arcade Lunar
                                     </h2>
                                     <p className="text-gray-300 text-sm">
-                                        Arcade Lunar is a social network focused on gaming and
-                                        multiplayer experiences. It connects players worldwide,
-                                        offering communities, events, and interactive features.
+                                        {t("projects.arcadeDescription")}
                                     </p>
                                 </div>
                             </a>
@@ -565,9 +562,7 @@ const ProjectsPage = () => {
                                     />
                                     <h2 className="text-2xl font-bold text-white mb-2">Optifyx</h2>
                                     <p className="text-gray-300 text-sm">
-                                        Optifyx is an app that allows a smartphone to fully monitor a
-                                        desktop in real-time over a Wi-Fi connection. It provides
-                                        seamless remote access, ensuring control and visibility.
+                                        {t("projects.optifyxDescription")}
                                     </p>
                                 </div>
                             </a>
@@ -577,12 +572,12 @@ const ProjectsPage = () => {
 
                 {/* GitHub Projects */}
                 <h2 className="text-3xl font-extrabold mt-10 mb-6 text-white">
-                    GitHub Projects
+                    {t("projects.githubProjects")}
                 </h2>
                 {loading ? (
-                    <div className="text-gray-400">Loading repositories…</div>
+                    <div className="text-gray-400">{t("projects.loadingRepositories")}</div>
                 ) : error ? (
-                    <div className="text-red-400">{error}</div>
+                    <div className="text-red-400">{t("projects.errorRepositories")}</div>
                 ) : (
                     <div
                         ref={gridRef}
@@ -615,7 +610,7 @@ const ProjectsPage = () => {
                                                 target="_blank"
                                                 rel="noreferrer"
                                                 className="ml-auto text-red-400 hover:text-red-300 transition-colors"
-                                                title="Project Website"
+                                                title={t("projects.projectWebsite")}
                                                 onClick={e => e.stopPropagation()}
                                             >
                                                 <ExternalLink size={16} />
@@ -623,7 +618,7 @@ const ProjectsPage = () => {
                                         )}
                                     </div>
                                     <p className="flex-1 text-gray-300 text-sm mb-4">
-                                        {repo.description || <span className="italic text-gray-500">No description</span>}
+                                        {repo.description || <span className="italic text-gray-500">{t("projects.noDescription")}</span>}
                                     </p>
 
                                     {/* Topics */}
@@ -647,7 +642,7 @@ const ProjectsPage = () => {
 
                                     <div className="flex justify-between items-end mt-auto">
                                         <span className="text-xs px-2 py-1 rounded bg-red-600 text-white">
-                                            {repo.language ?? "Other"}
+                                            {repo.language ?? t("projects.other")}
                                         </span>
                                         <span className="flex items-center text-xs text-red-400 font-bold">
                                             <Star className="mr-1" size={12} /> {repo.stargazers_count}
@@ -659,7 +654,7 @@ const ProjectsPage = () => {
                                         target="_blank"
                                         rel="noreferrer"
                                         className="absolute inset-0"
-                                        aria-label={`View ${repo.name} on GitHub`}
+                                        aria-label={t("projects.viewOnGithub", { name: repo.name })}
                                         style={{ zIndex: 10 }}
                                     />
                                 </div>
@@ -670,20 +665,22 @@ const ProjectsPage = () => {
 
                 {/* GitHub Gists Section */}
                 <h2 className="text-3xl font-extrabold mt-16 mb-6 text-white">
-                    GitHub Gists
+                    {t("projects.githubGists")}
                 </h2>
                 {loadingGists ? (
-                    <div className="text-gray-400">Loading gists…</div>
+                    <div className="text-gray-400">{t("projects.loadingGists")}</div>
                 ) : gistsError ? (
-                    <div className="text-red-400">{gistsError}</div>
+                    <div className="text-red-400">{t("projects.errorGists")}</div>
                 ) : gists.length === 0 ? (
-                    <div className="text-gray-400">No gists found.</div>
+                    <div className="text-gray-400">{t("projects.noGists")}</div>
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {gists.map((gist) => {
                             const firstFile = Object.values(gist.files)[0];
                             const fileCount = Object.keys(gist.files).length;
-                            const mainLanguage = firstFile?.language || "Text";
+                            const mainLanguage = firstFile?.language || t("projects.textLanguage");
+                            const fileLabel =
+                                fileCount - 1 === 1 ? t("projects.fileSingular") : t("projects.filePlural");
 
                             return (
                                 <a
@@ -707,17 +704,17 @@ const ProjectsPage = () => {
                                             />
                                             <div className="flex-1 min-w-0">
                                                 <span className="text-sm font-semibold text-white block truncate">
-                                                    {firstFile?.filename || "Untitled"}
+                                                    {firstFile?.filename || t("projects.untitled")}
                                                 </span>
                                                 {fileCount > 1 && (
                                                     <span className="text-xs text-gray-400">
-                                                        +{fileCount - 1} more file{fileCount > 2 ? 's' : ''}
+                                                        {t("projects.moreFiles", { count: fileCount - 1, fileLabel })}
                                                     </span>
                                                 )}
                                             </div>
                                         </div>
                                         <p className="flex-1 text-gray-300 text-sm mb-4 line-clamp-3">
-                                            {gist.description || <span className="italic text-gray-500">No description</span>}
+                                            {gist.description || <span className="italic text-gray-500">{t("projects.noDescription")}</span>}
                                         </p>
                                         <div className="flex justify-between items-end">
                                             <span className="text-xs px-2 py-1 rounded bg-red-600 text-white">
