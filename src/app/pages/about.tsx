@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState, memo } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { useI18n } from "../contexts/I18nContext";
 
 // Lazy load heavy components
 const Fall = dynamic(() => import("../components/Fall"), { 
@@ -83,6 +84,7 @@ const MemoizedProfileImage = memo(ProfileImage);
 
 function TextSection() {
     const textRef = useRef<HTMLDivElement>(null);
+    const { t } = useI18n();
 
     useEffect(() => {
         if (textRef.current)
@@ -99,23 +101,32 @@ function TextSection() {
             className="flex-1 p-8 flex flex-col gap-2 justify-center"
         >
             <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg">
-                Hello, I&apos;m <span className="text-red-800">TheusHen</span>!
+                {t("about.titlePrefix")}
+                <span className="text-red-800">TheusHen</span>!
             </h1>
             <div className="flex flex-col gap-3 text-lg md:text-xl text-white/90 mb-2 leading-relaxed">
                 <span>
-                    14-year-old student dreaming big and building the future with code. I&apos;m determined to get into <span className="font-bold text-red-600">MIT</span> with a full-ride scholarship, where I plan to major in Aerospace Engineering and Computer Engineering.
+                    {t("about.paragraphOneBeforeMit")}
+                    <span className="font-bold text-red-600">MIT</span>
+                    {t("about.paragraphOneAfterMit")}
                 </span>
                 <span>
-                    Founder of <span className="font-bold text-red-600">PRACTA</span>, an open source community that helps students achieve their academic and personal goals with lots of code, collaboration, and resilience.
+                    {t("about.paragraphTwoBeforePracta")}
+                    <span className="font-bold text-red-600">PRACTA</span>
+                    {t("about.paragraphTwoAfterPracta")}
                 </span>
                 <span>
-                    I&apos;ve already developed projects such as viral mutation simulators, digital organizers, and remote diagnosis systems, and I actively participate in hackathons like <span className="text-red-600 font-bold">Shipwrecked</span> and events from <span className="text-red-600 font-bold">Hack Club</span>.
+                    {t("about.paragraphThreeBeforeShipwrecked")}
+                    <span className="text-red-600 font-bold">Shipwrecked</span>
+                    {t("about.paragraphThreeBetween")}
+                    <span className="text-red-600 font-bold">Hack Club</span>
+                    {t("about.paragraphThreeAfterHackClub")}
                 </span>
                 <span>
-                    I&apos;m always looking to learn new technologies, contribute to open source repositories, and grow as a developer and as a person.
+                    {t("about.paragraphFour")}
                 </span>
                 <span>
-                    If you want to chat about programming, science, communities, or how to turn dreams into projects, reach out to me!
+                    {t("about.paragraphFive")}
                 </span>
             </div>
             <div className="flex gap-4 mt-4">
@@ -154,6 +165,7 @@ const MemoizedTextSection = memo(TextSection);
 
 function HackClubSection() {
     const hackRef = useRef<HTMLDivElement>(null);
+    const { t } = useI18n();
 
     useEffect(() => {
         if (hackRef.current)
@@ -178,8 +190,8 @@ function HackClubSection() {
                 loading="lazy"
             />
             <div>
-                <span className="text-2xl font-bold text-red-300">Hack Club</span>
-                <p className="text-white/80 text-base mt-1">I&apos;m currently participating in!</p>
+                <span className="text-2xl font-bold text-red-300">{t("about.hackClubTitle")}</span>
+                <p className="text-white/80 text-base mt-1">{t("about.hackClubSubtitle")}</p>
             </div>
         </div>
     );
@@ -190,6 +202,7 @@ const MemoizedHackClubSection = memo(HackClubSection);
 function TimerSection() {
     const [timer, setTimer] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
     const timerRef = useRef<HTMLDivElement>(null);
+    const { t } = useI18n();
 
     useEffect(() => {
         setTimer(getTimeLeft());
@@ -211,26 +224,26 @@ function TimerSection() {
             ref={timerRef}
             className="flex flex-col h-40 items-center justify-center bg-zinc-900/80 backdrop-blur-lg rounded-xl p-6 shadow-lg border border-red-400/20"
         >
-            <span className="text-lg font-semibold text-red-300 mb-2">Time left until my College Application</span>
+            <span className="text-lg font-semibold text-red-300 mb-2">{t("about.timerTitle")}</span>
             <div className="flex gap-3 text-white text-2xl font-mono tracking-wider">
                 <div className="flex flex-col items-center">
                     <span>{timer.days}</span>
-                    <span className="text-xs text-red-400">days</span>
+                    <span className="text-xs text-red-400">{t("time.days")}</span>
                 </div>
                 <span>:</span>
                 <div className="flex flex-col items-center">
                     <span>{timer.hours}</span>
-                    <span className="text-xs text-red-400">h</span>
+                    <span className="text-xs text-red-400">{t("time.hoursShort")}</span>
                 </div>
                 <span>:</span>
                 <div className="flex flex-col items-center">
                     <span>{timer.mins}</span>
-                    <span className="text-xs text-red-400">min</span>
+                    <span className="text-xs text-red-400">{t("time.minutesShort")}</span>
                 </div>
                 <span>:</span>
                 <div className="flex flex-col items-center">
                     <span>{timer.secs}</span>
-                    <span className="text-xs text-red-400">s</span>
+                    <span className="text-xs text-red-400">{t("time.secondsShort")}</span>
                 </div>
             </div>
         </div>

@@ -15,6 +15,31 @@ body {
   text-rendering: optimizeSpeed;
 }
 
+html[data-text-size="large"] {
+  font-size: 112.5%;
+}
+
+html[data-text-size="xl"] {
+  font-size: 125%;
+}
+
+html[data-contrast="high"] body {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+html[data-contrast="high"] a,
+html[data-contrast="high"] button {
+  color: #ffffff;
+}
+
+html[data-motion="reduced"] * {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
 /* Optimize animations */
 @media (prefers-reduced-motion: no-preference) {
   * {

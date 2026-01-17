@@ -4,6 +4,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { motion, useReducedMotion } from "framer-motion";
 import { ExternalLink, CalendarDays, Clock3 } from "lucide-react";
+import { useI18n } from "../contexts/I18nContext";
 
 const GITHUB_OWNER = "TheusHen";
 const GITHUB_REPO = "TheusHen";
@@ -43,6 +44,7 @@ export default function Timeline() {
     const itemsRef = useRef<HTMLDivElement | null>(null);
     const [items, setItems] = useState<TimelineItem[]>([]);
     const [activeId, setActiveId] = useState<string | null>(null);
+    const { t } = useI18n();
 
     useEffect(() => {
         let cancelled = false;
@@ -117,7 +119,7 @@ export default function Timeline() {
                         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                         className="text-balance text-2xl font-semibold tracking-tight text-white sm:text-3xl"
                     >
-                        Timeline
+                        {t("timeline.title")}
                     </motion.h2>
 
                     <motion.p
@@ -126,7 +128,7 @@ export default function Timeline() {
                         transition={{ duration: 0.75, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
                         className="max-w-2xl text-pretty text-sm text-white/65 sm:text-base"
                     >
-                        Scroll down to see the timeline. Each point opens the full markdown entry on GitHub.
+                        {t("timeline.subtitle")}
                     </motion.p>
                 </div>
 
@@ -149,7 +151,7 @@ export default function Timeline() {
                                                 "outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 focus-visible:ring-offset-0",
                                             ].join(" ")}
                                             style={{ width: NODE_SIZE * 2.3, height: NODE_SIZE * 2.3, top: "1.5rem" }}
-                                            aria-label={`Open ${it.title} on GitHub`}
+                                            aria-label={t("timeline.openOnGithub", { title: it.title })}
                                         >
                                             <span
                                                 className={[
@@ -219,7 +221,7 @@ export default function Timeline() {
                                                         </div>
 
                                                         <div className="text-sm leading-relaxed text-white/55">
-                                                            Click to open the full entry on GitHub.
+                                                            {t("timeline.cardHint")}
                                                         </div>
                                                     </div>
 
@@ -238,8 +240,7 @@ export default function Timeline() {
                     </div>
                 ) : (
                     <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-sm text-white/70">
-                        No markdown files found in /{TIMELINE_FOLDER}. Add files like 2026-01-05.md with a first line
-                        heading: &apos;# Title&apos;.
+                        {t("timeline.emptyState", { folder: TIMELINE_FOLDER })}
                     </div>
                 )}
             </div>
