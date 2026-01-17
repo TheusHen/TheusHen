@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic';
 import './index.css'
 import LoadingDots from "./components/LoadingDots";
 import ClientRemount from "./client-remount";
+import { useI18n } from "./contexts/I18nContext";
 
 // Lazy load components
 const Particles = dynamic(() => import("./components/particles"), { 
@@ -22,9 +23,9 @@ const About = dynamic(() => import("./pages/about"), {
 // This site was inspired by chronark/chronark.com and uses some code snippets from it, not only in this file but also in others.
 
 const navigation = [
-    { name: "Projects", href: "/projects" },
-    { name: "Timeline", href: "/timeline" },
-    { name: "Contact", href: "/contact" },
+    { key: "nav.projects", href: "/projects" },
+    { key: "nav.timeline", href: "/timeline" },
+    { key: "nav.contact", href: "/contact" },
 ];
 
 // Set your user and repository here
@@ -32,6 +33,7 @@ const REPO_OWNER = "TheusHen";
 const REPO_NAME = "TheusHen";
 
 export default function Home() {
+    const { t } = useI18n();
     const [message, setMessage] = useState("");
     const [stars, setStars] = useState<number | null>(null);
 
@@ -102,13 +104,13 @@ export default function Home() {
                         {stars !== null ? (
                             <>
                                 <span className="font-bold">{stars}</span>
-                                <span className="hidden sm:inline">Stars</span>
-                                <span className="ml-2 text-yellow-700/90 group-hover:text-yellow-900 transition-colors">Support my portfolio</span>
+                                <span className="hidden sm:inline">{t("home.stars")}</span>
+                                <span className="ml-2 text-yellow-700/90 group-hover:text-yellow-900 transition-colors">{t("home.support")}</span>
                             </>
                         ) : (
                             <span className="inline-flex items-center gap-1">
                                 <LoadingDots color="#f59e42" size={7} />
-                                <span className="hidden sm:inline ml-1">Loading...</span>
+                                <span className="hidden sm:inline ml-1">{t("home.loading")}</span>
                             </span>
                         )}
                     </span>
@@ -126,7 +128,7 @@ export default function Home() {
                                         href={item.href}
                                         className="text-xs sm:text-sm duration-500 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:text-white transition-colors px-3 py-1 rounded"
                                     >
-                                        {item.name}
+                                        {t(item.key)}
                                     </Link>
                                 </li>
                             ))}
@@ -146,7 +148,7 @@ export default function Home() {
                     <div className="flex items-center bg-white/70 rounded-full p-1.5 shadow w-full max-w-md mt-8 sm:max-w-xs border border-zinc-200 backdrop-blur">
                         <input
                             type="text"
-                            placeholder="Need some help?"
+                            placeholder={t("home.needHelp")}
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
                             className="flex-1 bg-transparent outline-none text-black px-3 text-sm sm:text-xs placeholder:text-black-500"
@@ -154,7 +156,7 @@ export default function Home() {
                         <button
                             onClick={handleSend}
                             className="bg-black/80 hover:bg-black text-white p-2 rounded-full flex items-center justify-center transition-colors duration-200"
-                            aria-label="Send message"
+                            aria-label={t("home.sendMessage")}
                         >
                             <ArrowUp size={18} />
                         </button>
@@ -167,7 +169,7 @@ export default function Home() {
                     >
                         <ArrowDownCircle size={32} className="text-zinc-400 hover:text-zinc-200 transition-all duration-200" />
                         <span className="mt-1 text-zinc-400 text-xs sm:text-sm font-medium">
-                        Scroll down for <span className="font-semibold text-zinc-200">About Me</span>
+                        {t("home.scrollDown")} <span className="font-semibold text-zinc-200">{t("home.aboutMe")}</span>
                     </span>
                     </div>
                 </div>
