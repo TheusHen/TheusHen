@@ -48,12 +48,12 @@ export default function FloatingControls() {
                     onClick={() => togglePanel("accessibility")}
                     aria-label={t("accessibility.accessibilityLabel")}
                     aria-expanded={openPanel === "accessibility"}
-                    className="group flex items-center flex-row-reverse"
+                    className="group relative flex items-center flex-row-reverse"
                 >
                     <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-black shadow-lg sm:h-12 sm:w-12">
                         <Accessibility className="h-5 w-5 sm:h-6 sm:w-6" />
                     </span>
-                    <span className="mr-3 max-w-0 overflow-hidden rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-black opacity-0 shadow-lg transition-all duration-300 group-hover:max-w-[160px] group-hover:opacity-100">
+                    <span className="pointer-events-none absolute right-full mr-3 whitespace-nowrap rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-black opacity-0 shadow-lg transition-opacity duration-300 group-hover:opacity-100">
                         {t("accessibility.accessibilityLabel")}
                     </span>
                 </button>
@@ -121,12 +121,12 @@ export default function FloatingControls() {
                     onClick={() => togglePanel("language")}
                     aria-label={t("accessibility.translationLabel")}
                     aria-expanded={openPanel === "language"}
-                    className="group flex items-center flex-row-reverse"
+                    className="group relative flex items-center flex-row-reverse"
                 >
                     <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-black shadow-lg sm:h-12 sm:w-12">
                         <Languages className="h-5 w-5 sm:h-6 sm:w-6" />
                     </span>
-                    <span className="mr-3 max-w-0 overflow-hidden rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-black opacity-0 shadow-lg transition-all duration-300 group-hover:max-w-[160px] group-hover:opacity-100">
+                    <span className="pointer-events-none absolute right-full mr-3 whitespace-nowrap rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-black opacity-0 shadow-lg transition-opacity duration-300 group-hover:opacity-100">
                         {t("accessibility.translationLabel")}
                     </span>
                 </button>
