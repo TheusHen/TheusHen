@@ -40,7 +40,8 @@ export default function FloatingControls() {
     return (
         <div
             ref={containerRef}
-            className="fixed left-4 top-1/2 z-[9999] flex -translate-y-1/2 flex-col gap-3"
+            className="fixed left-4 z-[9999] flex flex-col gap-3"
+            style={{ top: "50%", transform: "translateY(-50%)" }}
         >
             <div className="relative">
                 <button
