@@ -243,6 +243,7 @@ function TimerSection({
     targetDate: Date;
     onTimerZero: () => void;
 }) {
+    const { t } = useI18n();
     // Inicializa o timer "hidratado" já no client, usando um fallback estável no SSR
     const [timer, setTimer] = useState(() =>
         typeof window === "undefined"
