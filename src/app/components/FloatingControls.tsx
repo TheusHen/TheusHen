@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { Accessibility, Languages, Check } from "lucide-react";
 import { useI18n } from "../contexts/I18nContext";
 import { useAccessibility } from "../contexts/AccessibilityContext";
@@ -17,6 +18,8 @@ const textSizeOptions = [
 ] as const;
 
 export default function FloatingControls() {
+  const pathname = usePathname();
+  const isDecisionsPage = pathname === "/decisions";
   const { language, setLanguage, t } = useI18n();
   const {
     highContrast,
@@ -49,7 +52,9 @@ export default function FloatingControls() {
   return (
     <div
       ref={containerRef}
-      className="fixed right-2 top-4 z-[9999] mt-10 flex flex-col gap-2 sm:right-3 sm:gap-3"
+      className={`fixed right-2 z-[9999] flex flex-col gap-2 sm:right-3 sm:gap-3 ${
+        isDecisionsPage ? "top-32 sm:top-40" : "top-4 mt-10"
+      }`}
     >
       <div className="relative">
         <button
