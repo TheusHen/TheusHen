@@ -4,7 +4,6 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { ArrowUp, ArrowDownCircle, Star } from "lucide-react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/next";
 import dynamic from 'next/dynamic';
 import './index.css'
 import LoadingDots from "./components/LoadingDots";
@@ -92,7 +91,6 @@ export default function Home() {
         <>
             <ClientRemount>
                 <SpeedInsights />
-                <Analytics />
                 <div className="absolute top-4 left-4 z-50 mt-10">
                     <Link
                         href={`https://github.com/${REPO_OWNER}/${REPO_NAME}`}
