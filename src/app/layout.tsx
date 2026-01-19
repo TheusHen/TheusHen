@@ -124,7 +124,6 @@ export default function RootLayout({
             
             {/* Preconnect to external domains */}
             <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
-            <link rel="preconnect" href="https://plausible.io" crossOrigin="anonymous" />
             <link rel="preconnect" href="https://analytics.ahrefs.com" crossOrigin="anonymous" />
             <link rel="dns-prefetch" href="https://api.github.com" />
             <link rel="dns-prefetch" href="https://us.i.posthog.com" />
@@ -150,20 +149,6 @@ export default function RootLayout({
                 data-key="7pSFS8uTZPgZ6+AQJF9oRg"
                 strategy="worker"
             />
-
-            {/* Plausible Analytics */}
-            <Script
-                data-domain="theushen.me"
-                src="https://plausible.io/js/script.js"
-                strategy="worker"
-            />
-            <Script id="plausible-init" strategy="worker">
-                {`
-                    window.plausible = window.plausible || function() {
-                        (window.plausible.q = window.plausible.q || []).push(arguments)
-                    }
-                `}
-            </Script>
 
             <Script id="structured-data-person" type="application/ld+json">
                 {JSON.stringify({
