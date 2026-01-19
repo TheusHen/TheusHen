@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import CollegeDecisionsBar from "./components/CollegeDecisionsBar";
 import GlobalSwitch from "./components/Switch";
 import InspectDetector from "./components/InspectDetector";
@@ -208,6 +209,7 @@ export default function RootLayout({
                         <GlobalSwitch />
                         <FloatingControls />
                         {children}
+                        <Analytics />
                     </GlobeProvider>
                 </AccessibilityProvider>
             </I18nProvider>
