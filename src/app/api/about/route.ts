@@ -12,15 +12,25 @@ interface GitHubRepo {
     topics?: string[];
 }
 
+const BIRTH_DATE = new Date("2011-01-19T00:00:00Z");
+
+function getAgeFromBirthdate(birthDate: Date, now = new Date()) {
+    const yearDiff = now.getUTCFullYear() - birthDate.getUTCFullYear();
+    const monthDiff = now.getUTCMonth() - birthDate.getUTCMonth();
+    const dayDiff = now.getUTCDate() - birthDate.getUTCDate();
+    const hasBirthdayPassed = monthDiff > 0 || (monthDiff === 0 && dayDiff >= 0);
+    return hasBirthdayPassed ? yearDiff : yearDiff - 1;
+}
+
 // Informações estáticas do About
 const aboutInfo = {
     profile: {
         name: "TheusHen",
-        age: 14,
+        age: getAgeFromBirthdate(BIRTH_DATE),
         photo: "https://avatars.githubusercontent.com/u/180109164",
         flag: "https://upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg",
         bio: [
-            "14-year-old student dreaming big and building the future with code. I’m determined to get into MIT with a full-ride scholarship, where I plan to major in Aerospace Engineering and Computer Engineering.",
+            `${getAgeFromBirthdate(BIRTH_DATE)}-year-old student dreaming big and building the future with code. I’m determined to get into MIT with a full-ride scholarship, where I plan to major in Aerospace Engineering and Computer Engineering.`,
             "Founder of PRACTA, an open source community that helps students achieve their academic and personal goals with lots of code, collaboration, and resilience.",
             "I’ve already developed projects such as viral mutation simulators, digital organizers, and remote diagnosis systems, and I actively participate in hackathons like Shipwrecked and events from Hack Club.",
             "I’m always looking to learn new technologies, contribute to open source repositories, and grow as a developer and as a person.",

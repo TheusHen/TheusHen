@@ -13,6 +13,15 @@ type I18nContextValue = {
 };
 
 const LANGUAGE_STORAGE_KEY = "theushen-language";
+const BIRTH_DATE = new Date("2011-01-19T00:00:00Z");
+
+function getAgeFromBirthdate(birthDate: Date, now = new Date()) {
+    const yearDiff = now.getUTCFullYear() - birthDate.getUTCFullYear();
+    const monthDiff = now.getUTCMonth() - birthDate.getUTCMonth();
+    const dayDiff = now.getUTCDate() - birthDate.getUTCDate();
+    const hasBirthdayPassed = monthDiff > 0 || (monthDiff === 0 && dayDiff >= 0);
+    return hasBirthdayPassed ? yearDiff : yearDiff - 1;
+}
 
 const translations = {
     en: {
@@ -34,7 +43,7 @@ const translations = {
         about: {
             titlePrefix: "Hello, I'm ",
             paragraphOneBeforeMit:
-                "14-year-old student dreaming big and building the future with code. I'm determined to get into ",
+                "{age}-year-old student dreaming big and building the future with code. I'm determined to get into ",
             paragraphOneAfterMit:
                 " with a full-ride scholarship, where I plan to major in Aerospace Engineering and Computer Engineering.",
             paragraphTwoBeforePracta:
@@ -165,7 +174,7 @@ const translations = {
         about: {
             titlePrefix: "Olá, eu sou o ",
             paragraphOneBeforeMit:
-                "Estudante de 14 anos sonhando alto e construindo o futuro com código. Estou determinado a entrar no ",
+                "Estudante de {age} anos sonhando alto e construindo o futuro com código. Estou determinado a entrar no ",
             paragraphOneAfterMit:
                 " com bolsa integral, onde planejo cursar Engenharia Aeroespacial e Engenharia da Computação.",
             paragraphTwoBeforePracta:
@@ -331,7 +340,8 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
             const current = getTranslationValue(language, key);
             const fallback = getTranslationValue("en", key);
             const message = typeof current === "string" ? current : typeof fallback === "string" ? fallback : key;
-            return interpolate(message, values);
+            const mergedValues = { age: getAgeFromBirthdate(BIRTH_DATE), ...values };
+            return interpolate(message, mergedValues);
         },
         [language]
     );
