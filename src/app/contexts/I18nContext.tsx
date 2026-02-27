@@ -140,7 +140,7 @@ const translations = {
             youtube: "YouTube",
             youtubeChannel: "YouTube channel",
             youtubeSubtitle: "Watch updates, projects, and new videos.",
-            youtubeButton: "Open channel",
+            youtubeButton: "Access channel",
         },
         accessibility: {
             accessibilityLabel: "Accessibility",
@@ -276,7 +276,7 @@ const translations = {
             youtube: "YouTube",
             youtubeChannel: "Canal no YouTube",
             youtubeSubtitle: "Acompanhe updates, projetos e novos videos.",
-            youtubeButton: "Abrir canal",
+            youtubeButton: "Acessar o canal",
         },
         accessibility: {
             accessibilityLabel: "Acessibilidade",

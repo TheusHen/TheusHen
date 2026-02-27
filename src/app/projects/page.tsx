@@ -495,7 +495,7 @@ const ProjectsPage = () => {
                                         alt="20t Project"
                                         width={96}
                                         height={96}
-                                        className="w-24 h-24 rounded-xl object-contain"
+                                        className="w-24 h-24 rounded-xl mb-4 object-cover"
                                         priority
                                     />
                                 </div>
