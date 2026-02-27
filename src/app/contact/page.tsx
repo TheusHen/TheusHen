@@ -1,6 +1,6 @@
 "use client";
 
-import { FaArrowLeft, FaGithub, FaEnvelope, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaArrowLeft, FaGithub, FaEnvelope, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import Link from "next/link";
 import { ReactNode, useEffect, useState } from "react";
 import './styles.css'
@@ -44,8 +44,9 @@ export default function ContactPage() {
                 </div>
             </div>
 
-            <div className="flex items-center justify-center flex-grow">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="flex items-center justify-center flex-grow py-6">
+                <div className="w-full max-w-[1500px] px-4">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <ContactCard
                         icon={<FaGithub className="text-4xl" />}
                         title="TheusHen"
@@ -70,6 +71,8 @@ export default function ContactPage() {
                         subtitle={t("contact.linkedin")}
                         link="https://www.linkedin.com/in/matheus-henrique-741776367/"
                     />
+                        <YoutubeWideCard link={"https://www.youtube.com/@TheusHen"} title={t("contact.youtubeChannel")} subtitle={t("contact.youtubeSubtitle")} buttonLabel={t("contact.youtubeButton")} />
+                    </div>
                 </div>
             </div>
         </div>
@@ -89,5 +92,47 @@ function ContactCard({ icon, title, subtitle, link }: { icon: ReactNode; title: 
                 <p className="text-gray-400 text-lg">{subtitle}</p>
             </div>
         </Link>
+    );
+}
+
+function YoutubeWideCard({
+    link,
+    title,
+    subtitle,
+    buttonLabel,
+}: {
+    link: string;
+    title: string;
+    subtitle: string;
+    buttonLabel: string;
+}) {
+    return (
+        <div className="md:col-span-4 white-hover-effect">
+            <div className="border border-gray-600 rounded-lg px-6 py-7 w-full">
+                <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+                    <div className="flex items-start gap-4">
+                        <div className="w-14 h-14 rounded-lg border border-gray-600 flex justify-center items-center shrink-0">
+                            <FaYoutube className="text-3xl text-red-500" />
+                        </div>
+                        <div>
+                            <h2 className="text-2xl">{title}</h2>
+                            <p className="text-gray-400 text-lg">{subtitle}</p>
+                            <Link href={link} target="_blank" rel="noopener noreferrer" className="text-red-400 hover:text-red-300 transition-colors break-all">
+                                {link}
+                            </Link>
+                        </div>
+                    </div>
+
+                    <Link
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center rounded-lg border border-red-500/60 bg-red-500/10 px-5 py-3 text-base text-red-300 hover:bg-red-500/20 hover:text-red-200 transition-colors"
+                    >
+                        {buttonLabel}
+                    </Link>
+                </div>
+            </div>
+        </div>
     );
 }

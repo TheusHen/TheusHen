@@ -19,7 +19,7 @@ const textSizeOptions = [
 
 export default function FloatingControls() {
   const pathname = usePathname();
-  const isDecisionsPage = pathname === "/decisions";
+  const hasLowerTopOffset = pathname === "/decisions" || pathname === "/contact";
   const { language, setLanguage, t } = useI18n();
   const {
     highContrast,
@@ -53,7 +53,7 @@ export default function FloatingControls() {
     <div
       ref={containerRef}
       className={`fixed right-2 z-[9999] flex flex-col gap-2 sm:right-3 sm:gap-3 ${
-        isDecisionsPage ? "top-32 sm:top-40" : "top-4 mt-10"
+        hasLowerTopOffset ? "top-32 sm:top-40" : "top-4 mt-10"
       }`}
     >
       <div className="relative">

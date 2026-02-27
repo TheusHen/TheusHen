@@ -493,9 +493,9 @@ const ProjectsPage = () => {
                                     <Image
                                         src="/20t.png"
                                         alt="20t Project"
-                                        width={248}
+                                        width={96}
                                         height={96}
-                                        className="w-62 h-24  rounded-xl"
+                                        className="w-24 h-24 rounded-xl object-contain"
                                         priority
                                     />
                                 </div>

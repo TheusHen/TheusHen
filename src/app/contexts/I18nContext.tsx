@@ -137,6 +137,10 @@ const translations = {
             email: "Email",
             instagram: "Instagram",
             linkedin: "LinkedIn",
+            youtube: "YouTube",
+            youtubeChannel: "YouTube channel",
+            youtubeSubtitle: "Watch updates, projects, and new videos.",
+            youtubeButton: "Open channel",
         },
         accessibility: {
             accessibilityLabel: "Accessibility",
@@ -269,6 +273,10 @@ const translations = {
             email: "E-mail",
             instagram: "Instagram",
             linkedin: "LinkedIn",
+            youtube: "YouTube",
+            youtubeChannel: "Canal no YouTube",
+            youtubeSubtitle: "Acompanhe updates, projetos e novos videos.",
+            youtubeButton: "Abrir canal",
         },
         accessibility: {
             accessibilityLabel: "Acessibilidade",
