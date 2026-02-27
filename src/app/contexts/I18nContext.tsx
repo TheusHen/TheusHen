@@ -46,10 +46,10 @@ const translations = {
                 "{age}-year-old student dreaming big and building the future with code. I'm determined to get into ",
             paragraphOneAfterMit:
                 " with a full-ride scholarship, where I plan to major in Aerospace Engineering and Computer Engineering.",
-            paragraphTwoBeforePracta:
+            paragraphTwoBefore20t:
                 "Founder of ",
-            paragraphTwoAfterPracta:
-                ", an open source community that helps students achieve their academic and personal goals with lots of code, collaboration, and resilience.",
+            paragraphTwoAfter20t:
+                ", a student-run non-profit coding club focused on building real-world projects and learning technology. Think it. Hack it. Build it. Created by TheusHen.",
             paragraphThreeBeforeShipwrecked:
                 "I've already developed projects such as viral mutation simulators, digital organizers, and remote diagnosis systems, and I actively participate in hackathons like ",
             paragraphThreeBetween:
@@ -106,8 +106,8 @@ const translations = {
             fileSingular: "file",
             filePlural: "files",
             textLanguage: "Text",
-            practaDescription:
-                "PRACTA is an open-source community focused on helping students prepare for SAT with focus in the MIT university. It provides a platform for students worldwide to discuss study strategies, share experiences, and connect with like-minded individuals.",
+            twentyTDescription:
+                "Student-run non-profit coding club focused on building real-world projects and learning technology. Think it. Hack it. Build it. Created by TheusHen.",
             arcadeDescription:
                 "Arcade Lunar is a social network focused on gaming and multiplayer experiences. It connects players worldwide, offering communities, events, and interactive features.",
             optifyxDescription:
@@ -177,10 +177,10 @@ const translations = {
                 "Estudante de {age} anos sonhando alto e construindo o futuro com código. Estou determinado a entrar no ",
             paragraphOneAfterMit:
                 " com bolsa integral, onde planejo cursar Engenharia Aeroespacial e Engenharia da Computação.",
-            paragraphTwoBeforePracta:
+            paragraphTwoBefore20t:
                 "Fundador da ",
-            paragraphTwoAfterPracta:
-                ", uma comunidade open source que ajuda estudantes a alcançar objetivos acadêmicos e pessoais com muito código, colaboração e resiliência.",
+            paragraphTwoAfter20t:
+                ", um clube de programação sem fins lucrativos gerido por estudantes e focado em construir projetos reais e aprender tecnologia. Think it. Hack it. Build it. Created by TheusHen.",
             paragraphThreeBeforeShipwrecked:
                 "Já desenvolvi projetos como simuladores de mutação viral, organizadores digitais e sistemas de diagnóstico remoto, e participo ativamente de hackathons como ",
             paragraphThreeBetween:
@@ -237,8 +237,8 @@ const translations = {
             fileSingular: "arquivo",
             filePlural: "arquivos",
             textLanguage: "Texto",
-            practaDescription:
-                "A PRACTA é uma comunidade open source focada em ajudar estudantes a se prepararem para o SAT com foco no MIT. Ela oferece uma plataforma para estudantes do mundo todo discutirem estratégias de estudo, compartilharem experiências e se conectarem com pessoas parecidas.",
+            twentyTDescription:
+                "Clube de programação sem fins lucrativos gerido por estudantes e focado em construir projetos reais e aprender tecnologia. Think it. Hack it. Build it. Created by TheusHen.",
             arcadeDescription:
                 "Arcade Lunar é uma rede social voltada para games e experiências multiplayer. Ela conecta jogadores do mundo todo, oferecendo comunidades, eventos e recursos interativos.",
             optifyxDescription:

@@ -3,10 +3,10 @@ import Script from "next/script";
 
 export const metadata: Metadata = {
     title: "Projects",
-    description: "Explore TheusHen's portfolio of open source projects, applications, and websites. From PRACTA to Arcade Lunar and Optifyx, discover innovative solutions in software development, aerospace engineering, and community platforms.",
+    description: "Explore TheusHen's portfolio of open source projects, applications, and websites. From 20t to Arcade Lunar and Optifyx, discover innovative solutions in software development, aerospace engineering, and community platforms.",
     openGraph: {
         title: "Projects | TheusHen Portfolio",
-        description: "Browse through a collection of innovative projects including PRACTA, Arcade Lunar, Optifyx, and various open-source GitHub repositories. Full-stack development, aerospace innovations, and community platforms.",
+        description: "Browse through a collection of innovative projects including 20t, Arcade Lunar, Optifyx, and various open-source GitHub repositories. Full-stack development, aerospace innovations, and community platforms.",
         url: "https://theushen.me/projects",
         siteName: "TheusHen Portfolio",
         images: [
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     twitter: {
         card: "summary_large_image",
         title: "Projects | TheusHen Portfolio",
-        description: "Explore innovative projects in software development, aerospace, and open source. PRACTA, Arcade Lunar, Optifyx, and more.",
+        description: "Explore innovative projects in software development, aerospace, and open source. 20t, Arcade Lunar, Optifyx, and more.",
         images: ["https://theushen.me/banner.jpg"],
     },
 };
@@ -57,9 +57,9 @@ export default function ProjectsLayout({
                                 position: 1,
                                 item: {
                                     "@type": "SoftwareApplication",
-                                    name: "PRACTA",
-                                    description: "An open-source community platform focused on helping students prepare for SAT with a focus on MIT University. Provides a platform for students worldwide to discuss study strategies, share experiences, and connect.",
-                                    url: "https://practa.tech",
+                                    name: "20t",
+                                    description: "Student-run non-profit coding club focused on building real-world projects and learning technology. Think it. Hack it. Build it. Created by TheusHen.",
+                                    url: "https://discord.gg/U6GXeNwZ",
                                     applicationCategory: "WebApplication",
                                     operatingSystem: "Web Browser",
                                     offers: {

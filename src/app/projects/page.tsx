@@ -485,27 +485,27 @@ const ProjectsPage = () => {
 
                 {/* Featured Projects */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                    {/* PRACTA Project */}
+                    {/* 20t Project */}
                     {showMitpa && (
                         <div className="white-spin-border white-hover-effect">
                             <div className="white-spin-border-content p-6">
                                 <div className="flex justify-between items-center mb-4">
                                     <Image
-                                        src="https://www.practa.tech/Logo.png"
-                                        alt="PRACTA Project"
+                                        src="/20t.png"
+                                        alt="20t Project"
                                         width={248}
                                         height={96}
                                         className="w-62 h-24  rounded-xl"
                                         priority
                                     />
                                 </div>
-                                <h2 className="text-2xl font-bold text-white mb-4">PRACTA</h2>
+                                <h2 className="text-2xl font-bold text-white mb-4">20t</h2>
                                 <p className="text-gray-300 text-sm mb-4">
-                                    {t("projects.practaDescription")}
+                                    {t("projects.twentyTDescription")}
                                 </p>
                                 <a
                                     className="text-sm flex items-center space-x-1 hover:underline cursor-pointer text-red-400 hover:text-red-300 transition-colors"
-                                    href="https://practa.tech"
+                                    href="https://discord.gg/U6GXeNwZ"
                                     target="_blank"
                                     rel="noreferrer"
                                 >

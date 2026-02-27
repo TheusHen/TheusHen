@@ -25,10 +25,6 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'www.practa.tech',
-      },
-      {
-        protocol: 'https',
         hostname: 'raw.githubusercontent.com',
       },
     ],

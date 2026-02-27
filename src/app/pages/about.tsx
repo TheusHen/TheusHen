@@ -111,9 +111,9 @@ function TextSection() {
                     {t("about.paragraphOneAfterMit")}
                 </span>
                 <span>
-                    {t("about.paragraphTwoBeforePracta")}
-                    <span className="font-bold text-red-600">PRACTA</span>
-                    {t("about.paragraphTwoAfterPracta")}
+                    {t("about.paragraphTwoBefore20t")}
+                    <span className="font-bold text-red-600">20t</span>
+                    {t("about.paragraphTwoAfter20t")}
                 </span>
                 <span>
                     {t("about.paragraphThreeBeforeShipwrecked")}

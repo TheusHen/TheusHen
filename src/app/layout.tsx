@@ -16,13 +16,13 @@ export const metadata: Metadata = {
         default: "TheusHen",
         template: "%s | TheusHen",
     },
-    description: "Matheus Henrique (TheusHen) - Founder of PRACTA, full-stack developer passionate about open source software, aerospace engineering, and building impactful tools. Explore my projects, timeline, and get in touch.",
+    description: "Matheus Henrique (TheusHen) - Creator of 20t, a student-run non-profit coding club focused on building real-world projects and learning technology. Think it. Hack it. Build it. Created by TheusHen.",
     applicationName: "TheusHen Portfolio",
     authors: [{ name: "Matheus Henrique", url: "https://theushen.me" }],
     keywords: [
         "theushen",
         "Matheus Henrique",
-        "PRACTA",
+        "20t",
         "developer",
         "portfolio",
         "aerospace",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     metadataBase: new URL("https://theushen.me"),
     openGraph: {
         title: "TheusHen - Full-Stack Developer & Open Source Advocate",
-        description: "Portfolio of Matheus Henrique, founder of PRACTA. Passionate about open source software, aerospace engineering, and creating impactful solutions. Discover my projects and journey in software development.",
+        description: "Portfolio of Matheus Henrique, creator of 20t. Student-run non-profit coding club focused on building real-world projects and learning technology. Think it. Hack it. Build it. Created by TheusHen.",
         url: "https://theushen.me",
         siteName: "TheusHen Portfolio",
         images: [
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     twitter: {
         card: "summary_large_image",
         title: "TheusHen - Full-Stack Developer & Open Source Advocate",
-        description: "Portfolio of Matheus Henrique, founder of PRACTA. Passionate about open source, aerospace engineering, and building impactful solutions.",
+        description: "Portfolio of Matheus Henrique, creator of 20t. Student-run non-profit coding club focused on building real-world projects and learning technology.",
         images: ["https://theushen.me/banner.jpg"],
         creator: "@theushen",
         site: "@theushen",
@@ -164,11 +164,11 @@ export default function RootLayout({
                         "https://www.linkedin.com/in/matheus-henrique-741776367/",
                     ],
                     jobTitle: "Full-Stack Developer",
-                    description: "Founder of PRACTA, developer focused on open source, aerospace innovation and impactful tools.",
+                    description: "Creator of 20t. Student-run non-profit coding club focused on building real-world projects and learning technology. Think it. Hack it. Build it. Created by TheusHen.",
                     worksFor: {
                         "@type": "Organization",
-                        name: "PRACTA",
-                        url: "https://practa.tech"
+                        name: "20t",
+                        url: "https://discord.gg/U6GXeNwZ"
                     },
                     contactPoint: {
                         "@type": "ContactPoint",
@@ -190,7 +190,7 @@ export default function RootLayout({
                     name: "TheusHen Portfolio",
                     alternateName: "TheusHen",
                     url: "https://theushen.me",
-                    description: "Portfolio of Matheus Henrique (TheusHen), founder of PRACTA, developer focused on open source, aerospace innovation and impactful tools.",
+                    description: "Portfolio of Matheus Henrique (TheusHen), creator of 20t. Student-run non-profit coding club focused on building real-world projects and learning technology. Think it. Hack it. Build it. Created by TheusHen.",
                     author: {
                         "@type": "Person",
                         name: "Matheus Henrique",

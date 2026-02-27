@@ -31,7 +31,7 @@ const aboutInfo = {
         flag: "https://upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg",
         bio: [
             `${getAgeFromBirthdate(BIRTH_DATE)}-year-old student dreaming big and building the future with code. I’m determined to get into MIT with a full-ride scholarship, where I plan to major in Aerospace Engineering and Computer Engineering.`,
-            "Founder of PRACTA, an open source community that helps students achieve their academic and personal goals with lots of code, collaboration, and resilience.",
+            "Creator of 20t, a student-run non-profit coding club focused on building real-world projects and learning technology. Think it. Hack it. Build it. Created by TheusHen.",
             "I’ve already developed projects such as viral mutation simulators, digital organizers, and remote diagnosis systems, and I actively participate in hackathons like Shipwrecked and events from Hack Club.",
             "I’m always looking to learn new technologies, contribute to open source repositories, and grow as a developer and as a person.",
             "If you want to chat about programming, science, communities, or how to turn dreams into projects, reach out to me!",
@@ -80,10 +80,10 @@ const aboutInfo = {
     ],
     featuredProjects: [
         {
-            name: "PRACTA",
-            description: "PRACTA is an open-source community focused on helping students prepare for admission to MIT. It provides a platform for students worldwide to discuss study strategies, share experiences, and connect with like-minded individuals.",
-            url: "https://PRACTA.tech",
-            image: "https://PRACTA-tech.vercel.app/Logo.png",
+            name: "20t",
+            description: "Student-run non-profit coding club focused on building real-world projects and learning technology. Think it. Hack it. Build it. Created by TheusHen.",
+            url: "https://discord.gg/U6GXeNwZ",
+            image: "/20t.png",
             type: ["openSource", "website"]
         },
         {
