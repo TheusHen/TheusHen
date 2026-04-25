@@ -1,6 +1,6 @@
 "use client";
 
-import { FaArrowLeft, FaGithub, FaEnvelope, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
+import { ArrowLeft, Github, Mail, Instagram, Linkedin, Youtube } from "lucide-react";
 import Link from "next/link";
 import { ReactNode, useEffect, useState } from "react";
 import './styles.css'
@@ -53,8 +53,12 @@ export default function ContactPage() {
             />
             <div className="relative z-10 mx-auto w-full max-w-6xl px-4 pt-16">
                 <div className="flex justify-between items-center mb-8 gap-4">
-                    <Link href="/">
-                        <FaArrowLeft className="text-2xl cursor-pointer transition-transform hover:-translate-x-1 text-white" />
+                    <Link href="/" aria-label={t("nav.back") || "Back to home"}>
+                        <ArrowLeft
+                            size={24}
+                            className="cursor-pointer transition-transform hover:-translate-x-1 text-white"
+                            aria-hidden="true"
+                        />
                     </Link>
                     <div className="flex space-x-4 text-sm sm:text-base">
                         <Link href="/projects" className="text-lg hover:text-red-400 transition-colors">
@@ -71,25 +75,25 @@ export default function ContactPage() {
                 <div className="w-full max-w-6xl px-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 sm:gap-6">
                         <ContactCard
-                            icon={<FaGithub className="text-4xl" />}
+                            icon={<Github size={36} aria-hidden="true" />}
                             title="TheusHen"
                             subtitle={t("contact.github")}
                             link="https://github.com/TheusHen"
                         />
                         <ContactCard
-                            icon={<FaEnvelope className="text-4xl" />}
+                            icon={<Mail size={36} aria-hidden="true" />}
                             title="dev@theushen.me"
                             subtitle={t("contact.email")}
                             link="mailto:dev@theushen.me"
                         />
                         <ContactCard
-                            icon={<FaInstagram className="text-4xl" />}
+                            icon={<Instagram size={36} aria-hidden="true" />}
                             title="@mmatheus_henriquee"
                             subtitle={t("contact.instagram")}
                             link="https://www.instagram.com/mmatheus_henriquee"
                         />
                         <ContactCard
-                            icon={<FaLinkedin className="text-4xl" />}
+                            icon={<Linkedin size={36} aria-hidden="true" />}
                             title="Matheus Henrique"
                             subtitle={t("contact.linkedin")}
                             link="https://www.linkedin.com/in/matheus-henrique-741776367/"
@@ -142,7 +146,11 @@ function YoutubeWideCard({
                 <div className="relative z-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
                     <div className="flex items-start gap-4 sm:gap-5">
                         <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border border-gray-600/90 flex justify-center items-center shrink-0 bg-red-500/10">
-                            <FaYoutube className="text-3xl sm:text-4xl text-red-500" />
+                            <Youtube
+                                size={32}
+                                className="text-red-500 sm:size-9"
+                                aria-hidden="true"
+                            />
                         </div>
                         <div className="min-w-0">
                             <h2 className="text-2xl sm:text-3xl">{title}</h2>
@@ -164,7 +172,7 @@ function YoutubeWideCard({
                         rel="noopener noreferrer"
                         className="inline-flex items-center justify-center gap-2 rounded-xl border border-red-400/70 bg-gradient-to-r from-red-600 to-rose-500 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white shadow-[0_0_24px_rgba(239,68,68,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:from-red-500 hover:to-rose-400 hover:shadow-[0_0_30px_rgba(239,68,68,0.5)]"
                     >
-                        <FaYoutube className="text-base" />
+                        <Youtube size={16} aria-hidden="true" />
                         {buttonLabel}
                     </Link>
                 </div>

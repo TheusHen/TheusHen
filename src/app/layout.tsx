@@ -3,7 +3,6 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import CollegeDecisionsBar from "./components/CollegeDecisionsBar";
 import GlobalSwitch from "./components/Switch";
-import InspectDetector from "./components/InspectDetector";
 import FloatingControls from "./components/FloatingControls";
 import "./globals.css";
 import { PostHogProvider } from "./providers/PostHogProvider";
@@ -123,33 +122,9 @@ export default function RootLayout({
             <meta name="apple-mobile-web-app-capable" content="yes" />
             <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
             
-            {/* Preconnect to external domains */}
-            <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
-            <link rel="preconnect" href="https://analytics.ahrefs.com" crossOrigin="anonymous" />
-            <link rel="dns-prefetch" href="https://api.github.com" />
+            {/* Preconnect to external domains used by the site */}
             <link rel="dns-prefetch" href="https://us.i.posthog.com" />
             <link rel="dns-prefetch" href="https://avatars.githubusercontent.com" />
-
-            {/* Google Analytics */}
-            <Script
-                src="https://www.googletagmanager.com/gtag/js?id=G-DWX5JVERXC"
-                strategy="afterInteractive"
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-                {`
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', 'G-DWX5JVERXC');
-                `}
-            </Script>
-
-            {/* Ahrefs Analytics */}
-            <Script
-                src="https://analytics.ahrefs.com/analytics.js"
-                data-key="7pSFS8uTZPgZ6+AQJF9oRg"
-                strategy="worker"
-            />
 
             <Script id="structured-data-person" type="application/ld+json">
                 {JSON.stringify({
@@ -204,7 +179,6 @@ export default function RootLayout({
             <I18nProvider>
                 <AccessibilityProvider>
                     <GlobeProvider>
-                        <InspectDetector />
                         <CollegeDecisionsBar />
                         <GlobalSwitch />
                         <FloatingControls />

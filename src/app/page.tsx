@@ -38,27 +38,14 @@ export default function Home() {
     const [stars, setStars] = useState<number | null>(null);
 
     useEffect(() => {
-        // Lazy load Hotjar
-        const loadHotjar = async () => {
-            if (typeof window !== 'undefined') {
-                const { default: hotjar } = await import('@hotjar/browser');
-                hotjar.init(6469301, 6);
-            }
-        };
-        
-        if ('requestIdleCallback' in window) {
-            requestIdleCallback(() => loadHotjar(), { timeout: 3000 });
-        } else {
-            setTimeout(loadHotjar, 2000);
-        }
-
-        // Fetch GitHub stars with lower priority
+        // Fetch GitHub stars from our cached edge route handler
+        // (avoids the 60 req/h unauthenticated client-side GitHub rate limit).
         const fetchStars = () => {
-            fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`)
+            fetch(`/api/github/stars`)
                 .then((res) => res.json())
                 .then((data) => {
-                    if (data.stargazers_count !== undefined) {
-                        setStars(data.stargazers_count);
+                    if (typeof data?.stars === "number") {
+                        setStars(data.stars);
                     }
                 })
                 .catch(() => {
@@ -66,7 +53,7 @@ export default function Home() {
                 });
         };
 
-        if ('requestIdleCallback' in window) {
+        if ("requestIdleCallback" in window) {
             requestIdleCallback(() => fetchStars(), { timeout: 2000 });
         } else {
             setTimeout(fetchStars, 1000);
