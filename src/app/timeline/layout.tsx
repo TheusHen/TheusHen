@@ -7,11 +7,11 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Timeline | TheusHen",
         description: "Follow Matheus Henrique's journey through an interactive timeline of achievements, projects, and milestones in software development and education.",
-        url: "https://theushen.me/timeline",
+        url: "https://theushen.works/timeline",
         siteName: "TheusHen Portfolio",
         images: [
             {
-                url: "https://theushen.me/banner.jpg",
+                url: "https://theushen.works/banner.jpg",
                 width: 780,
                 height: 400,
                 alt: "TheusHen Timeline - Journey and Achievements",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "Timeline | TheusHen",
         description: "Interactive timeline of Matheus Henrique's journey in software development and education.",
-        images: ["https://theushen.me/banner.jpg"],
+        images: ["https://theushen.works/banner.jpg"],
     },
 };
 
@@ -44,13 +44,13 @@ export default function TimelineLayout({
                             "@type": "ListItem",
                             position: 1,
                             name: "Home",
-                            item: "https://theushen.me"
+                            item: "https://theushen.works"
                         },
                         {
                             "@type": "ListItem",
                             position: 2,
                             name: "Timeline",
-                            item: "https://theushen.me/timeline"
+                            item: "https://theushen.works/timeline"
                         }
                     ]
                 })}

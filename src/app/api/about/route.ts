@@ -39,7 +39,7 @@ const aboutInfo = {
         socials: [
             { label: "GitHub", url: "https://github.com/TheusHen" },
             { label: "LinkedIn", url: "https://www.linkedin.com/in/matheus-henrique-741776367/" },
-            { label: "Email", url: "mailto:dev@theushen.me" },
+            { label: "Email", url: "mailto:dev@theushen.works" },
             { label: "Instagram", url: "https://www.instagram.com/mmatheus_henriquee" },
             { label: "Reddit", url: "https://www.reddit.com/user/TheusHen" },
         ],
@@ -61,9 +61,9 @@ const aboutInfo = {
         },
         {
             icon: "email",
-            label: "dev@theushen.me",
+            label: "dev@theushen.works",
             subtitle: "Email",
-            url: "mailto:dev@theushen.me"
+            url: "mailto:dev@theushen.works"
         },
         {
             icon: "instagram",

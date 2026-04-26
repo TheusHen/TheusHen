@@ -57,7 +57,6 @@ ScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName;
 // --- Main ProjectsPage Component ---
 
 const fallbackImg = "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png";
-const GITHUB_USERNAME = "TheusHen";
 
 interface Repo {
     id: number;
@@ -174,17 +173,19 @@ const ProjectsPage = () => {
 
     useEffect(() => {
         setLoading(true);
-        fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`)
+        // Use cached edge route handlers to avoid client-side GitHub rate limits
+        fetch(`/api/github/repos`)
             .then((res) => res.json())
             .then((data) => {
-                if (Array.isArray(data)) {
-                    setRepos(data);
+                const repos = data?.repos;
+                if (Array.isArray(repos)) {
+                    setRepos(repos);
 
                     // Extract all unique topics
                     const topics = new Set<string>();
-                    data.forEach((repo: Repo) => {
+                    repos.forEach((repo: Repo) => {
                         if (repo.topics && repo.topics.length > 0) {
-                            repo.topics.forEach(topic => topics.add(topic));
+                            repo.topics.forEach((topic) => topics.add(topic));
                         }
                     });
                     setAllTopics(Array.from(topics).sort());
@@ -199,14 +200,15 @@ const ProjectsPage = () => {
                 setError(true);
                 setLoading(false);
             });
-        
+
         // Fetch gists
         setLoadingGists(true);
-        fetch(`https://api.github.com/users/${GITHUB_USERNAME}/gists?per_page=100`)
+        fetch(`/api/github/gists`)
             .then((res) => res.json())
             .then((data) => {
-                if (Array.isArray(data)) {
-                    setGists(data);
+                const gists = data?.gists;
+                if (Array.isArray(gists)) {
+                    setGists(gists);
                     setGistsError(false);
                 } else {
                     setGistsError(true);

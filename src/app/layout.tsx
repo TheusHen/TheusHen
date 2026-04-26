@@ -3,7 +3,6 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import CollegeDecisionsBar from "./components/CollegeDecisionsBar";
 import GlobalSwitch from "./components/Switch";
-import InspectDetector from "./components/InspectDetector";
 import FloatingControls from "./components/FloatingControls";
 import "./globals.css";
 import { PostHogProvider } from "./providers/PostHogProvider";
@@ -18,7 +17,7 @@ export const metadata: Metadata = {
     },
     description: "Matheus Henrique (TheusHen) - Creator of 20t, a student-run non-profit coding club focused on building real-world projects and learning technology. Think it. Hack it. Build it. Created by TheusHen.",
     applicationName: "TheusHen Portfolio",
-    authors: [{ name: "Matheus Henrique", url: "https://theushen.me" }],
+    authors: [{ name: "Matheus Henrique", url: "https://theushen.works" }],
     keywords: [
         "theushen",
         "Matheus Henrique",
@@ -44,15 +43,15 @@ export const metadata: Metadata = {
     referrer: "origin-when-cross-origin",
     creator: "Matheus Henrique",
     publisher: "TheusHen",
-    metadataBase: new URL("https://theushen.me"),
+    metadataBase: new URL("https://theushen.works"),
     openGraph: {
         title: "TheusHen - Full-Stack Developer & Open Source Advocate",
         description: "Portfolio of Matheus Henrique, creator of 20t. Student-run non-profit coding club focused on building real-world projects and learning technology. Think it. Hack it. Build it. Created by TheusHen.",
-        url: "https://theushen.me",
+        url: "https://theushen.works",
         siteName: "TheusHen Portfolio",
         images: [
             {
-                url: "https://theushen.me/banner.jpg",
+                url: "https://theushen.works/banner.jpg",
                 width: 780,
                 height: 400,
                 alt: "TheusHen Portfolio - Matheus Henrique, Full-Stack Developer",
@@ -68,7 +67,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "TheusHen - Full-Stack Developer & Open Source Advocate",
         description: "Portfolio of Matheus Henrique, creator of 20t. Student-run non-profit coding club focused on building real-world projects and learning technology.",
-        images: ["https://theushen.me/banner.jpg"],
+        images: ["https://theushen.works/banner.jpg"],
         creator: "@theushen",
         site: "@theushen",
     },
@@ -123,33 +122,9 @@ export default function RootLayout({
             <meta name="apple-mobile-web-app-capable" content="yes" />
             <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
             
-            {/* Preconnect to external domains */}
-            <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
-            <link rel="preconnect" href="https://analytics.ahrefs.com" crossOrigin="anonymous" />
-            <link rel="dns-prefetch" href="https://api.github.com" />
+            {/* Preconnect to external domains used by the site */}
             <link rel="dns-prefetch" href="https://us.i.posthog.com" />
             <link rel="dns-prefetch" href="https://avatars.githubusercontent.com" />
-
-            {/* Google Analytics */}
-            <Script
-                src="https://www.googletagmanager.com/gtag/js?id=G-DWX5JVERXC"
-                strategy="afterInteractive"
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-                {`
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', 'G-DWX5JVERXC');
-                `}
-            </Script>
-
-            {/* Ahrefs Analytics */}
-            <Script
-                src="https://analytics.ahrefs.com/analytics.js"
-                data-key="7pSFS8uTZPgZ6+AQJF9oRg"
-                strategy="worker"
-            />
 
             <Script id="structured-data-person" type="application/ld+json">
                 {JSON.stringify({
@@ -157,7 +132,7 @@ export default function RootLayout({
                     "@type": "Person",
                     name: "Matheus Henrique",
                     alternateName: "TheusHen",
-                    url: "https://theushen.me",
+                    url: "https://theushen.works",
                     image: "https://avatars.githubusercontent.com/u/180109164",
                     sameAs: [
                         "https://github.com/theushen",
@@ -173,7 +148,7 @@ export default function RootLayout({
                     contactPoint: {
                         "@type": "ContactPoint",
                         contactType: "Personal",
-                        url: "https://theushen.me/contact"
+                        url: "https://theushen.works/contact"
                     },
                     knowsAbout: ["Software Development", "Aerospace Engineering", "Open Source", "Web Development", "Full-Stack Development"],
                     alumniOf: {
@@ -189,12 +164,12 @@ export default function RootLayout({
                     "@type": "WebSite",
                     name: "TheusHen Portfolio",
                     alternateName: "TheusHen",
-                    url: "https://theushen.me",
+                    url: "https://theushen.works",
                     description: "Portfolio of Matheus Henrique (TheusHen), creator of 20t. Student-run non-profit coding club focused on building real-world projects and learning technology. Think it. Hack it. Build it. Created by TheusHen.",
                     author: {
                         "@type": "Person",
                         name: "Matheus Henrique",
-                        url: "https://theushen.me"
+                        url: "https://theushen.works"
                     }
                 })}
             </Script>
@@ -204,7 +179,6 @@ export default function RootLayout({
             <I18nProvider>
                 <AccessibilityProvider>
                     <GlobeProvider>
-                        <InspectDetector />
                         <CollegeDecisionsBar />
                         <GlobalSwitch />
                         <FloatingControls />

@@ -7,11 +7,11 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Projects | TheusHen Portfolio",
         description: "Browse through a collection of innovative projects including 20t, Arcade Lunar, Optifyx, and various open-source GitHub repositories. Full-stack development, aerospace innovations, and community platforms.",
-        url: "https://theushen.me/projects",
+        url: "https://theushen.works/projects",
         siteName: "TheusHen Portfolio",
         images: [
             {
-                url: "https://theushen.me/banner.jpg",
+                url: "https://theushen.works/banner.jpg",
                 width: 780,
                 height: 400,
                 alt: "TheusHen Projects - Portfolio of Open Source and Innovation",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "Projects | TheusHen Portfolio",
         description: "Explore innovative projects in software development, aerospace, and open source. 20t, Arcade Lunar, Optifyx, and more.",
-        images: ["https://theushen.me/banner.jpg"],
+        images: ["https://theushen.works/banner.jpg"],
     },
 };
 
@@ -41,11 +41,11 @@ export default function ProjectsLayout({
                     "@type": "CollectionPage",
                     name: "Projects Portfolio",
                     description: "A collection of innovative projects and open-source contributions by Matheus Henrique (TheusHen)",
-                    url: "https://theushen.me/projects",
+                    url: "https://theushen.works/projects",
                     author: {
                         "@type": "Person",
                         name: "Matheus Henrique",
-                        url: "https://theushen.me"
+                        url: "https://theushen.works"
                     },
                     mainEntity: {
                         "@type": "ItemList",
@@ -118,13 +118,13 @@ export default function ProjectsLayout({
                             "@type": "ListItem",
                             position: 1,
                             name: "Home",
-                            item: "https://theushen.me"
+                            item: "https://theushen.works"
                         },
                         {
                             "@type": "ListItem",
                             position: 2,
                             name: "Projects",
-                            item: "https://theushen.me/projects"
+                            item: "https://theushen.works/projects"
                         }
                     ]
                 })}

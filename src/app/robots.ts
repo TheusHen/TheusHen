@@ -14,7 +14,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/'],
       },
     ],
-    sitemap: 'https://www.theushen.me/sitemap.xml',
-    host: 'https://www.theushen.me',
+    sitemap: 'https://www.theushen.works/sitemap.xml',
+    host: 'https://www.theushen.works',
   }
 }

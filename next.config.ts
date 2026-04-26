@@ -37,7 +37,7 @@ const nextConfig: NextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   experimental: {
-    optimizePackageImports: ['lucide-react', 'react-icons', 'd3', 'framer-motion', 'gsap', 'three', '@fortawesome/fontawesome-free'],
+    optimizePackageImports: ['lucide-react', 'd3', 'framer-motion', 'gsap', 'three'],
     webVitalsAttribution: ['CLS', 'LCP', 'FCP', 'FID', 'TTFB', 'INP'],
   },
   compiler: {
@@ -58,10 +58,10 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: `
               default-src 'self';
-              script-src 'self' https://www.googletagmanager.com https://plausible.io https://vercel.live https://analytics.ahrefs.com https://static.hotjar.com https://script.hotjar.com 'unsafe-inline' 'unsafe-eval';
+              script-src 'self' https://vercel.live 'unsafe-inline' 'unsafe-eval';
               style-src 'self' 'unsafe-inline';
               img-src 'self' data: https:;
-              connect-src 'self' https: wss://ws.hotjar.com;
+              connect-src 'self' https:;
               font-src 'self' https:;
               frame-src 'self' https://vercel.live;
             `.replace(/\s{2,}/g, ' ').trim(),

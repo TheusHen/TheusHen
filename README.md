@@ -3,10 +3,10 @@
 	<a href="https://last.fm/user/theushen"><img src="https://lastfm-recently-played.vercel.app/api?user=theushen&count=3" height=200 /></a>
 </div>
 <div align="center">
-    <a href="https://www.theushen.me">
+    <a href="https://www.theushen.works">
         <img src="https://github-readme-stats.vercel.app/api?username=TheusHen&theme=vue-dark&show_icons=true&hide_border=true&count_private=true" width="380" style="display: block; margin: 0;" />
     </a>
-    <a href="https://www.theushen.me">
+    <a href="https://www.theushen.works">
         <img src="https://github-readme-streak-stats.herokuapp.com/?user=TheusHen&theme=vue-dark&hide_border=true" width="400" />
     </a>
 </div>
