@@ -7,11 +7,11 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Contact | TheusHen",
         description: "Reach out to Matheus Henrique for collaboration, project inquiries, or tech discussions. Open to opportunities in software development and aerospace innovation.",
-        url: "https://theushen.me/contact",
+        url: "https://theushen.works/contact",
         siteName: "TheusHen Portfolio",
         images: [
             {
-                url: "https://theushen.me/banner.jpg",
+                url: "https://theushen.works/banner.jpg",
                 width: 780,
                 height: 400,
                 alt: "Contact TheusHen - Get in Touch",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "Contact | TheusHen",
         description: "Get in touch with Matheus Henrique for collaboration and project opportunities.",
-        images: ["https://theushen.me/banner.jpg"],
+        images: ["https://theushen.works/banner.jpg"],
     },
 };
 
@@ -44,13 +44,13 @@ export default function ContactLayout({
                             "@type": "ListItem",
                             position: 1,
                             name: "Home",
-                            item: "https://theushen.me"
+                            item: "https://theushen.works"
                         },
                         {
                             "@type": "ListItem",
                             position: 2,
                             name: "Contact",
-                            item: "https://theushen.me/contact"
+                            item: "https://theushen.works/contact"
                         }
                     ]
                 })}
@@ -61,15 +61,15 @@ export default function ContactLayout({
                     "@type": "ContactPage",
                     name: "Contact TheusHen",
                     description: "Get in touch with Matheus Henrique",
-                    url: "https://theushen.me/contact",
+                    url: "https://theushen.works/contact",
                     mainEntity: {
                         "@type": "Person",
                         name: "Matheus Henrique",
-                        url: "https://theushen.me",
+                        url: "https://theushen.works",
                         contactPoint: {
                             "@type": "ContactPoint",
                             contactType: "Personal",
-                            url: "https://theushen.me/contact"
+                            url: "https://theushen.works/contact"
                         }
                     }
                 })}

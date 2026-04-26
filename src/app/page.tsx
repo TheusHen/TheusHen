@@ -63,7 +63,7 @@ export default function Home() {
     const handleSend = () => {
         if (message.trim()) {
             const encodedMessage = encodeURIComponent(message);
-            window.location.href = `https://intouchbot.theushen.me?help=${encodedMessage}`;
+            window.location.href = `https://intouchbot.theushen.works?help=${encodedMessage}`;
         }
     };
 

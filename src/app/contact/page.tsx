@@ -82,9 +82,9 @@ export default function ContactPage() {
                         />
                         <ContactCard
                             icon={<Mail size={36} aria-hidden="true" />}
-                            title="dev@theushen.me"
+                            title="dev@theushen.works"
                             subtitle={t("contact.email")}
-                            link="mailto:dev@theushen.me"
+                            link="mailto:dev@theushen.works"
                         />
                         <ContactCard
                             icon={<Instagram size={36} aria-hidden="true" />}
