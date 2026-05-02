@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Donate</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #0a0a0a;
+      --muted: #666666;
+      --line: #e7e7e7;
+      --soft: #f7f7f7;
+      --shadow: rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--fg);
+      background:
+        radial-gradient(circle at var(--mx, 50%) var(--my, 20%), rgba(0, 0, 0, 0.055), transparent 240px),
+        linear-gradient(180deg, #fff 0%, #f9f9f9 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image:
+        linear-gradient(var(--fg) 1px, transparent 1px),
+        linear-gradient(90deg, var(--fg) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(circle at center, black, transparent 75%);
+    }
+
+    .page {
+      width: min(100%, 980px);
+      margin: 0 auto;
+      padding: 72px 20px 52px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 44px;
+      animation: fadeUp 720ms ease both;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      margin-bottom: 18px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(12px);
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--fg);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    h1 {
+      font-size: clamp(42px, 8vw, 84px);
+      line-height: 0.92;
+      letter-spacing: -0.075em;
+      font-weight: 850;
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      width: min(100%, 620px);
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .card {
+      position: relative;
+      isolation: isolate;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 20px 60px var(--shadow);
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+      transform: translateY(10px);
+      opacity: 0;
+      animation: fadeUp 720ms ease both;
+    }
+
+    .card:nth-child(2) {
+      animation-delay: 120ms;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      z-index: -1;
+      border-radius: inherit;
+      background: linear-gradient(130deg, rgba(0,0,0,0.16), transparent 28%, transparent 72%, rgba(0,0,0,0.08));
+      opacity: 0;
+      transition: opacity 240ms ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      transition: transform 240ms ease;
+    }
+
+    .card:hover::after {
+      opacity: 1;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .coin {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 750;
+      letter-spacing: -0.03em;
+      font-size: 22px;
+    }
+
+    .coin-icon {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .coin-icon img {
+      width: 34px;
+      height: 34px;
+      display: block;
+      object-fit: contain;
+    }
+
+    .tag {
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 12px;
+      background: var(--soft);
+      white-space: nowrap;
+    }
+
+    .address {
+      width: 100%;
+      min-height: 94px;
+      padding: 16px;
+      border: 1px dashed #cfcfcf;
+      border-radius: 18px;
+      background: #fbfbfb;
+      color: #111;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 13px;
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+      user-select: all;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .button {
+      appearance: none;
+      border: 1px solid var(--fg);
+      border-radius: 999px;
+      padding: 11px 15px;
+      background: var(--fg);
+      color: var(--bg);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 650;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--fg);
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button.secondary:hover {
+      background: var(--fg);
+      color: var(--bg);
+    }
+
+    .thanks {
+      position: relative;
+      margin-top: 22px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 20px 60px var(--shadow);
+      overflow: hidden;
+      animation: fadeUp 720ms 220ms ease both;
+    }
+
+    .thanks::before {
+      content: "Thanks";
+      position: absolute;
+      right: -18px;
+      bottom: -28px;
+      color: rgba(0, 0, 0, 0.035);
+      font-size: clamp(72px, 16vw, 180px);
+      font-weight: 900;
+      letter-spacing: -0.08em;
+      pointer-events: none;
+    }
+
+    .thanks-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 94px 1fr;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .popcorn {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      object-position: center;
+      border: none;
+      border-radius: 0;
+      filter: none;
+      animation: none;
+    }
+
+    .thanks h2 {
+      margin-bottom: 10px;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: -0.06em;
+      line-height: 1;
+    }
+
+    .thanks p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      z-index: 10;
+      padding: 11px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 12px 40px var(--shadow);
+      color: var(--fg);
+      font-size: 14px;
+      transform: translate(-50%, 120%);
+      opacity: 0;
+      transition: transform 240ms ease, opacity 240ms ease;
+      backdrop-filter: blur(12px);
+    }
+
+    .toast.show {
+      transform: translate(-50%, 0);
+      opacity: 1;
+    }
+
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--fg);
+      animation: sparkle 760ms ease-out forwards;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.8); opacity: 0.35; }
+    }
+
+    @keyframes sparkle {
+      to {
+        transform: translate(var(--dx), var(--dy)) scale(0);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        padding-top: 48px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .thanks-content {
+        grid-template-columns: 1fr;
+      }
+
+      .popcorn {
+        width: 64px;
+        height: 64px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="eyebrow"><span class="dot"></span> Privacy-friendly donations</div>
+      <h1 id="page-title">Donate</h1>
+      <p>
+        If this project helped you, a small donation keeps the work alive, open, and independent.
+        Choose Monero or Bitcoin, copy the address, or open it directly in your wallet.
+      </p>
+    </section>
+
+    <section class="cards" aria-label="Donation addresses">
+      <article class="card">
+        <div class="card-header">
+          <div class="coin">
+            <span class="coin-icon" aria-hidden="true">
+              <img src="https://www.svgrepo.com/show/354089/monero.svg" alt="" />
+            </span>
+            Monero
+          </div>
+          <span class="tag">Recommended</span>
+        </div>
+
+        <div class="address" id="xmr-address">88qbtu73qaT71f9h7M9uHJh6TW9rkWkvj6f15UyiV6iENn6y3St8EbjGofMMGSVTzx1UBzPgmZf6BSbLkDEwndWGVKC7Fnq</div>
+
+        <div class="actions">
+          <a class="button" href="monero:88qbtu73qaT71f9h7M9uHJh6TW9rkWkvj6f15UyiV6iENn6y3St8EbjGofMMGSVTzx1UBzPgmZf6BSbLkDEwndWGVKC7Fnq?tx_description=Donation">Open wallet</a>
+          <button class="button secondary" type="button" data-copy="xmr-address">Copy address</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-header">
+          <div class="coin">
+            <span class="coin-icon" aria-hidden="true">
+              <img src="https://www.svgrepo.com/show/452169/bitcoin.svg" alt="" />
+            </span>
+            Bitcoin
+          </div>
+          <span class="tag">Universal</span>
+        </div>
+
+        <div class="address" id="btc-address">bc1qt73ej5rw3g7qm0c87tvvzkltxxjahjy23755q4</div>
+
+        <div class="actions">
+          <a class="button" href="bitcoin:bc1qt73ej5rw3g7qm0c87tvvzkltxxjahjy23755q4?label=Donation">Open wallet</a>
+          <button class="button secondary" type="button" data-copy="btc-address">Copy address</button>
+        </div>
+      </article>
+    </section>
+
+    <section class="thanks" aria-labelledby="thanks-title">
+      <div class="thanks-content">
+        <img
+          class="popcorn"
+          src="https://www.eevblog.com/forum/Smileys/default/EatingPopcorn.jpg.pagespeed.ce.yJ6TmC5fSa.jpg"
+          alt="Eating popcorn smiley"
+        />
+
+        <div>
+          <h2 id="thanks-title">Thanks!</h2>
+          <p>
+            Thank you for supporting this project. Every donation, no matter the size, helps keep development moving,
+            pays for infrastructure, testing, hardware, documentation, and gives more time to improve the work for everyone.
+            Your support means a lot and helps keep the project open, independent, and useful for the community.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Address copied</div>
+
+  <script>
+    const toast = document.getElementById("toast");
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    function sparkleAt(x, y) {
+      for (let i = 0; i < 14; i += 1) {
+        const particle = document.createElement("span");
+        const angle = (Math.PI * 2 * i) / 14;
+        const distance = 34 + Math.random() * 26;
+
+        particle.className = "sparkle";
+        particle.style.left = `${x}px`;
+        particle.style.top = `${y}px`;
+        particle.style.setProperty("--dx", `${Math.cos(angle) * distance}px`);
+        particle.style.setProperty("--dy", `${Math.sin(angle) * distance}px`);
+
+        document.body.appendChild(particle);
+        particle.addEventListener("animationend", () => particle.remove());
+      }
+    }
+
+    document.addEventListener("pointermove", (event) => {
+      document.body.style.setProperty("--mx", `${event.clientX}px`);
+      document.body.style.setProperty("--my", `${event.clientY}px`);
+    });
+
+    document.querySelectorAll("[data-copy]").forEach((button) => {
+      button.addEventListener("click", async (event) => {
+        const targetId = button.getAttribute("data-copy");
+        const address = document.getElementById(targetId).textContent.trim();
+
+        try {
+          await navigator.clipboard.writeText(address);
+          showToast("Address copied");
+        } catch (error) {
+          showToast("Select and copy manually");
+        }
+
+        sparkleAt(event.clientX, event.clientY);
+      });
+    });
+  </script>
+</body>
+</html>
