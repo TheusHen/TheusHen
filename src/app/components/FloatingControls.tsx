@@ -41,8 +41,16 @@ export default function FloatingControls() {
       if (!containerRef.current.contains(event.target as Node)) setOpenPanel(null);
     };
 
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpenPanel(null);
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
   }, []);
 
   const togglePanel = (panel: "accessibility" | "language") => {
@@ -52,8 +60,8 @@ export default function FloatingControls() {
   return (
     <div
       ref={containerRef}
-      className={`fixed right-2 z-[9999] flex flex-col gap-2 sm:right-3 sm:gap-3 ${
-        hasLowerTopOffset ? "top-32 sm:top-40" : "top-4 mt-10"
+      className={`fixed right-3 z-[950] flex flex-col gap-2 sm:gap-3 ${
+        hasLowerTopOffset ? "top-20 sm:top-24" : "top-3"
       }`}
     >
       <div className="relative">
@@ -62,7 +70,8 @@ export default function FloatingControls() {
           onClick={() => togglePanel("accessibility")}
           aria-label={t("accessibility.accessibilityLabel")}
           aria-expanded={openPanel === "accessibility"}
-          className="group relative flex items-center flex-row-reverse"
+          aria-controls="accessibility-panel"
+          className="group relative flex items-center flex-row-reverse rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300"
         >
           <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-black shadow-lg sm:h-12 sm:w-12">
             <Accessibility className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -73,7 +82,12 @@ export default function FloatingControls() {
         </button>
 
         {openPanel === "accessibility" && (
-          <div className="absolute right-14 top-0 w-64 rounded-2xl border border-white/20 bg-black/90 p-4 text-white shadow-2xl backdrop-blur">
+          <div
+            id="accessibility-panel"
+            role="region"
+            aria-label={t("accessibility.accessibilityTitle")}
+            className="absolute right-12 top-0 w-[min(16rem,calc(100vw-4.5rem))] rounded-2xl border border-white/20 bg-black/95 p-4 text-white shadow-2xl backdrop-blur sm:right-14"
+          >
             <div className="mb-3 text-sm font-semibold text-white">
               {t("accessibility.accessibilityTitle")}
             </div>
@@ -83,6 +97,9 @@ export default function FloatingControls() {
                 <span className="text-white/80">{t("accessibility.highContrast")}</span>
                 <button
                   type="button"
+                  role="switch"
+                  aria-checked={highContrast}
+                  aria-label={t("accessibility.highContrast")}
                   onClick={() => setHighContrast(!highContrast)}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                     highContrast ? "bg-red-500" : "bg-white/20"
@@ -121,6 +138,9 @@ export default function FloatingControls() {
                 <span className="text-white/80">{t("accessibility.reduceMotion")}</span>
                 <button
                   type="button"
+                  role="switch"
+                  aria-checked={reduceMotion}
+                  aria-label={t("accessibility.reduceMotion")}
                   onClick={() => setReduceMotion(!reduceMotion)}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                     reduceMotion ? "bg-red-500" : "bg-white/20"
@@ -144,7 +164,8 @@ export default function FloatingControls() {
           onClick={() => togglePanel("language")}
           aria-label={t("accessibility.translationLabel")}
           aria-expanded={openPanel === "language"}
-          className="group relative flex items-center flex-row-reverse"
+          aria-controls="language-panel"
+          className="group relative flex items-center flex-row-reverse rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300"
         >
           <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-black shadow-lg sm:h-12 sm:w-12">
             <Languages className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -155,7 +176,12 @@ export default function FloatingControls() {
         </button>
 
         {openPanel === "language" && (
-          <div className="absolute right-14 top-0 w-64 rounded-2xl border border-white/20 bg-black/90 p-4 text-white shadow-2xl backdrop-blur">
+          <div
+            id="language-panel"
+            role="region"
+            aria-label={t("accessibility.languageTitle")}
+            className="absolute right-12 top-0 w-[min(16rem,calc(100vw-4.5rem))] rounded-2xl border border-white/20 bg-black/95 p-4 text-white shadow-2xl backdrop-blur sm:right-14"
+          >
             <div className="mb-3 text-sm font-semibold text-white">
               {t("accessibility.languageTitle")}
             </div>

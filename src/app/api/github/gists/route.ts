@@ -25,13 +25,31 @@ export async function GET() {
         if (!res.ok) {
             return NextResponse.json(
                 { gists: [], error: "github_unavailable" },
-                { status: 200, headers: { "Cache-Control": "public, s-maxage=300" } }
+                { status: 502, headers: { "Cache-Control": "public, s-maxage=300" } }
             );
         }
 
-        const gists = await res.json();
+        const payload: unknown = await res.json();
+        const gists = Array.isArray(payload)
+            ? payload.slice(0, 6).map((gist: {
+                id: string;
+                description: string | null;
+                html_url: string;
+                updated_at: string;
+                files: Record<string, {
+                    filename: string;
+                    language: string | null;
+                }>;
+            }) => ({
+                id: gist.id,
+                description: gist.description,
+                html_url: gist.html_url,
+                updated_at: gist.updated_at,
+                files: gist.files,
+            }))
+            : [];
         return NextResponse.json(
-            { gists: Array.isArray(gists) ? gists : [] },
+            { gists },
             {
                 status: 200,
                 headers: {
@@ -43,7 +61,7 @@ export async function GET() {
     } catch {
         return NextResponse.json(
             { gists: [], error: "fetch_failed" },
-            { status: 200 }
+            { status: 503 }
         );
     }
 }

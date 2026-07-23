@@ -1,44 +1,18 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  // Optimized image configuration
   images: {
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'avatars.githubusercontent.com',
       },
-      {
-        protocol: 'https',
-        hostname: 'images.fillout.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'mitpa-tech.vercel.app',
-      },
-      {
-        protocol: 'https',
-        hostname: 'upload.wikimedia.org',
-      },
-      {
-        protocol: 'https',
-        hostname: 'raw.githubusercontent.com',
-      },
     ],
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 31536000,
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    dangerouslyAllowSVG: true,
-    contentDispositionType: 'attachment',
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-  },
-  experimental: {
-    optimizePackageImports: ['lucide-react', 'd3', 'framer-motion', 'gsap', 'three'],
-    webVitalsAttribution: ['CLS', 'LCP', 'FCP', 'FID', 'TTFB', 'INP'],
+    dangerouslyAllowSVG: false,
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
@@ -47,7 +21,6 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
-  // Generate standalone output for better performance
   output: process.env.BUILD_STANDALONE === 'true' ? 'standalone' : undefined,
   async headers() {
     return [
@@ -58,37 +31,27 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: `
               default-src 'self';
-              script-src 'self' https://vercel.live 'unsafe-inline' 'unsafe-eval';
+              script-src 'self' https://vercel.live 'unsafe-inline';
               style-src 'self' 'unsafe-inline';
-              img-src 'self' data: https:;
-              connect-src 'self' https:;
-              font-src 'self' https:;
+              img-src 'self' data: blob:;
+              connect-src 'self' https://api.github.com https://vitals.vercel-insights.com https://*.vercel-insights.com;
+              font-src 'self' data:;
               frame-src 'self' https://vercel.live;
+              frame-ancestors 'self';
+              object-src 'none';
+              base-uri 'self';
+              form-action 'self';
             `.replace(/\s{2,}/g, ' ').trim(),
+          },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains",
           },
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "geolocation=(), microphone=(), camera=()" },
           { key: "X-DNS-Prefetch-Control", value: "on" },
-        ],
-      },
-      {
-        source: "/:all*(svg|jpg|png|webp|avif|woff|woff2)",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
-          },
-        ],
-      },
-      {
-        source: "/_next/static/:path*",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
-          },
         ],
       },
     ];
@@ -106,43 +69,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
     ];
-  },
-  async rewrites() {
-    return [
-      {
-        source: "/donate",
-        destination: "/donate.html",
-      },
-      {
-        source: "/donate/",
-        destination: "/donate.html",
-      },
-      {
-        source: "/ingest/static/:path*",
-        destination: "https://us-assets.i.posthog.com/static/:path*",
-      },
-      {
-        source: "/ingest/:path*",
-        destination: "https://us.i.posthog.com/:path*",
-      },
-      {
-        source: "/ingest/decide",
-        destination: "https://us.i.posthog.com/decide",
-      },
-    ];
-  },
-  skipTrailingSlashRedirect: true,
-  // Optimize bundle size
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        net: false,
-        tls: false,
-      };
-    }
-    return config;
   },
 };
 

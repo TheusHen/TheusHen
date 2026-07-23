@@ -1,284 +1,151 @@
 "use client";
 
-import React, { useEffect, useRef, useState, memo } from "react";
-import { gsap } from "gsap";
-import Image from "next/image";
 import dynamic from "next/dynamic";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowUpRight, Cpu, Github, Linkedin, MapPin, Waves } from "lucide-react";
+import Fall from "../components/Fall";
+import GlobalSwitch from "../components/Switch";
 import { useI18n } from "../contexts/I18nContext";
 
-// Lazy load heavy components
-const Fall = dynamic(() => import("../components/Fall"), { 
-  ssr: false,
-  loading: () => null
-});
 const LazyGlobe = dynamic(() => import("../components/LazyGlobe"), {
   ssr: false,
-  loading: () => null
+  loading: () => null,
 });
 
-const PROFILE_IMAGE = "https://avatars.githubusercontent.com/u/180109164";
-const HACKCLUB_IMAGE =
-    "https://images.fillout.com/orgid-81/flowpublicid-eLhFehpKG6us/widgetid-cbsLd1W9tHmPW9frkYFap2/3G6y1B7Rk3agk6YVqtLmJN/Group-106.png?a=hcRnPh87k73TcrVHzBe6UW";
-const COLLEGE_APP_DATE = new Date("2028-11-01T00:00:00Z");
-
-function getTimeLeft() {
-    // This function should only be called on the client
-    if (typeof window === "undefined") {
-        // Avoids hydration mismatch: always return the same for SSR
-        return { days: 0, hours: 0, mins: 0, secs: 0 };
-    }
-    const target = COLLEGE_APP_DATE.getTime();
-    const now = new Date().getTime();
-    const diff = target - now;
-    if (diff <= 0) return { days: 0, hours: 0, mins: 0, secs: 0 };
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const mins = Math.floor((diff / (1000 * 60)) % 60);
-    const secs = Math.floor((diff / 1000) % 60);
-
-    return { days, hours, mins, secs };
-}
-
-function ProfileImage() {
-    const imgRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if (imgRef.current)
-            gsap.fromTo(
-                imgRef.current,
-                { y: -100, opacity: 0, rotate: -10 },
-                { y: 0, opacity: 1, rotate: 0, duration: 1.2, delay: 0.5, ease: "elastic.out(1,0.75)" }
-            );
-    }, []);
-
-    return (
-        <div
-            ref={imgRef}
-            className="flex items-center justify-center md:justify-end md:items-center p-8 bg-transparent relative "
-        >
-            <Image
-                src={PROFILE_IMAGE}
-                alt="Profile photo"
-                width={160}
-                height={160}
-                className="w-40 h-40 rounded-full shadow-xl border-4 border-red-500 object-cover hover:scale-110 transition-transform duration-300"
-                priority
-                quality={90}
-            />
-            <div className="absolute bottom-4 right-4 w-20 h-14 rounded shadow-lg" style={{ zIndex: 10 }}>
-                <Image
-                    src="https://upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg"
-                    alt="Brazil Flag"
-                    width={80}
-                    height={56}
-                    className="w-20 h-14 rounded shadow-lg"
-                    loading="lazy"
-                />
-            </div>
-        </div>
-    );
-}
-
-const MemoizedProfileImage = memo(ProfileImage);
-
-function TextSection() {
-    const textRef = useRef<HTMLDivElement>(null);
-    const { t } = useI18n();
-
-    useEffect(() => {
-        if (textRef.current)
-            gsap.fromTo(
-                textRef.current,
-                { x: -100, opacity: 0 },
-                { x: 0, opacity: 1, duration: 1.2, ease: "power2.out" }
-            );
-    }, []);
-
-    return (
-        <div
-            ref={textRef}
-            className="flex-1 p-8 flex flex-col gap-2 justify-center"
-        >
-            <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg">
-                {t("about.titlePrefix")}
-                <span className="text-red-800">TheusHen</span>!
-            </h1>
-            <div className="flex flex-col gap-3 text-lg md:text-xl text-white/90 mb-2 leading-relaxed">
-                <span>
-                    {t("about.paragraphOneBeforeMit")}
-                    <span className="font-bold text-red-600">MIT</span>
-                    {t("about.paragraphOneAfterMit")}
-                </span>
-                <span>
-                    {t("about.paragraphTwoBefore20t")}
-                    <span className="font-bold text-red-600">20t</span>
-                    {t("about.paragraphTwoAfter20t")}
-                </span>
-                <span>
-                    {t("about.paragraphThreeBeforeShipwrecked")}
-                    <span className="text-red-600 font-bold">Shipwrecked</span>
-                    {t("about.paragraphThreeBetween")}
-                    <span className="text-red-600 font-bold">Hack Club</span>
-                    {t("about.paragraphThreeAfterHackClub")}
-                </span>
-                <span>
-                    {t("about.paragraphFour")}
-                </span>
-                <span>
-                    {t("about.paragraphFive")}
-                </span>
-            </div>
-            <div className="flex gap-4 mt-4">
-                <a
-                    href="https://github.com/TheusHen"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-all duration-200 shadow-md scale-90 hover:scale-105"
-                >
-                    GitHub
-                </a>
-                <a
-                    href="https://www.linkedin.com/in/matheus-henrique-741776367/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-red-800 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-all duration-200 shadow-md scale-90 hover:scale-105"
-                >
-                    LinkedIn
-                </a>
-            </div>
-            <div className="flex justify-center mt-8">
-                <Image
-                    src="https://raw.githubusercontent.com/TheusHen/TheusHen/output/snake.svg"
-                    alt="GitHub Contribution Snake"
-                    width={800}
-                    height={200}
-                    className="max-w-full h-auto"
-                    loading="lazy"
-                />
-            </div>
-        </div>
-    );
-}
-
-const MemoizedTextSection = memo(TextSection);
-
-function HackClubSection() {
-    const hackRef = useRef<HTMLDivElement>(null);
-    const { t } = useI18n();
-
-    useEffect(() => {
-        if (hackRef.current)
-            gsap.fromTo(
-                hackRef.current,
-                { y: 50, opacity: 0 },
-                { y: 0, opacity: 1, duration: 1, delay: 1.5, ease: "power2.out" }
-            );
-    }, []);
-
-    return (
-        <div
-            ref={hackRef}
-            className="flex items-center gap-6 bg-zinc-900/80 backdrop-blur-lg rounded-xl p-6 shadow-lg border border-red-400/20 hidden sm:flex"
-        >
-            <Image
-                src={HACKCLUB_IMAGE}
-                alt="Hack Club"
-                width={272}
-                height={112}
-                className="w-68 h-28 rounded-lg drop-shadow-lg hover:rotate-6 transition-transform duration-300"
-                loading="lazy"
-            />
-            <div>
-                <span className="text-2xl font-bold text-red-300">{t("about.hackClubTitle")}</span>
-                <p className="text-white/80 text-base mt-1">{t("about.hackClubSubtitle")}</p>
-            </div>
-        </div>
-    );
-}
-
-const MemoizedHackClubSection = memo(HackClubSection);
-
-function TimerSection() {
-    const [timer, setTimer] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
-    const timerRef = useRef<HTMLDivElement>(null);
-    const { t } = useI18n();
-
-    useEffect(() => {
-        setTimer(getTimeLeft());
-        const interval = setInterval(() => setTimer(getTimeLeft()), 1000);
-        return () => clearInterval(interval);
-    }, []);
-
-    useEffect(() => {
-        if (timerRef.current)
-            gsap.fromTo(
-                timerRef.current,
-                { x: 100, opacity: 0 },
-                { x: 0, opacity: 1, duration: 1, delay: 2, ease: "power2.out" }
-            );
-    }, []);
-
-    return (
-        <div
-            ref={timerRef}
-            className="flex flex-col h-40 items-center justify-center bg-zinc-900/80 backdrop-blur-lg rounded-xl p-6 shadow-lg border border-red-400/20"
-        >
-            <span className="text-lg font-semibold text-red-300 mb-2">{t("about.timerTitle")}</span>
-            <div className="flex gap-3 text-white text-2xl font-mono tracking-wider">
-                <div className="flex flex-col items-center">
-                    <span>{timer.days}</span>
-                    <span className="text-xs text-red-400">{t("time.days")}</span>
-                </div>
-                <span>:</span>
-                <div className="flex flex-col items-center">
-                    <span>{timer.hours}</span>
-                    <span className="text-xs text-red-400">{t("time.hoursShort")}</span>
-                </div>
-                <span>:</span>
-                <div className="flex flex-col items-center">
-                    <span>{timer.mins}</span>
-                    <span className="text-xs text-red-400">{t("time.minutesShort")}</span>
-                </div>
-                <span>:</span>
-                <div className="flex flex-col items-center">
-                    <span>{timer.secs}</span>
-                    <span className="text-xs text-red-400">{t("time.secondsShort")}</span>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-const MemoizedTimerSection = memo(TimerSection);
+const work = [
+  {
+    name: "EEGFrontier",
+    descriptionKey: "about.eegWork",
+    href: "https://github.com/TheusHen/EEGFrontier",
+    icon: Cpu,
+  },
+  {
+    name: "Nautilus AquaVision",
+    descriptionKey: "about.aquaWork",
+    href: "https://github.com/TheusHen/Nautilus-AquaVision-v0",
+    icon: Waves,
+  },
+  {
+    name: "Ternary Ibex",
+    descriptionKey: "about.ternaryWork",
+    href: "https://github.com/TheusHen/ternary-ibex",
+    icon: Cpu,
+  },
+] as const;
 
 export default function About() {
-    const cardRef = useRef<HTMLDivElement>(null);
+  const { t } = useI18n();
 
-    useEffect(() => {
-        if (cardRef.current)
-            gsap.fromTo(
-                cardRef.current,
-                { scale: 0.5, opacity: 0 },
-                { scale: 1, opacity: 1, duration: 1.1, delay: 1, ease: "back.out(1.7)" }
-            );
-    }, []);
+  return (
+    <div className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_20%_20%,rgba(153,27,27,0.18),transparent_28%),linear-gradient(155deg,#070707,#121212_60%,#180707)] px-5 py-24 sm:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <div className="grid gap-8 rounded-[2rem] border border-white/10 bg-black/35 p-6 shadow-2xl shadow-black/40 backdrop-blur-xl md:grid-cols-[1fr_280px] md:p-10">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-red-300">
+              {t("about.selectedWork")}
+            </p>
+            <h2 className="mt-4 text-4xl font-black tracking-[-0.055em] text-white sm:text-6xl">
+              {t("about.titlePrefix")}
+              <span className="text-red-400">TheusHen</span>
+            </h2>
 
-    return (
-        <div className="min-h-screen w-full bg-gradient-to-bl from-black/40 via-zinc-600/20 to-red-900 flex flex-col items-center justify-center p-6 transition-colors duration-1000">
-            <div
-                ref={cardRef}
-                className="w-full max-w-4xl mt-20 bg-zinc-900/80 backdrop-blur-2xl rounded-3xl shadow-2xl flex flex-col md:flex-row items-center md:items-stretch overflow-hidden border border-white/10"
-            >
-                <MemoizedTextSection />
-                <MemoizedProfileImage />
+            <div className="mt-7 max-w-3xl space-y-4 text-base leading-8 text-white/70 sm:text-lg">
+              <p>
+                {t("about.paragraphOneBeforeMit")}
+                <strong className="font-semibold text-white">
+                  {t("about.aerospaceEngineering")}
+                </strong>
+                {t("about.paragraphOneAfterMit")}
+              </p>
+              <p>
+                {t("about.paragraphTwoBefore20t")}
+                <strong className="font-semibold text-white">20t</strong>
+                {t("about.paragraphTwoAfter20t")}
+              </p>
+              <p>
+                {t("about.paragraphThreeBeforeShipwrecked")}
+                <strong className="font-semibold text-white">Hack Club</strong>
+                {t("about.paragraphThreeBetween")}
+                <strong className="font-semibold text-white">open source</strong>
+                {t("about.paragraphThreeAfterHackClub")}
+              </p>
+              <p>{t("about.paragraphFour")}</p>
             </div>
-            <div className="flex flex-col gap-8 items-center mt-12 sm:flex-row">
-                <MemoizedHackClubSection />
-                <MemoizedTimerSection />
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="https://github.com/TheusHen"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-5 py-2 text-sm font-bold text-black transition hover:bg-red-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300"
+              >
+                <Github aria-hidden="true" className="h-4 w-4" />
+                GitHub
+              </Link>
+              <Link
+                href="https://www.linkedin.com/in/matheus-henrique-741776367/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-5 py-2 text-sm font-bold text-white transition hover:border-white/30 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300"
+              >
+                <Linkedin aria-hidden="true" className="h-4 w-4" />
+                LinkedIn
+              </Link>
             </div>
-            <LazyGlobe />
-            <Fall />
+          </div>
+
+          <aside className="flex flex-col items-center justify-center rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6 text-center">
+            <Image
+              src="https://avatars.githubusercontent.com/u/180109164"
+              alt="Matheus Henrique"
+              width={192}
+              height={192}
+              className="h-40 w-40 rounded-full border-4 border-red-400/70 object-cover shadow-xl sm:h-48 sm:w-48"
+              priority
+            />
+            <p className="mt-5 text-xl font-bold text-white">Matheus Henrique</p>
+            <p className="mt-2 inline-flex items-center gap-2 text-sm text-white/60">
+              <MapPin aria-hidden="true" className="h-4 w-4" />
+              {t("about.location")} 🇧🇷
+            </p>
+          </aside>
         </div>
-    );
+
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {work.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                target="_blank"
+                rel="noreferrer"
+                className="group rounded-[1.5rem] border border-white/10 bg-black/25 p-6 transition hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300"
+              >
+                <div className="flex items-center justify-between">
+                  <Icon aria-hidden="true" className="h-6 w-6 text-red-300" />
+                  <ArrowUpRight
+                    aria-hidden="true"
+                    className="h-4 w-4 text-white/45 transition group-hover:text-white"
+                  />
+                </div>
+                <h3 className="mt-5 text-xl font-bold text-white">{item.name}</h3>
+                <p className="mt-2 text-sm leading-6 text-white/60">
+                  {t(item.descriptionKey)}
+                </p>
+              </Link>
+            );
+          })}
+        </div>
+
+        <div className="mt-10 flex flex-col items-center gap-5">
+          <GlobalSwitch />
+          <LazyGlobe />
+        </div>
+
+        <Fall />
+      </div>
+    </div>
+  );
 }

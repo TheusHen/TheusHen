@@ -1,68 +1,36 @@
 "use client";
-import React from "react";
+
+import { Globe2 } from "lucide-react";
 import { useGlobe } from "../contexts/GlobeContext";
-import { motion } from "framer-motion";
-import { usePathname } from "next/navigation";
+import { useI18n } from "../contexts/I18nContext";
 
-function isMobile() {
-    if (typeof window === "undefined") return false;
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent);
+export default function GlobalSwitch() {
+  const { globeActive, setGlobeActive } = useGlobe();
+  const { t } = useI18n();
+  const label = globeActive ? t("about.globeHide") : t("about.globeShow");
+
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={globeActive}
+      onClick={() => setGlobeActive(!globeActive)}
+      className="inline-flex min-h-11 items-center gap-3 rounded-full border border-white/15 bg-black/35 px-4 py-2 text-sm font-semibold text-white/80 transition hover:border-white/30 hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300"
+    >
+      <Globe2 aria-hidden="true" className="h-4 w-4" />
+      <span>{label}</span>
+      <span
+        aria-hidden="true"
+        className={`relative h-6 w-11 rounded-full transition-colors ${
+          globeActive ? "bg-red-500" : "bg-white/20"
+        }`}
+      >
+        <span
+          className={`absolute top-1 h-4 w-4 rounded-full bg-white shadow transition-transform ${
+            globeActive ? "translate-x-6" : "translate-x-1"
+          }`}
+        />
+      </span>
+    </button>
+  );
 }
-
-const switchVariants = {
-    active: {
-        backgroundColor: "#3B82F6",
-        transition: { type: "spring", stiffness: 350, damping: 28 }
-    },
-    inactive: {
-        backgroundColor: "#000000",
-        transition: { type: "spring", stiffness: 350, damping: 28 }
-    }
-};
-
-const knobVariants = {
-    active: {
-        x: 24, // translate-x-6, 1.5rem = 24px
-        boxShadow: "0px 2px 4px rgba(0,0,0,0.12)",
-        transition: { type: "spring", stiffness: 350, damping: 28 }
-    },
-    inactive: {
-        x: 0,
-        boxShadow: "0px 2px 4px rgba(0,0,0,0.12)",
-        transition: { type: "spring", stiffness: 350, damping: 28 }
-    }
-};
-
-const GlobalSwitch = () => {
-    const { globeActive, setGlobeActive } = useGlobe();
-    const pathname = usePathname();
-
-    if (pathname !== "/") return null;
-
-    if (typeof window !== "undefined" && isMobile()) return null;
-
-    return (
-        <div
-            className="fixed top-2 left-4 z-[9999]"
-            style={{ userSelect: "none" }}
-        >
-            <motion.div
-                className="w-12 h-6 flex items-center rounded-full p-1 cursor-pointer"
-                initial={false}
-                animate={globeActive ? "active" : "inactive"}
-                variants={switchVariants}
-                onClick={() => setGlobeActive(!globeActive)}
-                role="checkbox"
-                aria-checked={globeActive}
-                tabIndex={0}
-            >
-                <motion.div
-                    className="bg-white w-4 h-4 rounded-full shadow-md"
-                    variants={knobVariants}
-                />
-            </motion.div>
-        </div>
-    );
-};
-
-export default GlobalSwitch;

@@ -2,17 +2,30 @@
 
 :root {
   color-scheme: dark;
+  --page-bg: #050505;
+  --page-fg: #ffffff;
 }
 
 * {
+  box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  width: 100%;
+  background: var(--page-bg);
+  scroll-behavior: smooth;
+}
+
 body {
-  background-color: #121212;
-  color: #ffffff;
-  text-rendering: optimizeSpeed;
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow-x: clip;
+  background-color: var(--page-bg);
+  color: var(--page-fg);
+  text-rendering: optimizeLegibility;
 }
 
 html[data-text-size="large"] {
@@ -33,28 +46,23 @@ html[data-contrast="high"] button {
   color: #ffffff;
 }
 
-html[data-motion="reduced"] * {
+html[data-motion="reduced"] *,
+html[data-motion-pref="reduced"] * {
   animation-duration: 0.001ms !important;
   animation-iteration-count: 1 !important;
   transition-duration: 0.001ms !important;
   scroll-behavior: auto !important;
 }
 
-/* Optimize animations */
-@media (prefers-reduced-motion: no-preference) {
-  * {
-    scroll-behavior: smooth;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
   }
-}
-
-/* GPU acceleration for transforms */
-[class*="transition-"],
-[class*="animate-"],
-[class*="hover:scale"],
-[class*="hover:rotate"] {
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
 }
 
 @layer base {
@@ -65,7 +73,27 @@ html[data-motion="reduced"] * {
 
 @media (prefers-color-scheme: light) {
   body {
-    background-color: #121212 !important;
+    background-color: var(--page-bg) !important;
     color: #ffffff !important;
   }
+}
+
+.footer-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0 0.75rem;
+  color: rgb(255 255 255 / 0.6);
+  transition: color 180ms ease, background-color 180ms ease;
+}
+
+.footer-link:hover {
+  background: rgb(255 255 255 / 0.07);
+  color: white;
+}
+
+.footer-link:focus-visible {
+  outline: 2px solid rgb(252 165 165);
+  outline-offset: 2px;
 }

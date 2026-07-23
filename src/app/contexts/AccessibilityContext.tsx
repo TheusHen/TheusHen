@@ -27,29 +27,34 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
     const [highContrast, setHighContrast] = useState(defaultState.highContrast);
     const [textSize, setTextSize] = useState<TextSize>(defaultState.textSize);
     const [reduceMotion, setReduceMotion] = useState(defaultState.reduceMotion);
+    const [ready, setReady] = useState(false);
 
     useEffect(() => {
-        if (typeof window === "undefined") return;
-        const stored = window.localStorage.getItem(STORAGE_KEY);
-        if (stored) {
-            try {
-                const parsed = JSON.parse(stored) as Partial<typeof defaultState>;
-                if (typeof parsed.highContrast === "boolean") setHighContrast(parsed.highContrast);
-                if (parsed.textSize === "normal" || parsed.textSize === "large" || parsed.textSize === "xl") {
-                    setTextSize(parsed.textSize);
+        const timeout = window.setTimeout(() => {
+            const stored = window.localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored) as Partial<typeof defaultState>;
+                    if (typeof parsed.highContrast === "boolean") setHighContrast(parsed.highContrast);
+                    if (parsed.textSize === "normal" || parsed.textSize === "large" || parsed.textSize === "xl") {
+                        setTextSize(parsed.textSize);
+                    }
+                    if (typeof parsed.reduceMotion === "boolean") setReduceMotion(parsed.reduceMotion);
+                } catch {
+                    window.localStorage.removeItem(STORAGE_KEY);
                 }
-                if (typeof parsed.reduceMotion === "boolean") setReduceMotion(parsed.reduceMotion);
-            } catch {
-                window.localStorage.removeItem(STORAGE_KEY);
             }
-        }
+            setReady(true);
+        }, 0);
+
+        return () => window.clearTimeout(timeout);
     }, []);
 
     useEffect(() => {
-        if (typeof window === "undefined") return;
+        if (!ready) return;
         const payload = JSON.stringify({ highContrast, textSize, reduceMotion });
         window.localStorage.setItem(STORAGE_KEY, payload);
-    }, [highContrast, textSize, reduceMotion]);
+    }, [highContrast, ready, reduceMotion, textSize]);
 
     useEffect(() => {
         if (typeof document === "undefined") return;

@@ -1,61 +1,25 @@
 import type { Metadata } from "next";
-import Script from "next/script";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-    title: "Timeline",
-    description: "Explore the journey of Matheus Henrique (TheusHen) through an interactive timeline. Discover milestones, achievements, and key moments in software development, education, and personal growth.",
-    openGraph: {
-        title: "Timeline | TheusHen",
-        description: "Follow Matheus Henrique's journey through an interactive timeline of achievements, projects, and milestones in software development and education.",
-        url: "https://theushen.works/timeline",
-        siteName: "TheusHen Portfolio",
-        images: [
-            {
-                url: "https://theushen.works/banner.jpg",
-                width: 780,
-                height: 400,
-                alt: "TheusHen Timeline - Journey and Achievements",
-            },
-        ],
-        locale: "en_US",
-        type: "website",
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Timeline | TheusHen",
-        description: "Interactive timeline of Matheus Henrique's journey in software development and education.",
-        images: ["https://theushen.works/banner.jpg"],
-    },
+  title: "Timeline",
+  description:
+    "A timeline of projects, milestones and open-source work by Matheus Henrique.",
+  alternates: { canonical: "/timeline" },
+  openGraph: {
+    title: "Timeline | TheusHen",
+    description:
+      "Projects, milestones and open-source work by Matheus Henrique.",
+    url: `${SITE_URL}/timeline`,
+    images: [{ url: "/banner.jpg", width: 780, height: 400, alt: "TheusHen timeline" }],
+    type: "website",
+  },
 };
 
 export default function TimelineLayout({
-    children,
+  children,
 }: {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-    return (
-        <>
-            <Script id="structured-data-breadcrumb-timeline" type="application/ld+json">
-                {JSON.stringify({
-                    "@context": "https://schema.org",
-                    "@type": "BreadcrumbList",
-                    itemListElement: [
-                        {
-                            "@type": "ListItem",
-                            position: 1,
-                            name: "Home",
-                            item: "https://theushen.works"
-                        },
-                        {
-                            "@type": "ListItem",
-                            position: 2,
-                            name: "Timeline",
-                            item: "https://theushen.works/timeline"
-                        }
-                    ]
-                })}
-            </Script>
-            {children}
-        </>
-    );
+  return children;
 }

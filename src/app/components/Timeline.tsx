@@ -1,249 +1,151 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { motion, useReducedMotion } from "framer-motion";
-import { ExternalLink, CalendarDays, Clock3 } from "lucide-react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { CalendarDays, Clock3, ExternalLink } from "lucide-react";
 import { useI18n } from "../contexts/I18nContext";
 
 const GITHUB_OWNER = "TheusHen";
 const GITHUB_REPO = "TheusHen";
-const GITHUB_BRANCH = "feat-add-timeline";
+const GITHUB_BRANCH = "main";
 const TIMELINE_FOLDER = "line";
-const NODE_SIZE = 14;
 
 type TimelineItem = {
-    id: string;
-    dateISO: string;
-    timeHHMM: string;
-    title: string;
-    githubUrl: string;
-    orderKey: number;
+  id: string;
+  dateISO: string;
+  timeHHMM: string;
+  title: string;
+  githubUrl: string;
 };
 
 type ApiItem = {
-    id: string;
-    dateISO: string;
-    timeHHMM: string;
-    title: string;
-    linkOverride: string | null;
-    orderKey: number;
+  id: string;
+  dateISO: string;
+  timeHHMM: string;
+  title: string;
+  linkOverride: string | null;
 };
 
-function buildGithubMdUrl(fileName: string) {
-    const encodedPath = `${TIMELINE_FOLDER}/${fileName}`
-        .split("/")
-        .map(encodeURIComponent)
-        .join("/");
-    return `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/blob/${GITHUB_BRANCH}/${encodedPath}`;
+function buildGithubUrl(fileName: string) {
+  const encodedPath = `${TIMELINE_FOLDER}/${fileName}`
+    .split("/")
+    .map(encodeURIComponent)
+    .join("/");
+  return `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/blob/${GITHUB_BRANCH}/${encodedPath}`;
 }
 
 export default function Timeline() {
-    const reducedMotion = useReducedMotion();
-    const rootRef = useRef<HTMLDivElement | null>(null);
-    const itemsRef = useRef<HTMLDivElement | null>(null);
-    const [items, setItems] = useState<TimelineItem[]>([]);
-    const [activeId, setActiveId] = useState<string | null>(null);
-    const { t } = useI18n();
+  const { language, t } = useI18n();
+  const [items, setItems] = useState<TimelineItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-    useEffect(() => {
-        let cancelled = false;
+  useEffect(() => {
+    const controller = new AbortController();
 
-        (async () => {
-            try {
-                const res = await fetch("/api/timeline", { cache: "no-store" });
-                const data: { items: ApiItem[] } = await res.json();
+    const load = async () => {
+      try {
+        const response = await fetch("/api/timeline", {
+          signal: controller.signal,
+        });
+        if (!response.ok) throw new Error("Timeline unavailable");
+        const data: { items?: ApiItem[] } = await response.json();
+        setItems(
+          (data.items ?? []).map((item) => ({
+            id: item.id,
+            dateISO: item.dateISO,
+            timeHHMM: item.timeHHMM,
+            title: item.title,
+            githubUrl: item.linkOverride ?? buildGithubUrl(item.id),
+          }))
+        );
+        setError(false);
+      } catch (caughtError) {
+        if (!(caughtError instanceof DOMException && caughtError.name === "AbortError")) {
+          setError(true);
+        }
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
+      }
+    };
 
-                const loaded: TimelineItem[] = (data.items ?? []).map((it) => ({
-                    id: it.id,
-                    dateISO: it.dateISO,
-                    timeHHMM: it.timeHHMM,
-                    title: it.title,
-                    githubUrl: it.linkOverride ?? buildGithubMdUrl(it.id),
-                    orderKey: it.orderKey,
-                }));
+    load();
+    return () => controller.abort();
+  }, []);
 
-                if (!cancelled) {
-                    setItems(loaded);
-                    setActiveId(loaded[0]?.id ?? null);
-                }
-            } catch {
-                if (!cancelled) {
-                    setItems([]);
-                    setActiveId(null);
-                }
-            }
-        })();
+  return (
+    <section className="mx-auto w-full max-w-4xl px-5 pb-20 pt-32 sm:px-8">
+      <div className="mb-12 max-w-2xl">
+        <h1 className="text-5xl font-black tracking-[-0.06em] text-white sm:text-7xl">
+          {t("timeline.title")}
+        </h1>
+        <p className="mt-5 text-base leading-8 text-white/60">
+          {t("timeline.subtitle")}
+        </p>
+      </div>
 
-        return () => {
-            cancelled = true;
-        };
-    }, []);
+      {loading ? (
+        <p className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-white/60">
+          {t("timeline.loading")}
+        </p>
+      ) : error ? (
+        <p className="rounded-2xl border border-red-300/20 bg-red-950/20 p-5 text-red-200">
+          {t("timeline.error")}
+        </p>
+      ) : items.length === 0 ? (
+        <p className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-white/60">
+          {t("timeline.emptyState", { folder: TIMELINE_FOLDER })}
+        </p>
+      ) : (
+        <ol className="relative space-y-7 before:absolute before:bottom-6 before:left-[0.45rem] before:top-6 before:w-px before:bg-gradient-to-b before:from-red-300/60 before:via-white/20 before:to-transparent">
+          {items.map((item) => {
+            const formattedDate = new Intl.DateTimeFormat(
+              language === "pt" ? "pt-BR" : "en-US",
+              { dateStyle: "medium", timeZone: "UTC" }
+            ).format(new Date(`${item.dateISO}T12:00:00Z`));
 
-    useLayoutEffect(() => {
-        if (reducedMotion) return;
-        const root = rootRef.current;
-        const itemsEl = itemsRef.current;
-        if (!root || !itemsEl) return;
-        if (!items.length) return;
-
-        const ctx = gsap.context(() => {
-            const nodes = gsap.utils.toArray<HTMLElement>("[data-tl-node]");
-            const cards = gsap.utils.toArray<HTMLElement>("[data-tl-card]");
-
-            gsap.fromTo(itemsEl, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" });
-
-            gsap.fromTo(
-                nodes,
-                { scale: 0.65, opacity: 0 },
-                { scale: 1, opacity: 1, duration: 0.8, ease: "elastic.out(1, 0.6)", stagger: 0.04, delay: 0.15 }
-            );
-
-            gsap.fromTo(
-                cards,
-                { y: 14, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.7, ease: "power3.out", stagger: 0.05, delay: 0.2 }
-            );
-        }, root);
-
-        return () => ctx.revert();
-    }, [items, reducedMotion]);
-
-    return (
-        <div ref={rootRef} className="relative w-full overflow-hidden bg-transparent pb-6">
-            <div className="relative mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
-                <div className="mb-10 flex flex-col gap-3">
-                    <motion.h2
-                        initial={reducedMotion ? false : { opacity: 0, y: 10 }}
-                        animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                        className="text-balance text-2xl font-semibold tracking-tight text-white sm:text-3xl"
-                    >
-                        {t("timeline.title")}
-                    </motion.h2>
-
-                    <motion.p
-                        initial={reducedMotion ? false : { opacity: 0, y: 10 }}
-                        animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
-                        transition={{ duration: 0.75, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-                        className="max-w-2xl text-pretty text-sm text-white/65 sm:text-base"
-                    >
-                        {t("timeline.subtitle")}
-                    </motion.p>
-                </div>
-
-                {items.length > 0 ? (
-                    <div ref={itemsRef} className="relative">
-                        <div className="absolute left-6 top-0 bottom-0 w-[2px] bg-gradient-to-b from-white/10 via-white/25 to-white/10" />
-
-                        <div className="relative space-y-12">
-                            {items.map((it) => {
-                                const isActive = activeId === it.id;
-
-                                return (
-                                    <div key={it.id} className="relative flex items-start gap-8 pl-16">
-                                        <button
-                                            type="button"
-                                            data-tl-node
-                                            onClick={() => window.open(it.githubUrl, "_blank", "noopener,noreferrer")}
-                                            className={[
-                                                "group absolute left-6 -translate-x-1/2 flex items-center justify-center rounded-full transition",
-                                                "outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 focus-visible:ring-offset-0",
-                                            ].join(" ")}
-                                            style={{ width: NODE_SIZE * 2.3, height: NODE_SIZE * 2.3, top: "1.5rem" }}
-                                            aria-label={t("timeline.openOnGithub", { title: it.title })}
-                                        >
-                                            <span
-                                                className={[
-                                                    "absolute inset-0 rounded-full blur-md transition-opacity",
-                                                    isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100",
-                                                ].join(" ")}
-                                                style={{
-                                                    background:
-                                                        "radial-gradient(circle at 50% 50%, rgba(99,102,241,0.55), rgba(34,211,238,0.0) 70%)",
-                                                }}
-                                            />
-                                            <span
-                                                className={[
-                                                    "relative rounded-full transition-all",
-                                                    isActive
-                                                        ? "bg-white shadow-[0_0_0_6px_rgba(255,255,255,0.08),0_0_0_1px_rgba(255,255,255,0.25)]"
-                                                        : "bg-white/80 shadow-[0_0_0_6px_rgba(255,255,255,0.05),0_0_0_1px_rgba(255,255,255,0.18)] group-hover:shadow-[0_0_0_8px_rgba(99,102,241,0.12),0_0_0_1px_rgba(255,255,255,0.22)]",
-                                                ].join(" ")}
-                                                style={{ width: NODE_SIZE, height: NODE_SIZE }}
-                                            />
-                                        </button>
-
-                                        <motion.a
-                                            data-tl-card
-                                            href={it.githubUrl}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            initial={false}
-                                            whileHover={reducedMotion ? undefined : { scale: 1.02 }}
-                                            whileTap={reducedMotion ? undefined : { scale: 0.98 }}
-                                            className={[
-                                                "block flex-1",
-                                                "rounded-2xl border border-white/10 bg-black/35 shadow-[0_18px_60px_-45px_rgba(0,0,0,0.95)] backdrop-blur",
-                                                "transition-colors hover:border-white/20",
-                                                "group",
-                                            ].join(" ")}
-                                            onMouseEnter={() => setActiveId(it.id)}
-                                            onFocus={() => setActiveId(it.id)}
-                                        >
-                                            <div className="relative p-6">
-                                                <div
-                                                    className={[
-                                                        "pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300",
-                                                        "group-hover:opacity-100",
-                                                    ].join(" ")}
-                                                    style={{
-                                                        background:
-                                                            "radial-gradient(600px circle at 20% 0%, rgba(99,102,241,0.18), transparent 45%), radial-gradient(600px circle at 80% 100%, rgba(34,211,238,0.14), transparent 50%)",
-                                                    }}
-                                                />
-
-                                                <div className="relative flex items-start justify-between gap-4">
-                                                    <div className="min-w-0 flex-1">
-                                                        <div className="mb-3 flex flex-wrap items-center gap-2">
-                                                            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white/75">
-                                                                <CalendarDays className="h-4 w-4 text-white/60" />
-                                                                {it.dateISO}
-                                                            </span>
-                                                            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white/60">
-                                                                <Clock3 className="h-4 w-4 text-white/50" />
-                                                                {it.timeHHMM}
-                                                            </span>
-                                                        </div>
-
-                                                        <div className="mb-3 text-xl font-semibold leading-snug text-white break-words">
-                                                            {it.title}
-                                                        </div>
-
-                                                        <div className="text-sm leading-relaxed text-white/55">
-                                                            {t("timeline.cardHint")}
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="shrink-0">
-                                                        <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/70 transition-colors group-hover:bg-white/10 group-hover:text-white">
-                                                            <ExternalLink className="h-6 w-6" />
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </motion.a>
-                                    </div>
-                                );
-                            })}
-                        </div>
+            return (
+              <li key={item.id} className="relative pl-10">
+                <span
+                  aria-hidden="true"
+                  className="absolute left-0 top-8 h-4 w-4 rounded-full border-4 border-[#080808] bg-red-300 shadow-[0_0_0_4px_rgba(252,165,165,0.12)]"
+                />
+                <Link
+                  href={item.githubUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group block rounded-[1.5rem] border border-white/10 bg-black/30 p-6 transition hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap gap-2 text-xs text-white/50">
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 px-3 py-1.5">
+                          <CalendarDays aria-hidden="true" className="h-3.5 w-3.5" />
+                          {formattedDate}
+                        </span>
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 px-3 py-1.5">
+                          <Clock3 aria-hidden="true" className="h-3.5 w-3.5" />
+                          {item.timeHHMM}
+                        </span>
+                      </div>
+                      <h2 className="mt-5 break-words text-2xl font-bold tracking-[-0.035em] text-white">
+                        {item.title}
+                      </h2>
+                      <p className="mt-3 text-sm leading-7 text-white/50">
+                        {t("timeline.cardHint")}
+                      </p>
                     </div>
-                ) : (
-                    <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-sm text-white/70">
-                        {t("timeline.emptyState", { folder: TIMELINE_FOLDER })}
-                    </div>
-                )}
-            </div>
-        </div>
-    );
+                    <ExternalLink
+                      aria-hidden="true"
+                      className="h-5 w-5 shrink-0 text-white/35 transition group-hover:text-white"
+                    />
+                  </div>
+                </Link>
+              </li>
+            );
+          })}
+        </ol>
+      )}
+    </section>
+  );
 }

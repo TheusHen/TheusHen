@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import path from "path";
 import fs from "fs/promises";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
 const TIMELINE_DIR = path.join(process.cwd(), "line");
 
@@ -80,6 +80,9 @@ export async function GET() {
 
         return NextResponse.json({ items });
     } catch {
-        return NextResponse.json({ items: [] });
+        return NextResponse.json(
+            { items: [], error: "timeline_unavailable" },
+            { status: 500 }
+        );
     }
 }

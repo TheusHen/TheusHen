@@ -29,7 +29,7 @@ export async function GET() {
         if (!res.ok) {
             return NextResponse.json(
                 { stars: null, error: "github_unavailable" },
-                { status: 200, headers: { "Cache-Control": "public, s-maxage=300" } }
+                { status: 502, headers: { "Cache-Control": "public, s-maxage=300" } }
             );
         }
 
@@ -47,7 +47,7 @@ export async function GET() {
     } catch {
         return NextResponse.json(
             { stars: null, error: "fetch_failed" },
-            { status: 200 }
+            { status: 503 }
         );
     }
 }

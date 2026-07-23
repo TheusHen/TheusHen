@@ -3,25 +3,25 @@
   "short_name": "TheusHen",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#000000",
-  "description": "Creator of 20t, student-run non-profit coding club focused on building real-world projects and learning technology. Think it. Hack it. Build it. Created by TheusHen.",
-  "orientation": "portrait-primary",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "description": "Open-source hardware, AI, networking and aerospace projects by Matheus Henrique.",
   "scope": "/",
   "lang": "en-US",
   "dir": "ltr",
   "categories": ["education", "developer", "portfolio"],
   "icons": [
     {
-      "src": "/favicon.png",
-      "sizes": "500x500",
+      "src": "/icon-192.png",
+      "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "/favicon.ico",
-      "sizes": "48x48",
-      "type": "image/x-icon"
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
   "screenshots": [

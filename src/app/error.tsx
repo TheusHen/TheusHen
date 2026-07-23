@@ -3,7 +3,7 @@
 import { useI18n } from "./contexts/I18nContext";
 
 export default function Error({
-  error,
+  error: _error,
   reset,
 }: {
   error: Error & { digest?: string };
@@ -19,7 +19,7 @@ export default function Error({
         </h1>
         <h2 className="text-2xl font-semibold mb-4">{t("errors.subtitle")}</h2>
         <p className="text-zinc-400 mb-8">
-          {error.message || t("errors.fallback")}
+          {t("errors.fallback")}
         </p>
         <button
           onClick={reset}

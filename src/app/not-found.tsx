@@ -1,6 +1,7 @@
 "use client";
 
 import { useI18n } from "./contexts/I18nContext";
+import Link from "next/link";
 
 export default function NotFound() {
   const { t } = useI18n();
@@ -15,12 +16,12 @@ export default function NotFound() {
         <p className="text-zinc-400 mb-8 max-w-md">
           {t("notFound.body")}
         </p>
-        <a
+        <Link
           href="/"
           className="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-3 rounded-lg transition-all duration-200 transform hover:scale-105"
         >
           {t("notFound.backHome")}
-        </a>
+        </Link>
       </div>
     </div>
   );

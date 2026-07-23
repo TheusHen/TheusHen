@@ -10,47 +10,12 @@ import {
   Radio,
 } from "lucide-react";
 import Link from "next/link";
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import "./styles.css";
 import { useI18n } from "../contexts/I18nContext";
 
 export default function ContactPage() {
   const { t } = useI18n();
-
-  useEffect(() => {
-    let rafId = 0;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (rafId) cancelAnimationFrame(rafId);
-
-      rafId = requestAnimationFrame(() => {
-        document.documentElement.style.setProperty("--mx", `${e.clientX}px`);
-        document.documentElement.style.setProperty("--my", `${e.clientY}px`);
-
-        document
-          .querySelectorAll<HTMLElement>(".white-hover-effect")
-          .forEach((card) => {
-            const rect = card.getBoundingClientRect();
-
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-
-            card.style.setProperty("--mouse-x", `${x}%`);
-            card.style.setProperty("--mouse-y", `${y}%`);
-          });
-      });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove, {
-      passive: true,
-    });
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-
-      if (rafId) cancelAnimationFrame(rafId);
-    };
-  }, []);
 
   return (
     <main className="contact-shell min-h-screen overflow-x-hidden text-white">
@@ -58,8 +23,8 @@ export default function ContactPage() {
         <header className="mb-14 flex items-center justify-between gap-4">
           <Link
             href="/"
-            aria-label={t("nav.back") || "Back to home"}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 shadow-sm backdrop-blur-xl transition hover:-translate-x-1 hover:border-white/20 hover:bg-white/10"
+            aria-label={t("nav.backHome")}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 shadow-sm backdrop-blur-xl transition hover:border-white/20 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300"
           >
             <ArrowLeft
               size={20}
@@ -88,23 +53,21 @@ export default function ContactPage() {
         <section className="mx-auto mb-12 max-w-3xl text-center">
           <div className="contact-eyebrow">
             <span className="contact-dot" />
-            Available for projects, collaborations and open-source work
+            {t("contact.eyebrow")}
           </div>
 
           <h1 className="mt-5 text-5xl font-black tracking-[-0.075em] text-white sm:text-7xl md:text-8xl">
-            Contact
+            {t("contact.title")}
           </h1>
 
           <p className="mx-auto mt-5 max-w-2xl text-neutral-300 text-base leading-8 sm:text-lg">
-            Get in touch for software projects, open-source collaborations,
-            aerospace technology ideas, or anything related to building useful
-            things on the internet.
+            {t("contact.description")}
           </p>
         </section>
 
         <section
           className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4"
-          aria-label="Contact links"
+          aria-label={t("contact.linksLabel")}
         >
           <ContactCard
             icon={<Github size={32} aria-hidden="true" />}
@@ -118,6 +81,7 @@ export default function ContactPage() {
             title="dev@theushen.works"
             subtitle={t("contact.email") || "Email"}
             link="mailto:dev@theushen.works"
+            external={false}
           />
 
           <ContactCard
@@ -142,6 +106,7 @@ export default function ContactPage() {
               "Updates, builds, experiments and technical content from my projects."
             }
             buttonLabel={t("contact.youtubeButton") || "Open channel"}
+            label={t("contact.updatesLabel")}
           />
         </section>
       </div>
@@ -154,17 +119,19 @@ function ContactCard({
   title,
   subtitle,
   link,
+  external = true,
 }: {
   icon: ReactNode;
   title: string;
   subtitle: string;
   link: string;
+  external?: boolean;
 }) {
   return (
     <Link
       href={link}
-      target="_blank"
-      rel="noopener noreferrer"
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
       className="white-hover-effect group block h-full rounded-[28px]"
     >
       <article className="contact-card">
@@ -199,11 +166,13 @@ function WideContactCard({
   title,
   subtitle,
   buttonLabel,
+  label,
 }: {
   link: string;
   title: string;
   subtitle: string;
   buttonLabel: string;
+  label: string;
 }) {
   return (
     <article className="white-hover-effect contact-wide-card sm:col-span-2 xl:col-span-4">
@@ -215,7 +184,7 @@ function WideContactCard({
 
           <div className="min-w-0">
             <span className="contact-small-label">
-              Content & updates
+              {label}
             </span>
 
             <h2 className="mt-2 text-3xl font-black tracking-[-0.06em] text-white sm:text-4xl">

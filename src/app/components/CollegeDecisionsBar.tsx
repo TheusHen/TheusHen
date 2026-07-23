@@ -1,16 +1,23 @@
 "use client";
+
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { ArrowUpRight } from "lucide-react";
+import { useI18n } from "../contexts/I18nContext";
 
 export default function CollegeDecisionsBar() {
-    return (
-        <Link
-            href="/decisions"
-            className="fixed top-0 left-0 w-full h-10 flex items-center justify-center gap-2 bg-red-700 hover:bg-red-600 text-white text-lg font-semibold shadow-lg z-[999]"
-            style={{ zIndex: 999 }}
-        >
-            College Decisions
-            <ArrowRight className="w-5 h-5" />
-        </Link>
-    );
+  const pathname = usePathname();
+  const { t } = useI18n();
+
+  if (pathname === "/decisions") return null;
+
+  return (
+    <Link
+      href="/decisions"
+      className="fixed left-3 top-3 z-[900] inline-flex min-h-11 items-center gap-2 rounded-full border border-red-400/20 bg-red-950/85 px-4 py-2 text-sm font-semibold text-red-50 shadow-lg shadow-black/30 backdrop-blur-xl transition hover:border-red-300/30 hover:bg-red-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300"
+    >
+      {t("decisions.bar")}
+      <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+    </Link>
+  );
 }
