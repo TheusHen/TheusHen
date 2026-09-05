@@ -7,4 +7,5 @@
     </a>
 </div>
 
+
 <img src="https://raw.githubusercontent.com/TheusHen/TheusHen/output/snake.svg" alt="Snake animation" />
