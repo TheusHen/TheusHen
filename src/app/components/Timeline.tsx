@@ -1,249 +1,131 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { motion, useReducedMotion } from "framer-motion";
-import { ExternalLink, CalendarDays, Clock3 } from "lucide-react";
+import Link from "next/link";
+import { useRef, type ReactNode } from "react";
+import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { useI18n } from "../contexts/I18nContext";
 
-const GITHUB_OWNER = "TheusHen";
-const GITHUB_REPO = "TheusHen";
-const GITHUB_BRANCH = "feat-add-timeline";
-const TIMELINE_FOLDER = "line";
-const NODE_SIZE = 14;
-
-type TimelineItem = {
+export type TimelineEntry = {
     id: string;
     dateISO: string;
     timeHHMM: string;
     title: string;
-    githubUrl: string;
-    orderKey: number;
+    link: string;
+    tags: string[];
+    content: ReactNode;
 };
 
-type ApiItem = {
-    id: string;
-    dateISO: string;
-    timeHHMM: string;
-    title: string;
-    linkOverride: string | null;
-    orderKey: number;
-};
-
-function buildGithubMdUrl(fileName: string) {
-    const encodedPath = `${TIMELINE_FOLDER}/${fileName}`
-        .split("/")
-        .map(encodeURIComponent)
-        .join("/");
-    return `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/blob/${GITHUB_BRANCH}/${encodedPath}`;
+function pad(n: number) {
+    return String(n).padStart(2, "0");
 }
 
-export default function Timeline() {
-    const reducedMotion = useReducedMotion();
-    const rootRef = useRef<HTMLDivElement | null>(null);
-    const itemsRef = useRef<HTMLDivElement | null>(null);
-    const [items, setItems] = useState<TimelineItem[]>([]);
-    const [activeId, setActiveId] = useState<string | null>(null);
+export default function Timeline({ entries }: { entries: TimelineEntry[] }) {
     const { t } = useI18n();
-
-    useEffect(() => {
-        let cancelled = false;
-
-        (async () => {
-            try {
-                const res = await fetch("/api/timeline", { cache: "no-store" });
-                const data: { items: ApiItem[] } = await res.json();
-
-                const loaded: TimelineItem[] = (data.items ?? []).map((it) => ({
-                    id: it.id,
-                    dateISO: it.dateISO,
-                    timeHHMM: it.timeHHMM,
-                    title: it.title,
-                    githubUrl: it.linkOverride ?? buildGithubMdUrl(it.id),
-                    orderKey: it.orderKey,
-                }));
-
-                if (!cancelled) {
-                    setItems(loaded);
-                    setActiveId(loaded[0]?.id ?? null);
-                }
-            } catch {
-                if (!cancelled) {
-                    setItems([]);
-                    setActiveId(null);
-                }
-            }
-        })();
-
-        return () => {
-            cancelled = true;
-        };
-    }, []);
-
-    useLayoutEffect(() => {
-        if (reducedMotion) return;
-        const root = rootRef.current;
-        const itemsEl = itemsRef.current;
-        if (!root || !itemsEl) return;
-        if (!items.length) return;
-
-        const ctx = gsap.context(() => {
-            const nodes = gsap.utils.toArray<HTMLElement>("[data-tl-node]");
-            const cards = gsap.utils.toArray<HTMLElement>("[data-tl-card]");
-
-            gsap.fromTo(itemsEl, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" });
-
-            gsap.fromTo(
-                nodes,
-                { scale: 0.65, opacity: 0 },
-                { scale: 1, opacity: 1, duration: 0.8, ease: "elastic.out(1, 0.6)", stagger: 0.04, delay: 0.15 }
-            );
-
-            gsap.fromTo(
-                cards,
-                { y: 14, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.7, ease: "power3.out", stagger: 0.05, delay: 0.2 }
-            );
-        }, root);
-
-        return () => ctx.revert();
-    }, [items, reducedMotion]);
+    const reduced = useReducedMotion();
+    const listRef = useRef<HTMLOListElement | null>(null);
+    const { scrollYProgress } = useScroll({ target: listRef, offset: ["start 70%", "end 60%"] });
+    const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.4 });
 
     return (
-        <div ref={rootRef} className="relative w-full overflow-hidden bg-transparent pb-6">
-            <div className="relative mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
-                <div className="mb-10 flex flex-col gap-3">
-                    <motion.h2
-                        initial={reducedMotion ? false : { opacity: 0, y: 10 }}
-                        animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                        className="text-balance text-2xl font-semibold tracking-tight text-white sm:text-3xl"
-                    >
-                        {t("timeline.title")}
-                    </motion.h2>
+        <div className="relative mx-auto w-full max-w-5xl px-5 pb-32 pt-24 sm:px-8">
+            <Link
+                href="/"
+                className="inline-flex items-center gap-2 border border-white/10 bg-black/40 px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest text-zinc-400 backdrop-blur transition-colors hover:border-signal/60 hover:text-white"
+            >
+                <ArrowLeft className="h-3.5 w-3.5" />
+                {t("nav.backHome")}
+            </Link>
 
-                    <motion.p
-                        initial={reducedMotion ? false : { opacity: 0, y: 10 }}
-                        animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
-                        transition={{ duration: 0.75, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-                        className="max-w-2xl text-pretty text-sm text-white/65 sm:text-base"
-                    >
-                        {t("timeline.subtitle")}
-                    </motion.p>
-                </div>
+            <header className="mt-14 flex flex-col gap-4 border-b border-white/10 pb-10">
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-signal">
+                    {`// log · ${pad(entries.length)} entries · mdx`}
+                </span>
+                <motion.h1
+                    initial={reduced ? false : { opacity: 0, y: 24, filter: "blur(8px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                    className="font-display text-5xl font-medium tracking-tight text-white sm:text-7xl"
+                >
+                    {t("timeline.title")}
+                </motion.h1>
+                <p className="max-w-xl text-pretty text-sm leading-relaxed text-zinc-400 sm:text-base">{t("timeline.subtitle")}</p>
+            </header>
 
-                {items.length > 0 ? (
-                    <div ref={itemsRef} className="relative">
-                        <div className="absolute left-6 top-0 bottom-0 w-[2px] bg-gradient-to-b from-white/10 via-white/25 to-white/10" />
+            {entries.length === 0 ? (
+                <p className="mt-10 border border-white/10 bg-white/[0.03] p-5 font-mono text-sm text-zinc-400">
+                    {t("timeline.emptyState", { folder: "line" })}
+                </p>
+            ) : (
+                <ol ref={listRef} className="relative mt-16 flex flex-col gap-16">
+                    <span className="absolute bottom-0 left-[7px] top-0 w-px bg-white/10 md:left-[calc(9rem+7px)]" aria-hidden="true" />
+                    <motion.span
+                        className="absolute bottom-0 left-[7px] top-0 w-px origin-top bg-gradient-to-b from-signal via-signal to-signal/0 md:left-[calc(9rem+7px)]"
+                        style={{ scaleY: reduced ? 1 : progress }}
+                        aria-hidden="true"
+                    />
 
-                        <div className="relative space-y-12">
-                            {items.map((it) => {
-                                const isActive = activeId === it.id;
+                    {entries.map((entry, i) => (
+                        <motion.li
+                            key={entry.id}
+                            initial={reduced ? false : { opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-15% 0px" }}
+                            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                            className="group relative flex flex-col gap-4 pl-10 md:flex-row md:gap-10 md:pl-0"
+                        >
+                            <div className="flex shrink-0 flex-row items-baseline gap-3 font-mono md:w-36 md:flex-col md:items-end md:gap-1 md:pr-2 md:text-right">
+                                <span className="text-[10px] uppercase tracking-[0.3em] text-zinc-600">{pad(i + 1)}</span>
+                                <time dateTime={`${entry.dateISO}T${entry.timeHHMM}`} className="text-sm tabular-nums text-white">
+                                    {entry.dateISO.replaceAll("-", ".")}
+                                </time>
+                                <span className="text-xs tabular-nums text-zinc-500">{entry.timeHHMM}</span>
+                            </div>
 
-                                return (
-                                    <div key={it.id} className="relative flex items-start gap-8 pl-16">
-                                        <button
-                                            type="button"
-                                            data-tl-node
-                                            onClick={() => window.open(it.githubUrl, "_blank", "noopener,noreferrer")}
-                                            className={[
-                                                "group absolute left-6 -translate-x-1/2 flex items-center justify-center rounded-full transition",
-                                                "outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 focus-visible:ring-offset-0",
-                                            ].join(" ")}
-                                            style={{ width: NODE_SIZE * 2.3, height: NODE_SIZE * 2.3, top: "1.5rem" }}
-                                            aria-label={t("timeline.openOnGithub", { title: it.title })}
-                                        >
-                                            <span
-                                                className={[
-                                                    "absolute inset-0 rounded-full blur-md transition-opacity",
-                                                    isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100",
-                                                ].join(" ")}
-                                                style={{
-                                                    background:
-                                                        "radial-gradient(circle at 50% 50%, rgba(99,102,241,0.55), rgba(34,211,238,0.0) 70%)",
-                                                }}
-                                            />
-                                            <span
-                                                className={[
-                                                    "relative rounded-full transition-all",
-                                                    isActive
-                                                        ? "bg-white shadow-[0_0_0_6px_rgba(255,255,255,0.08),0_0_0_1px_rgba(255,255,255,0.25)]"
-                                                        : "bg-white/80 shadow-[0_0_0_6px_rgba(255,255,255,0.05),0_0_0_1px_rgba(255,255,255,0.18)] group-hover:shadow-[0_0_0_8px_rgba(99,102,241,0.12),0_0_0_1px_rgba(255,255,255,0.22)]",
-                                                ].join(" ")}
-                                                style={{ width: NODE_SIZE, height: NODE_SIZE }}
-                                            />
-                                        </button>
+                            <span
+                                className="absolute left-0 top-1 flex h-[15px] w-[15px] items-center justify-center md:left-36"
+                                aria-hidden="true"
+                            >
+                                <span className="absolute h-full w-full rotate-45 border border-signal/50 bg-ink transition-transform duration-500 group-hover:rotate-[135deg]" />
+                                <span className="relative h-1.5 w-1.5 rotate-45 bg-signal shadow-[0_0_12px_rgba(255,59,59,0.9)]" />
+                            </span>
 
-                                        <motion.a
-                                            data-tl-card
-                                            href={it.githubUrl}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            initial={false}
-                                            whileHover={reducedMotion ? undefined : { scale: 1.02 }}
-                                            whileTap={reducedMotion ? undefined : { scale: 0.98 }}
-                                            className={[
-                                                "block flex-1",
-                                                "rounded-2xl border border-white/10 bg-black/35 shadow-[0_18px_60px_-45px_rgba(0,0,0,0.95)] backdrop-blur",
-                                                "transition-colors hover:border-white/20",
-                                                "group",
-                                            ].join(" ")}
-                                            onMouseEnter={() => setActiveId(it.id)}
-                                            onFocus={() => setActiveId(it.id)}
-                                        >
-                                            <div className="relative p-6">
-                                                <div
-                                                    className={[
-                                                        "pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300",
-                                                        "group-hover:opacity-100",
-                                                    ].join(" ")}
-                                                    style={{
-                                                        background:
-                                                            "radial-gradient(600px circle at 20% 0%, rgba(99,102,241,0.18), transparent 45%), radial-gradient(600px circle at 80% 100%, rgba(34,211,238,0.14), transparent 50%)",
-                                                    }}
-                                                />
-
-                                                <div className="relative flex items-start justify-between gap-4">
-                                                    <div className="min-w-0 flex-1">
-                                                        <div className="mb-3 flex flex-wrap items-center gap-2">
-                                                            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white/75">
-                                                                <CalendarDays className="h-4 w-4 text-white/60" />
-                                                                {it.dateISO}
-                                                            </span>
-                                                            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white/60">
-                                                                <Clock3 className="h-4 w-4 text-white/50" />
-                                                                {it.timeHHMM}
-                                                            </span>
-                                                        </div>
-
-                                                        <div className="mb-3 text-xl font-semibold leading-snug text-white break-words">
-                                                            {it.title}
-                                                        </div>
-
-                                                        <div className="text-sm leading-relaxed text-white/55">
-                                                            {t("timeline.cardHint")}
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="shrink-0">
-                                                        <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/70 transition-colors group-hover:bg-white/10 group-hover:text-white">
-                                                            <ExternalLink className="h-6 w-6" />
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </motion.a>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                ) : (
-                    <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-sm text-white/70">
-                        {t("timeline.emptyState", { folder: TIMELINE_FOLDER })}
-                    </div>
-                )}
-            </div>
+                            <article className="relative flex-1 overflow-hidden border border-white/10 bg-white/[0.02] p-6 backdrop-blur transition-colors duration-500 hover:border-white/20 md:ml-8">
+                                <span
+                                    className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                                    style={{ background: "radial-gradient(500px circle at 0% 0%, rgba(255,59,59,0.10), transparent 55%)" }}
+                                    aria-hidden="true"
+                                />
+                                <div className="relative flex items-start justify-between gap-4">
+                                    <h2 className="font-display text-2xl font-medium tracking-tight text-white">{entry.title}</h2>
+                                    <a
+                                        href={entry.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={t("timeline.openOnGithub", { title: entry.title })}
+                                        className="flex h-9 w-9 shrink-0 items-center justify-center border border-white/10 text-zinc-400 transition-all hover:border-signal hover:bg-signal hover:text-black"
+                                    >
+                                        <ArrowUpRight className="h-4 w-4" />
+                                    </a>
+                                </div>
+                                {entry.tags.length > 0 && (
+                                    <ul className="relative mt-3 flex flex-wrap gap-2">
+                                        {entry.tags.map((tag) => (
+                                            <li
+                                                key={tag}
+                                                className="border border-white/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-zinc-500"
+                                            >
+                                                {tag}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                                <div className="relative mt-3 text-sm">{entry.content}</div>
+                            </article>
+                        </motion.li>
+                    ))}
+                </ol>
+            )}
         </div>
     );
 }

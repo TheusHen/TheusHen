@@ -1,30 +1,26 @@
-"use client";
-
-import React from "react";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import Particles from "../components/particles";
-import Timeline from "../components/Timeline";
-import { useI18n } from "../contexts/I18nContext";
+import Timeline, { type TimelineEntry } from "../components/Timeline";
+import { getTimelineSources } from "@/lib/timeline";
+import { renderMdx } from "./render-mdx";
 
-export default function TimelinePage() {
-    const { t } = useI18n();
+export const revalidate = 3600;
+
+export default async function TimelinePage() {
+    const sources = await getTimelineSources();
+    const entries: TimelineEntry[] = await Promise.all(
+        sources.map(async ({ body, orderKey: _orderKey, ...meta }) => ({
+            ...meta,
+            content: await renderMdx(body),
+        }))
+    );
 
     return (
-        <div className="relative min-h-screen bg-gradient-to-b from-black via-zinc-900/60 to-black text-white">
-            <Particles className="absolute inset-0 -z-10 opacity-60" quantity={70} />
-            <div className="absolute left-6 top-16 z-20">
-                <Link
-                    href="/"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium text-white transition hover:border-white/25 hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/70"
-                >
-                    <ArrowLeft className="h-4 w-4" />
-                    {t("nav.backHome")}
-                </Link>
-            </div>
+        <main className="bg-noise relative min-h-screen bg-ink text-white">
+            <div className="bg-grid pointer-events-none fixed inset-0 [mask-image:linear-gradient(to_bottom,black,transparent_80%)]" />
+            <Particles className="pointer-events-none fixed inset-0 opacity-50" quantity={60} />
             <div className="relative">
-                <Timeline />
+                <Timeline entries={entries} />
             </div>
-        </div>
+        </main>
     );
 }

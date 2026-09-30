@@ -1,5 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+
+const grotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-grotesk", display: "swap" });
+const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains", display: "swap" });
 import { Analytics } from "@vercel/analytics/next";
 import CollegeDecisionsBar from "./components/CollegeDecisionsBar";
 import GlobalSwitch from "./components/Switch";
@@ -108,7 +112,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="en" className={`${grotesk.variable} ${mono.variable}`}>
         <head>
             {/* Preload critical assets */}
             <link rel="preload" href="/favicon.ico" as="image" type="image/x-icon" />
