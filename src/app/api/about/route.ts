@@ -22,7 +22,7 @@ function getAgeFromBirthdate(birthDate: Date, now = new Date()) {
     return hasBirthdayPassed ? yearDiff : yearDiff - 1;
 }
 
-// Informações estáticas do About
+// Static About info (English default; pt-BR served via i18n on the client)
 const aboutInfo = {
     profile: {
         name: "TheusHen",
@@ -103,7 +103,7 @@ const aboutInfo = {
     ]
 };
 
-// Função para buscar projetos do GitHub dinamicamente
+// Fetch GitHub projects dynamically
 async function fetchGitHubProjects(username: string): Promise<GitHubRepo[]> {
     try {
         const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`, {

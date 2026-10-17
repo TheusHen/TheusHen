@@ -1,12 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import CollegeDecisionsBar from "./components/CollegeDecisionsBar";
-import GlobalSwitch from "./components/Switch";
 import FloatingControls from "./components/FloatingControls";
+import LenisProvider from "./components/blueprint/LenisProvider";
 import "./globals.css";
+import "./blueprint.css";
 import { PostHogProvider } from "./providers/PostHogProvider";
-import { GlobeProvider } from "./contexts/GlobeContext";
 import { I18nProvider } from "./contexts/I18nContext";
 import { AccessibilityProvider } from "./contexts/AccessibilityContext";
 
@@ -94,7 +95,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
     colorScheme: "dark",
-    themeColor: "#000000",
+    themeColor: "#050505",
     width: "device-width",
     initialScale: 1,
     maximumScale: 5,
@@ -102,17 +103,28 @@ export const viewport: Viewport = {
     viewportFit: "cover",
 };
 
+const display = Space_Grotesk({
+    subsets: ["latin"],
+    weight: ["400", "500", "600", "700"],
+    variable: "--font-display",
+    display: "swap",
+});
+
+const mono = JetBrains_Mono({
+    subsets: ["latin"],
+    weight: ["400", "500", "700"],
+    variable: "--font-mono",
+    display: "swap",
+});
+
 export default function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="en" data-scroll-behavior="smooth">
         <head>
-            {/* Preload critical assets */}
-            <link rel="preload" href="/favicon.ico" as="image" type="image/x-icon" />
-            
             <link rel="icon" href="/favicon.ico" sizes="48x48" />
             <link rel="icon" href="/favicon.png" type="image/png" sizes="500x500" />
             <link rel="apple-touch-icon" href="/favicon.png" sizes="500x500" />
@@ -174,17 +186,16 @@ export default function RootLayout({
                 })}
             </Script>
         </head>
-        <body className="antialiased font-sans">
+        <body className={`antialiased ${display.variable} ${mono.variable} font-sans`}>
         <PostHogProvider>
             <I18nProvider>
                 <AccessibilityProvider>
-                    <GlobeProvider>
+                        <LenisProvider>
                         <CollegeDecisionsBar />
-                        <GlobalSwitch />
                         <FloatingControls />
                         {children}
+                        </LenisProvider>
                         <Analytics />
-                    </GlobeProvider>
                 </AccessibilityProvider>
             </I18nProvider>
         </PostHogProvider>

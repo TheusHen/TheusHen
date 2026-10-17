@@ -134,9 +134,9 @@ export default function Timeline() {
 
                 {items.length > 0 ? (
                     <div ref={itemsRef} className="relative">
-                        <div className="absolute left-6 top-0 bottom-0 w-[2px] bg-gradient-to-b from-white/10 via-white/25 to-white/10" />
+                        <div className="absolute left-6 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#ff2b2b]/10 via-[#ff2b2b]/60 to-[#ff2b2b]/10" />
 
-                        <div className="relative space-y-12">
+                        <div className="relative space-y-6">
                             {items.map((it) => {
                                 const isActive = activeId === it.id;
 
@@ -160,15 +160,15 @@ export default function Timeline() {
                                                 ].join(" ")}
                                                 style={{
                                                     background:
-                                                        "radial-gradient(circle at 50% 50%, rgba(99,102,241,0.55), rgba(34,211,238,0.0) 70%)",
+                                                        "radial-gradient(circle at 50% 50%, rgba(255,43,43,0.65), rgba(255,43,43,0.0) 70%)",
                                                 }}
                                             />
                                             <span
                                                 className={[
                                                     "relative rounded-full transition-all",
                                                     isActive
-                                                        ? "bg-white shadow-[0_0_0_6px_rgba(255,255,255,0.08),0_0_0_1px_rgba(255,255,255,0.25)]"
-                                                        : "bg-white/80 shadow-[0_0_0_6px_rgba(255,255,255,0.05),0_0_0_1px_rgba(255,255,255,0.18)] group-hover:shadow-[0_0_0_8px_rgba(99,102,241,0.12),0_0_0_1px_rgba(255,255,255,0.22)]",
+                                                        ? "bg-[#ff2b2b] shadow-[0_0_0_6px_rgba(255,43,43,0.12),0_0_0_1px_rgba(255,43,43,0.5)]"
+                                                        : "bg-white/80 shadow-[0_0_0_6px_rgba(255,255,255,0.05),0_0_0_1px_rgba(255,255,255,0.18)] group-hover:bg-[#ff2b2b] group-hover:shadow-[0_0_0_8px_rgba(255,43,43,0.2),0_0_0_1px_rgba(255,43,43,0.4)]",
                                                 ].join(" ")}
                                                 style={{ width: NODE_SIZE, height: NODE_SIZE }}
                                             />
@@ -184,8 +184,8 @@ export default function Timeline() {
                                             whileTap={reducedMotion ? undefined : { scale: 0.98 }}
                                             className={[
                                                 "block flex-1",
-                                                "rounded-2xl border border-white/10 bg-black/35 shadow-[0_18px_60px_-45px_rgba(0,0,0,0.95)] backdrop-blur",
-                                                "transition-colors hover:border-white/20",
+                                                "rounded-none border border-white/10 bg-transparent backdrop-blur",
+                                                "transition-colors hover:border-[#ff2b2b]/50",
                                                 "group",
                                             ].join(" ")}
                                             onMouseEnter={() => setActiveId(it.id)}
@@ -194,12 +194,12 @@ export default function Timeline() {
                                             <div className="relative p-6">
                                                 <div
                                                     className={[
-                                                        "pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300",
+                                                        "pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300",
                                                         "group-hover:opacity-100",
                                                     ].join(" ")}
                                                     style={{
                                                         background:
-                                                            "radial-gradient(600px circle at 20% 0%, rgba(99,102,241,0.18), transparent 45%), radial-gradient(600px circle at 80% 100%, rgba(34,211,238,0.14), transparent 50%)",
+                                                            "radial-gradient(600px circle at 20% 0%, rgba(255,43,43,0.12), transparent 45%), radial-gradient(600px circle at 80% 100%, rgba(255,255,255,0.05), transparent 50%)",
                                                     }}
                                                 />
 

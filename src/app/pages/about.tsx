@@ -1,284 +1,118 @@
 "use client";
 
-import React, { useEffect, useRef, useState, memo } from "react";
-import { gsap } from "gsap";
+import React from "react";
 import Image from "next/image";
-import dynamic from "next/dynamic";
+import { Github, Linkedin } from "lucide-react";
 import { useI18n } from "../contexts/I18nContext";
-
-// Lazy load heavy components
-const Fall = dynamic(() => import("../components/Fall"), { 
-  ssr: false,
-  loading: () => null
-});
-const LazyGlobe = dynamic(() => import("../components/LazyGlobe"), {
-  ssr: false,
-  loading: () => null
-});
+import GridCell from "../components/blueprint/GridCell";
+import DecoderText from "../components/blueprint/DecoderText";
+import Reveal from "../components/blueprint/Reveal";
+import CollegeTimer from "../components/blueprint/CollegeTimer";
+import AboutEn from "@/content/about.en.mdx";
+import AboutPt from "@/content/about.pt.mdx";
 
 const PROFILE_IMAGE = "https://avatars.githubusercontent.com/u/180109164";
 const HACKCLUB_IMAGE =
-    "https://images.fillout.com/orgid-81/flowpublicid-eLhFehpKG6us/widgetid-cbsLd1W9tHmPW9frkYFap2/3G6y1B7Rk3agk6YVqtLmJN/Group-106.png?a=hcRnPh87k73TcrVHzBe6UW";
+  "https://images.fillout.com/orgid-81/flowpublicid-eLhFehpKG6us/widgetid-cbsLd1W9tHmPW9frkYFap2/3G6y1B7Rk3agk6YVqtLmJN/Group-106.png?a=hcRnPh87k73TcrVHzBe6UW";
 const COLLEGE_APP_DATE = new Date("2028-11-01T00:00:00Z");
 
-function getTimeLeft() {
-    // This function should only be called on the client
-    if (typeof window === "undefined") {
-        // Avoids hydration mismatch: always return the same for SSR
-        return { days: 0, hours: 0, mins: 0, secs: 0 };
-    }
-    const target = COLLEGE_APP_DATE.getTime();
-    const now = new Date().getTime();
-    const diff = target - now;
-    if (diff <= 0) return { days: 0, hours: 0, mins: 0, secs: 0 };
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const mins = Math.floor((diff / (1000 * 60)) % 60);
-    const secs = Math.floor((diff / 1000) % 60);
-
-    return { days, hours, mins, secs };
-}
-
-function ProfileImage() {
-    const imgRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if (imgRef.current)
-            gsap.fromTo(
-                imgRef.current,
-                { y: -100, opacity: 0, rotate: -10 },
-                { y: 0, opacity: 1, rotate: 0, duration: 1.2, delay: 0.5, ease: "elastic.out(1,0.75)" }
-            );
-    }, []);
-
-    return (
-        <div
-            ref={imgRef}
-            className="flex items-center justify-center md:justify-end md:items-center p-8 bg-transparent relative "
-        >
-            <Image
-                src={PROFILE_IMAGE}
-                alt="Profile photo"
-                width={160}
-                height={160}
-                className="w-40 h-40 rounded-full shadow-xl border-4 border-red-500 object-cover hover:scale-110 transition-transform duration-300"
-                priority
-                quality={90}
-            />
-            <div className="absolute bottom-4 right-4 w-20 h-14 rounded shadow-lg" style={{ zIndex: 10 }}>
-                <Image
-                    src="https://upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg"
-                    alt="Brazil Flag"
-                    width={80}
-                    height={56}
-                    className="w-20 h-14 rounded shadow-lg"
-                    loading="lazy"
-                />
-            </div>
-        </div>
-    );
-}
-
-const MemoizedProfileImage = memo(ProfileImage);
-
-function TextSection() {
-    const textRef = useRef<HTMLDivElement>(null);
-    const { t } = useI18n();
-
-    useEffect(() => {
-        if (textRef.current)
-            gsap.fromTo(
-                textRef.current,
-                { x: -100, opacity: 0 },
-                { x: 0, opacity: 1, duration: 1.2, ease: "power2.out" }
-            );
-    }, []);
-
-    return (
-        <div
-            ref={textRef}
-            className="flex-1 p-8 flex flex-col gap-2 justify-center"
-        >
-            <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg">
-                {t("about.titlePrefix")}
-                <span className="text-red-800">TheusHen</span>!
-            </h1>
-            <div className="flex flex-col gap-3 text-lg md:text-xl text-white/90 mb-2 leading-relaxed">
-                <span>
-                    {t("about.paragraphOneBeforeMit")}
-                    <span className="font-bold text-red-600">MIT</span>
-                    {t("about.paragraphOneAfterMit")}
-                </span>
-                <span>
-                    {t("about.paragraphTwoBefore20t")}
-                    <span className="font-bold text-red-600">20t</span>
-                    {t("about.paragraphTwoAfter20t")}
-                </span>
-                <span>
-                    {t("about.paragraphThreeBeforeShipwrecked")}
-                    <span className="text-red-600 font-bold">Shipwrecked</span>
-                    {t("about.paragraphThreeBetween")}
-                    <span className="text-red-600 font-bold">Hack Club</span>
-                    {t("about.paragraphThreeAfterHackClub")}
-                </span>
-                <span>
-                    {t("about.paragraphFour")}
-                </span>
-                <span>
-                    {t("about.paragraphFive")}
-                </span>
-            </div>
-            <div className="flex gap-4 mt-4">
-                <a
-                    href="https://github.com/TheusHen"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-all duration-200 shadow-md scale-90 hover:scale-105"
-                >
-                    GitHub
-                </a>
-                <a
-                    href="https://www.linkedin.com/in/matheus-henrique-741776367/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-red-800 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-all duration-200 shadow-md scale-90 hover:scale-105"
-                >
-                    LinkedIn
-                </a>
-            </div>
-            <div className="flex justify-center mt-8">
-                <Image
-                    src="https://raw.githubusercontent.com/TheusHen/TheusHen/output/snake.svg"
-                    alt="GitHub Contribution Snake"
-                    width={800}
-                    height={200}
-                    className="max-w-full h-auto"
-                    loading="lazy"
-                />
-            </div>
-        </div>
-    );
-}
-
-const MemoizedTextSection = memo(TextSection);
-
-function HackClubSection() {
-    const hackRef = useRef<HTMLDivElement>(null);
-    const { t } = useI18n();
-
-    useEffect(() => {
-        if (hackRef.current)
-            gsap.fromTo(
-                hackRef.current,
-                { y: 50, opacity: 0 },
-                { y: 0, opacity: 1, duration: 1, delay: 1.5, ease: "power2.out" }
-            );
-    }, []);
-
-    return (
-        <div
-            ref={hackRef}
-            className="flex items-center gap-6 bg-zinc-900/80 backdrop-blur-lg rounded-xl p-6 shadow-lg border border-red-400/20 hidden sm:flex"
-        >
-            <Image
-                src={HACKCLUB_IMAGE}
-                alt="Hack Club"
-                width={272}
-                height={112}
-                className="w-68 h-28 rounded-lg drop-shadow-lg hover:rotate-6 transition-transform duration-300"
-                loading="lazy"
-            />
-            <div>
-                <span className="text-2xl font-bold text-red-300">{t("about.hackClubTitle")}</span>
-                <p className="text-white/80 text-base mt-1">{t("about.hackClubSubtitle")}</p>
-            </div>
-        </div>
-    );
-}
-
-const MemoizedHackClubSection = memo(HackClubSection);
-
-function TimerSection() {
-    const [timer, setTimer] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
-    const timerRef = useRef<HTMLDivElement>(null);
-    const { t } = useI18n();
-
-    useEffect(() => {
-        setTimer(getTimeLeft());
-        const interval = setInterval(() => setTimer(getTimeLeft()), 1000);
-        return () => clearInterval(interval);
-    }, []);
-
-    useEffect(() => {
-        if (timerRef.current)
-            gsap.fromTo(
-                timerRef.current,
-                { x: 100, opacity: 0 },
-                { x: 0, opacity: 1, duration: 1, delay: 2, ease: "power2.out" }
-            );
-    }, []);
-
-    return (
-        <div
-            ref={timerRef}
-            className="flex flex-col h-40 items-center justify-center bg-zinc-900/80 backdrop-blur-lg rounded-xl p-6 shadow-lg border border-red-400/20"
-        >
-            <span className="text-lg font-semibold text-red-300 mb-2">{t("about.timerTitle")}</span>
-            <div className="flex gap-3 text-white text-2xl font-mono tracking-wider">
-                <div className="flex flex-col items-center">
-                    <span>{timer.days}</span>
-                    <span className="text-xs text-red-400">{t("time.days")}</span>
-                </div>
-                <span>:</span>
-                <div className="flex flex-col items-center">
-                    <span>{timer.hours}</span>
-                    <span className="text-xs text-red-400">{t("time.hoursShort")}</span>
-                </div>
-                <span>:</span>
-                <div className="flex flex-col items-center">
-                    <span>{timer.mins}</span>
-                    <span className="text-xs text-red-400">{t("time.minutesShort")}</span>
-                </div>
-                <span>:</span>
-                <div className="flex flex-col items-center">
-                    <span>{timer.secs}</span>
-                    <span className="text-xs text-red-400">{t("time.secondsShort")}</span>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-const MemoizedTimerSection = memo(TimerSection);
-
 export default function About() {
-    const cardRef = useRef<HTMLDivElement>(null);
+  const { t, language } = useI18n();
+  const Mdx = language === "pt" ? AboutPt : AboutEn;
 
-    useEffect(() => {
-        if (cardRef.current)
-            gsap.fromTo(
-                cardRef.current,
-                { scale: 0.5, opacity: 0 },
-                { scale: 1, opacity: 1, duration: 1.1, delay: 1, ease: "back.out(1.7)" }
-            );
-    }, []);
-
-    return (
-        <div className="min-h-screen w-full bg-gradient-to-bl from-black/40 via-zinc-600/20 to-red-900 flex flex-col items-center justify-center p-6 transition-colors duration-1000">
-            <div
-                ref={cardRef}
-                className="w-full max-w-4xl mt-20 bg-zinc-900/80 backdrop-blur-2xl rounded-3xl shadow-2xl flex flex-col md:flex-row items-center md:items-stretch overflow-hidden border border-white/10"
-            >
-                <MemoizedTextSection />
-                <MemoizedProfileImage />
-            </div>
-            <div className="flex flex-col gap-8 items-center mt-12 sm:flex-row">
-                <MemoizedHackClubSection />
-                <MemoizedTimerSection />
-            </div>
-            <LazyGlobe />
-            <Fall />
+  return (
+    <div className="bp-grid">
+      {/* BIO — large text + small mono, MDX powered */}
+      <GridCell id="SEC.01 // BIO" index="03" label="about-mtx" span="bp-span-7" reflow="bp-reflow-a">
+        <DecoderText text={`${t("about.titlePrefix")}TheusHen!`} as="h2" className="bp-giant text-[clamp(2.2rem,5vw,3.8rem)]" />
+        <div className="bp-mdx mt-2">
+          <Mdx />
         </div>
-    );
+        <div className="mt-8 flex flex-wrap gap-3">
+          <a
+            href="https://github.com/TheusHen"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-[#ff2b2b] px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white hover:text-black"
+          >
+            <Github size={15} /> GitHub
+          </a>
+          <a
+            href="https://www.linkedin.com/in/matheus-henrique-741776367/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-[0.12em] text-white transition hover:border-[#ff2b2b] hover:text-[#ff5a5a]"
+          >
+            <Linkedin size={15} /> LinkedIn
+          </a>
+        </div>
+        <Reveal delay={120} className="mt-8 overflow-hidden border border-white/10">
+          <Image
+            src="https://raw.githubusercontent.com/TheusHen/TheusHen/output/snake.svg"
+            alt="GitHub Contribution Snake"
+            width={800}
+            height={200}
+            className="h-auto w-full"
+            loading="lazy"
+          />
+        </Reveal>
+      </GridCell>
+
+      {/* PROFILE — image square inside the cell */}
+      <GridCell id="SEC.01 // PROFILE" index="04" label="fig" span="bp-span-5" reflow="bp-reflow-b">
+        <div className="relative mx-auto w-fit">
+          <Image
+            src={PROFILE_IMAGE}
+            alt="Profile photo"
+            width={220}
+            height={220}
+            className="h-52 w-52 rounded-full border-2 border-[#ff2b2b] object-cover shadow-[0_0_60px_rgba(255,43,43,0.25)]"
+            priority
+          />
+          <Image
+            src="https://upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg"
+            alt="Brazil Flag"
+            width={64}
+            height={44}
+            className="absolute -bottom-1 -right-2 h-9 w-14 rounded border border-white/20 shadow-lg"
+            loading="lazy"
+          />
+        </div>
+        <div className="mt-6 grid grid-cols-3 gap-4 border-t border-white/[0.07] pt-6">
+          <div>
+            <p className="font-display text-2xl font-bold text-white">20t</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-zinc-500">founder</p>
+          </div>
+          <div>
+            <p className="font-display text-2xl font-bold text-white">MIT&apos;28</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-zinc-500">target</p>
+          </div>
+          <div>
+            <p className="font-display text-2xl font-bold text-[#ff5a5a]">OSS</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-zinc-500">first</p>
+          </div>
+        </div>
+        <div className="mt-6 flex items-center gap-4 border border-white/10 p-4">
+          <Image src={HACKCLUB_IMAGE} alt="Hack Club" width={120} height={52} className="h-12 w-auto" loading="lazy" />
+          <div>
+            <p className="font-display text-lg font-bold text-white">{t("about.hackClubTitle")}</p>
+            <p className="font-mono text-[11px] text-zinc-500">{t("about.hackClubSubtitle")}</p>
+          </div>
+        </div>
+      </GridCell>
+
+      {/* TIMER — full-width cell, reflows below on mobile */}
+      <GridCell id="SEC.01 // COUNTDOWN" index="05" label="timer" span="bp-span-12" reflow="bp-reflow-c">
+        <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+          <div>
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#ff5a5a]">{t("about.timerTitle")}</p>
+            <p className="font-display mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+              College Application <span className="text-[#ff2b2b]">— 2028.11.01</span>
+            </p>
+          </div>
+          <CollegeTimer target={COLLEGE_APP_DATE} />
+        </div>
+      </GridCell>
+    </div>
+  );
 }

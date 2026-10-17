@@ -56,7 +56,7 @@ const Particles: React.FC<ParticlesProps> = memo(
 
     useEffect(() => {
         onMouseMove();
-    }, [mousePosition.x, mousePosition.y]);  // Dependência adicionada
+    }, [mousePosition.x, mousePosition.y]); // re-run on mouse move
 
     useEffect(() => {
         initCanvas();

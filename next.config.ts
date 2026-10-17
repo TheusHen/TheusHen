@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
+import createMDX from "@next/mdx";
+import rehypePrettyCode from "rehype-pretty-code";
+import remarkGfm from "remark-gfm";
+import rehypeSlug from "rehype-slug";
 
 const nextConfig: NextConfig = {
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -25,6 +30,14 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'commons.wikimedia.org',
+      },
+      {
+        protocol: 'https',
+        hostname: 'en.wikipedia.org',
+      },
+      {
+        protocol: 'https',
         hostname: 'raw.githubusercontent.com',
       },
     ],
@@ -37,7 +50,7 @@ const nextConfig: NextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   experimental: {
-    optimizePackageImports: ['lucide-react', 'd3', 'framer-motion', 'gsap', 'three'],
+    optimizePackageImports: ['lucide-react', 'framer-motion', 'gsap'],
     webVitalsAttribution: ['CLS', 'LCP', 'FCP', 'FID', 'TTFB', 'INP'],
   },
   compiler: {
@@ -58,11 +71,11 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: `
               default-src 'self';
-              script-src 'self' https://vercel.live 'unsafe-inline' 'unsafe-eval';
+              script-src 'self' https://vercel.live https://va.vercel-scripts.com 'unsafe-inline' 'unsafe-eval';
               style-src 'self' 'unsafe-inline';
               img-src 'self' data: https:;
               connect-src 'self' https:;
-              font-src 'self' https:;
+              font-src 'self' https: data:;
               frame-src 'self' https://vercel.live;
             `.replace(/\s{2,}/g, ' ').trim(),
           },
@@ -146,4 +159,21 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const withMDX = createMDX({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [
+      rehypeSlug,
+      [
+        rehypePrettyCode,
+        {
+          theme: { dark: "github-dark", light: "github-dark" },
+          keepBackground: false,
+        },
+      ],
+    ],
+  },
+});
+
+export default withMDX(nextConfig);

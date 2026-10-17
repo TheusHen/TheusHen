@@ -7,42 +7,52 @@ import { usePathname, useSearchParams } from "next/navigation"
 
 let posthogInstance: any = null;
 
-function getPostHog() {
-  if (typeof window === 'undefined') return null;
-  
-  if (!posthogInstance) {
-    // Lazy load posthog
-    import('posthog-js').then((posthogModule) => {
-      posthogInstance = posthogModule.default;
-      posthogInstance.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
-        api_host: "/ingest",
-        ui_host: "https://us.posthog.com",
-        capture_pageview: false,
-        capture_pageleave: true,
-        capture_exceptions: true,
-        debug: process.env.NODE_ENV === "development",
-        loaded: (posthog: any) => {
-          if (process.env.NODE_ENV === "development") posthog.debug();
-        },
-      });
-    });
-  }
-  
-  return posthogInstance;
-}
+const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
 
 export function PostHogProvider({ children }: { readonly children: React.ReactNode }) {
+  // Analytics disabled without a key: render children directly, no warnings.
+  if (!POSTHOG_KEY) return <>{children}</>;
+
+  return <PostHogInit>{children}</PostHogInit>;
+}
+
+function PostHogInit({ children }: { readonly children: React.ReactNode }) {
+  const [client, setClient] = React.useState<any>(null);
+
   useEffect(() => {
-    // Initialize on idle
+    const key = POSTHOG_KEY;
+    if (!key) return;
+    // Initialize on idle, then attach the client once loaded.
+    const init = () => {
+      import('posthog-js').then((posthogModule) => {
+        const ph = posthogModule.default;
+        ph.init(key, {
+          api_host: "/ingest",
+          ui_host: "https://us.posthog.com",
+          capture_pageview: false,
+          capture_pageleave: true,
+          capture_exceptions: true,
+          debug: process.env.NODE_ENV === "development",
+          loaded: (posthog: any) => {
+            if (process.env.NODE_ENV === "development") posthog.debug();
+          },
+        });
+        posthogInstance = ph;
+        setClient(ph);
+      });
+    };
     if ('requestIdleCallback' in window) {
-      requestIdleCallback(() => getPostHog(), { timeout: 2000 });
+      requestIdleCallback(init, { timeout: 2000 });
     } else {
-      setTimeout(() => getPostHog(), 1000);
+      setTimeout(init, 1000);
     }
   }, [])
 
+  // No client yet: render children without the provider (avoids init warnings).
+  if (!client) return <>{children}</>;
+
   return (
-    <PHProvider client={getPostHog()}>
+    <PHProvider client={client}>
       <SuspendedPostHogPageView />
       {children}
     </PHProvider>
